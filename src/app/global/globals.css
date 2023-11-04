@@ -25,3 +25,25 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+li {
+  list-style: none;
+}
+
+.hidden-text-target {
+  font-size: 15px;
+  max-height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.preview-link a{
+  text-decoration: none;
+  color: inherit;
+}
+.preview-link a:hover{
+  text-decoration: none;
+  color: inherit;
+}
