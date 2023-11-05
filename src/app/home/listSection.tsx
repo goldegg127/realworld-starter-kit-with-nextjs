@@ -1,5 +1,5 @@
-import Pagination from "./pagination";
-import Items from './articles';
+import Pagination from "./Pagination";
+import Items from './Articles';
 
 async function getData() {
     const res = await fetch('https://api.realworld.io/api/articles');

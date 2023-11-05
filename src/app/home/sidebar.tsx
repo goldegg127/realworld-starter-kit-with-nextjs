@@ -11,7 +11,7 @@ async function fetchTagList() {
 export default async function Sidebar() {
     type Tags = string[];
     const data = await fetchTagList();
-    const { tags } : { tags: Tags } = data;
+    const { tags } : { tags : Tags } = data;
     
     return (
         <article className="sidebar">
