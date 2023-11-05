@@ -1,3 +1,5 @@
+// MVP 범위 밖
+
 type Profile = {
     username: string;
     bio: string;
@@ -17,8 +19,6 @@ async function fetchProfile(username:string) {
 
 export default async function Profile({params} : {params : {author:string}}) {
     const data = await fetchProfile(params.author);
-    console.log('>>>>>>>>>>>>>>>>>>>>>>', data.profile);
-    
     const { username, bio, image, following } : Profile = data.profile;
 
     return (
@@ -45,6 +45,7 @@ export default async function Profile({params} : {params : {author:string}}) {
                 </div>
             </div>
 
+            {/* 하드코딩 데이터 페치 적용 예정 */}
             <div className="container">
                 <div className="row">
                     <div className="col-xs-12 col-md-10 offset-md-1">
