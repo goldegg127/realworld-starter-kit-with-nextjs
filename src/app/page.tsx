@@ -1,6 +1,6 @@
-import Banner from './home/Banner';
-import List from './home/ListSection';
-import Sidebar from './home/Sidebar';
+import Banner from './main/Banner';
+import List from './main/ListSection';
+import Sidebar from './main/Sidebar';
 
 export default function Home() {
   return (
