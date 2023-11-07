@@ -2,13 +2,11 @@
 
 import { Articles, Article } from "@/app/type/index";
 import { formatDate, formatProfileLink } from "@/app/util/format";
-import { useSearchParams } from "next/navigation";
 
-export default function Item({ articles }: { articles: Articles }) {
-  const searchParams = useSearchParams();
-  const currentPage: string = searchParams.get("page") ?? "1";
-
-  const pageArticles = articles.slice(0, parseInt(currentPage) * 10);
+export default function Item({ articles }: { 
+  articles: Articles;
+ }) {
+  const pageArticles = articles;
   const renderArticle = (article: Article) => {
     const {
       slug,

@@ -1,7 +1,7 @@
-import Pagination from "./Pagination";
-import Items from "./Articles";
+import ArticleFeeds from "./ArticleFeeds";
+import { Articles } from "@/app/type/index";
 
-async function getData() {
+async function fetchArticles() {
   const res = await fetch("https://api.realworld.io/api/articles");
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
@@ -15,10 +15,12 @@ async function getData() {
 }
 
 export default async function List() {
-  const data = await getData();
-  const articles = data.articles;
-  const pageNum = articles.length;
-
+  const data = await fetchArticles();
+  const { articles, articlesCount } : {
+    articles: Articles;
+    articlesCount: number;
+  } = data;
+  
   return (
     <>
       <nav className="feed-toggle">
@@ -34,8 +36,7 @@ export default async function List() {
           </li>
         </ul>
       </nav>
-      <Items articles={articles} />
-      <Pagination pageNum={pageNum} />
+      <ArticleFeeds articles={articles} articlesCount={articlesCount} />
     </>
   );
 }
