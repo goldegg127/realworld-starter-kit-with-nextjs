@@ -1,6 +1,6 @@
 "use client";
 
-import { Articles } from "@/app/type/index";
+import { Articles } from "@/type/index";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 

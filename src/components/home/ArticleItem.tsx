@@ -1,8 +1,7 @@
 "use client";
 
-import { Articles, Article } from "@/app/type/index";
-import { formatDate, formatProfileLink } from "@/app/util/format";
-import { useEffect, useState } from "react";
+import { Articles, Article } from "@/type/index";
+import { formatDate, formatProfileLink } from "@/util/format";
 
 export default function ArticleItem({ articles }: { articles: Articles }) {
   const renderArticle = (article: Article) => {

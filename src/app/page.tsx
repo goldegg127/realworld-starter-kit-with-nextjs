@@ -1,6 +1,6 @@
-import Banner from './main/Banner';
-import List from './main/ListSection';
-import Sidebar from './main/Sidebar';
+import Banner from "@/components/home/Banner";
+import List from "@/components/home/ListSection";
+import Sidebar from "@/components/home/Sidebar";
 
 export default function Home() {
   return (
@@ -17,5 +17,5 @@ export default function Home() {
         </div>
       </section>
     </main>
-  )
+  );
 }

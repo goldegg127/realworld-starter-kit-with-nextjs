@@ -1,5 +1,5 @@
 import ArticleFeeds from "./ArticleFeeds";
-import { Articles } from "@/app/type/index";
+import { Articles } from "@/type/index";
 
 async function fetchArticles() {
   const res = await fetch("https://api.realworld.io/api/articles");
@@ -16,11 +16,14 @@ async function fetchArticles() {
 
 export default async function List() {
   const data = await fetchArticles();
-  const { articles, articlesCount } : {
+  const {
+    articles,
+    articlesCount,
+  }: {
     articles: Articles;
     articlesCount: number;
   } = data;
-  
+
   return (
     <>
       <nav className="feed-toggle">

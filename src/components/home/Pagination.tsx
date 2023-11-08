@@ -1,7 +1,5 @@
 "use client";
 
-import { Articles } from "@/app/type/index";
-
 export default function Pagination({
   currentPage,
   articlesCount,
