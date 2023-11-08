@@ -2,11 +2,9 @@
 
 import { Articles, Article } from "@/app/type/index";
 import { formatDate, formatProfileLink } from "@/app/util/format";
+import { useEffect, useState } from "react";
 
-export default function Item({ articles }: { 
-  articles: Articles;
- }) {
-  const pageArticles = articles;
+export default function ArticleItem({ articles }: { articles: Articles }) {
   const renderArticle = (article: Article) => {
     const {
       slug,
@@ -66,7 +64,7 @@ export default function Item({ articles }: {
 
   return (
     <ul>
-      {pageArticles.map((article) => {
+      {articles.map((article) => {
         return <li key={article.slug}>{renderArticle(article)}</li>;
       })}
     </ul>
