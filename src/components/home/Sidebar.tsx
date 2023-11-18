@@ -11,16 +11,19 @@ async function fetchTagList() {
 export default async function Sidebar() {
     type Tags = string[];
     const data = await fetchTagList();
-    const { tags } : { tags : Tags } = data;
-    
+    const { tags }: { tags: Tags } = data;
+
     return (
         <article className="sidebar">
             <p>Popular Tags</p>
             <ul className="tag-list">
-                {tags.map((tag, index) => 
+                {tags.map((tag, index) => (
                     <li key={index}>
-                        <a href={`/?tag=${tag}`} className="tag-pill tag-default">{tag}</a>
-                    </li>)}
+                        <a href={`/?tag=${tag}`} className="tag-pill tag-default">
+                            {tag}
+                        </a>
+                    </li>
+                ))}
             </ul>
         </article>
     );

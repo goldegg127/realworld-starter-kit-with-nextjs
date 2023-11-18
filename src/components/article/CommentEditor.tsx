@@ -1,5 +1,5 @@
 export default function CommentEditor() {
-    return(
+    return (
         <form className="card comment-form">
             <div className="card-block">
                 <textarea className="form-control" placeholder="Write a comment..." rows={3}></textarea>
