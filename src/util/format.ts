@@ -6,6 +6,6 @@ export const formatDate = (date: string): string =>
         day: 'numeric',
     });
 
-export const formatProfileLink = (username: string): string => {
+export const formatProfileLink = (username: string) => {
     return `/profile/${username}`;
 };

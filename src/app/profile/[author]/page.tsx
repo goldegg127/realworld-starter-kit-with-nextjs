@@ -30,22 +30,23 @@ export default async function Profile({ params }: { params: { author: string } }
                             <img src={image} alt="" className="user-img" />
                             <h4>{username}</h4>
                             <p>{bio}</p>
-                            {/* 로그인 기능 구현 후 적용
-                            <button className="btn btn-sm btn-outline-secondary action-btn">
-                                <i className="ion-plus-round"></i>
-                                &nbsp; Follow Eric Simons
-                            </button>
-                            <button className="btn btn-sm btn-outline-secondary action-btn">
-                                <i className="ion-gear-a"></i>
-                                &nbsp; Edit Profile Settings
-                            </button> 
+                            {/**
+                             * @todo 로그인 기능 구현 후 적용 예정
+                                <button className="btn btn-sm btn-outline-secondary action-btn">
+                                    <i className="ion-plus-round"></i>
+                                    &nbsp; Follow Eric Simons
+                                </button>
+                                <button className="btn btn-sm btn-outline-secondary action-btn">
+                                    <i className="ion-gear-a"></i>
+                                    &nbsp; Edit Profile Settings
+                                </button> 
                             */}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* 하드코딩 데이터 페치 적용 예정 */}
+            {/** @todo 하드코딩 데이터 페치 적용 예정 **/}
             <div className="container">
                 <div className="row">
                     <div className="col-xs-12 col-md-10 offset-md-1">
