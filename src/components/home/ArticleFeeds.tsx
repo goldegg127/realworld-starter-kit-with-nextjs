@@ -1,9 +1,9 @@
 'use client';
 
-import { Articles } from '@/type/index';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-
+import { Articles } from '@/type/index';
+import API from '@/config';
 import ArticleItems from './ArticleItems';
 import Pagination from './Pagination';
 
@@ -16,7 +16,7 @@ export default function ArticleFeeds({ articles, articlesCount }: { articles: Ar
     const [isLoading, setLoading] = useState(false);
 
     const fetchPageArticle = useCallback(async () => {
-        const res = await fetch(`https://api.realworld.io/api/articles?offset=${(currentPage - 1) * 10}&limit=10`);
+        const res = await fetch(`${API.ARTICLES}?offset=${(currentPage - 1) * 10}&limit=10`);
 
         if (!res.ok) {
             throw new Error('Failed to fetch data');

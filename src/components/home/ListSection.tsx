@@ -1,18 +1,6 @@
-import ArticleFeeds from './ArticleFeeds';
+import { fetchArticles } from '@/api';
 import { Articles } from '@/type/index';
-
-async function fetchArticles() {
-    const res = await fetch('https://api.realworld.io/api/articles');
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data');
-    }
-
-    return res.json();
-}
+import ArticleFeeds from './ArticleFeeds';
 
 export default async function List() {
     const data = await fetchArticles();

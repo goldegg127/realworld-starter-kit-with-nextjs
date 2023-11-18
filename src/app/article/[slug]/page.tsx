@@ -2,16 +2,7 @@ import { Article } from '@/type/index';
 import CommentsList from '@/components/article/CommentsList';
 import CommentEditor from '@/components/article/CommentEditor';
 import { formatDate, formatProfileLink } from '@/util/format';
-
-async function fetchDetails(slug: string) {
-    const res = await fetch(`https://api.realworld.io/api/articles/${slug}`);
-
-    if (!res.ok) {
-        throw new Error('failed to fetch for article details');
-    }
-
-    return res.json();
-}
+import { fetchDetails } from '@/api';
 
 export default async function ArticleDetails({ params }: { params: { slug: string } }) {
     const data = await fetchDetails(params.slug);

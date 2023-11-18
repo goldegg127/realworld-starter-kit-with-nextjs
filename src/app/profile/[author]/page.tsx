@@ -1,21 +1,13 @@
 // MVP 범위 밖
 
+import { fetchProfile } from '@/api';
+
 type Profile = {
     username: string;
     bio: string;
     image: string;
     following: boolean;
 };
-
-async function fetchProfile(username: string) {
-    const res = await fetch(`https://api.realworld.io/api/profiles/${username}`);
-
-    if (!res.ok) {
-        throw new Error('failed to fetch profile');
-    }
-
-    return res.json();
-}
 
 export default async function Profile({ params }: { params: { author: string } }) {
     const data = await fetchProfile(params.author);

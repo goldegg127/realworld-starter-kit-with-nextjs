@@ -1,14 +1,5 @@
 import { Article } from '@/type';
-
-async function fetchTagList() {
-    const res = await fetch('https://api.realworld.io/api/tags');
-
-    if (!res.ok) {
-        throw Error('failed fetching tag list');
-    }
-
-    return res.json();
-}
+import { fetchTagList } from '@/api';
 
 export default async function Sidebar() {
     const data = await fetchTagList();

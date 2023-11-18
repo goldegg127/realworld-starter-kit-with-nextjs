@@ -1,3 +1,4 @@
+import { fetchComments } from '@/api';
 import { formatDate, formatProfileLink } from '@/util/format';
 
 type Comments = Comment[];
@@ -13,16 +14,6 @@ type Comment = {
         following: boolean;
     };
 };
-
-async function fetchComments(slug: string) {
-    const res = await fetch(`https://api.realworld.io/api/articles/${slug}/comments`);
-
-    if (!res.ok) {
-        throw new Error('failed to fetch comments');
-    }
-
-    return res.json();
-}
 
 export default async function CommentsList({ slug }: { slug: string }) {
     const data = await fetchComments(slug);
@@ -45,8 +36,7 @@ export default async function CommentsList({ slug }: { slug: string }) {
                             <div className="card-footer">
                                 <a href="/profile/author" className="comment-author">
                                     <img src={image} alt="" className="comment-author-img" />
-                                </a>
-                                &nbsp;
+                                </a>{' '}
                                 <a href={profileLink} className="comment-author">
                                     {username}
                                 </a>
