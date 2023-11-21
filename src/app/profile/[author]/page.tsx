@@ -99,7 +99,7 @@ export default async function Profile({ params }: { params: { author: string } }
                                 </button>
                             </div>
                             <a href="/article/the-song-you" className="preview-link">
-                                <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
+                                <h1>The song you won&apos;t ever stop singing. No matter how hard you try.</h1>
                                 <p>This is the description for the post.</p>
                                 <span>Read more...</span>
                                 <ul className="tag-list">
