@@ -3,7 +3,7 @@ import { Articles } from '@/type/index';
 import ArticleFeeds from './ArticleFeeds';
 
 export default async function List() {
-    const data = await fetchArticles();
+    const data = await fetchArticles({});
     const {
         articles,
         articlesCount,
