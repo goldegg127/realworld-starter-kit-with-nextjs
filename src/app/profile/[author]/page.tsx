@@ -20,7 +20,7 @@ export default async function Profile({ params }: { params: { author: string } }
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-12 col-md-10 offset-md-1">
-                            <Image src={image} alt="" className="user-img" />
+                            <Image src={image} alt="" className="user-img" width={32} height={32} />
                             <h4>{username}</h4>
                             <p>{bio}</p>
                             {/**
@@ -40,7 +40,7 @@ export default async function Profile({ params }: { params: { author: string } }
             </div>
 
             {/** @todo 하드코딩 데이터 페치 적용 예정 **/}
-            <div className="container">
+            {/* <div className="container">
                 <div className="row">
                     <div className="col-xs-12 col-md-10 offset-md-1">
                         <div className="articles-toggle">
@@ -61,7 +61,7 @@ export default async function Profile({ params }: { params: { author: string } }
                         <div className="article-preview">
                             <div className="article-meta">
                                 <a href="/profile/eric-simons">
-                                    <Image src="http://i.imgur.com/Qr71crq.jpg" alt="" />
+                                    <Image src="http://i.imgur.com/Qr71crq.jpg" alt="" width={32} height={32} />
                                 </a>
                                 <div className="info">
                                     <a href="/profile/eric-simons" className="author">
@@ -87,7 +87,7 @@ export default async function Profile({ params }: { params: { author: string } }
                         <div className="article-preview">
                             <div className="article-meta">
                                 <a href="/profile/albert-pai">
-                                    <Image src="http://i.imgur.com/N4VcUeJ.jpg" alt="" />
+                                    <Image src="http://i.imgur.com/N4VcUeJ.jpg" alt="" width={32} height={32} />
                                 </a>
                                 <div className="info">
                                     <a href="/profile/albert-pai" className="author">
@@ -124,7 +124,7 @@ export default async function Profile({ params }: { params: { author: string } }
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -15,7 +15,7 @@ function ArticleItem({ article }: { article: Article }) {
         <article className="article-preview">
             <div className="article-meta">
                 <a href={profileLink}>
-                    <Image src={image} alt="" />
+                    <Image src={image} alt="" width={32} height={32} />
                 </a>
                 <div className="info">
                     <a href={profileLink} className="author">
