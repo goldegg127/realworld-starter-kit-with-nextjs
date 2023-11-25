@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { fetchComments } from '@/api';
 import { formatDate, formatProfileLink } from '@/util/format';
 
@@ -35,7 +36,7 @@ export default async function CommentsList({ slug }: { slug: string }) {
                             </div>
                             <div className="card-footer">
                                 <a href="/profile/author" className="comment-author">
-                                    <img src={image} alt="" className="comment-author-img" />
+                                    <Image src={image} alt="" className="comment-author-img" />
                                 </a>{' '}
                                 <a href={profileLink} className="comment-author">
                                     {username}

@@ -1,5 +1,6 @@
 // MVP 범위 밖
 
+import Image from 'next/image';
 import { fetchProfile } from '@/api';
 
 type Profile = {
@@ -19,7 +20,7 @@ export default async function Profile({ params }: { params: { author: string } }
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-12 col-md-10 offset-md-1">
-                            <img src={image} alt="" className="user-img" />
+                            <Image src={image} alt="" className="user-img" />
                             <h4>{username}</h4>
                             <p>{bio}</p>
                             {/**
@@ -60,7 +61,7 @@ export default async function Profile({ params }: { params: { author: string } }
                         <div className="article-preview">
                             <div className="article-meta">
                                 <a href="/profile/eric-simons">
-                                    <img src="http://i.imgur.com/Qr71crq.jpg" />
+                                    <Image src="http://i.imgur.com/Qr71crq.jpg" alt="" />
                                 </a>
                                 <div className="info">
                                     <a href="/profile/eric-simons" className="author">
@@ -86,7 +87,7 @@ export default async function Profile({ params }: { params: { author: string } }
                         <div className="article-preview">
                             <div className="article-meta">
                                 <a href="/profile/albert-pai">
-                                    <img src="http://i.imgur.com/N4VcUeJ.jpg" />
+                                    <Image src="http://i.imgur.com/N4VcUeJ.jpg" alt="" />
                                 </a>
                                 <div className="info">
                                     <a href="/profile/albert-pai" className="author">

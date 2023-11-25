@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Articles, Article } from '@/type/index';
 import { formatDate, formatProfileLink } from '@/util/format';
 
@@ -14,7 +15,7 @@ function ArticleItem({ article }: { article: Article }) {
         <article className="article-preview">
             <div className="article-meta">
                 <a href={profileLink}>
-                    <img src={image} alt="" />
+                    <Image src={image} alt="" />
                 </a>
                 <div className="info">
                     <a href={profileLink} className="author">

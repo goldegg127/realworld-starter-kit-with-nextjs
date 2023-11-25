@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Article } from '@/type/index';
 import CommentsList from '@/components/article/CommentsList';
 import CommentEditor from '@/components/article/CommentEditor';
@@ -31,7 +32,7 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
 
                     <div className="article-meta">
                         <a href={profileLink}>
-                            <img src={image} alt="" />
+                            <Image src={image} alt="" />
                         </a>
                         <div className="info">
                             <a href={profileLink} className="author">
@@ -84,7 +85,7 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
                 <div className="article-actions">
                     <div className="article-meta">
                         <a href={profileLink}>
-                            <img src={image} alt="" />
+                            <Image src={image} alt="" />
                         </a>
                         <div className="info">
                             <a href="" className="author">
