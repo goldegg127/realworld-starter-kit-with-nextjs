@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { fetchComments } from '@/api';
 import { formatDate, formatProfileLink } from '@/util/format';
@@ -35,12 +36,12 @@ export default async function CommentsList({ slug }: { slug: string }) {
                                 <p className="card-text">{body}</p>
                             </div>
                             <div className="card-footer">
-                                <a href="/profile/author" className="comment-author">
+                                <Link href="/profile/author" className="comment-author">
                                     <Image src={image} alt="" className="comment-author-img" width={32} height={32} />
-                                </a>{' '}
-                                <a href={profileLink} className="comment-author">
+                                </Link>{' '}
+                                <Link href={profileLink} className="comment-author">
                                     {username}
-                                </a>
+                                </Link>
                                 <span className="date-posted">{date}</span>
                                 {/**
                                   * @todo 로그인 기능 구현 후 적용 

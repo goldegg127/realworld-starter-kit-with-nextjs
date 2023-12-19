@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { Articles, Article } from '@/type/index';
 import { formatDate, formatProfileLink } from '@/util/format';
@@ -14,13 +15,13 @@ function ArticleItem({ article }: { article: Article }) {
     return (
         <article className="article-preview">
             <div className="article-meta">
-                <a href={profileLink}>
+                <Link href={profileLink}>
                     <Image src={image} alt="" width={32} height={32} />
-                </a>
+                </Link>
                 <div className="info">
-                    <a href={profileLink} className="author">
+                    <Link href={profileLink} className="author">
                         {username}
-                    </a>
+                    </Link>
                     <span className="date">{date}</span>
                 </div>
                 {/** 
@@ -32,18 +33,18 @@ function ArticleItem({ article }: { article: Article }) {
             </div>
             <div className="preview-link">
                 <h3>
-                    <a href={articleLink}>{title}</a>
+                    <Link href={articleLink}>{title}</Link>
                 </h3>
                 <p className="hidden-text-target">
-                    <a href={articleLink}>{description}</a>
+                    <Link href={articleLink}>{description}</Link>
                 </p>
-                <a href={articleLink}>Read more...</a>
+                <Link href={articleLink}>Read more...</Link>
                 <ul className="tag-list">
                     {tagList.map((tag, index) => (
                         <li key={`${slug}-${tag}-${index}`}>
-                            <a href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
+                            <Link href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
                                 {tag}
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>

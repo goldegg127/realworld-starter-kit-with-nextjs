@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 const getPageNums = (articlesCount: number): number[] => {
     const totalPageNum = Math.ceil(articlesCount / 10);
     const pageNums = [];
@@ -17,9 +19,9 @@ export default function Pagination({ currentPage, articlesCount }: { currentPage
             {getPageNums(articlesCount).map((pageNum, index) => {
                 return (
                     <li key={`page-${pageNum}-${index}`} className={`page-item ${pageNum === currentPage && 'active'}`}>
-                        <a className="page-link" href={`?page=${pageNum}`}>
+                        <Link className="page-link" href={`?page=${pageNum}`}>
                             {pageNum}
-                        </a>
+                        </Link>
                     </li>
                 );
             })}
