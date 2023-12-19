@@ -1,5 +1,7 @@
 // MVP 범위 밖
 
+import Link from 'next/link';
+import Image from 'next/image';
 import { fetchProfile } from '@/api';
 
 type Profile = {
@@ -19,7 +21,7 @@ export default async function Profile({ params }: { params: { author: string } }
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-12 col-md-10 offset-md-1">
-                            <img src={image} alt="" className="user-img" />
+                            <Image src={image} alt="" className="user-img" width={32} height={32} />
                             <h4>{username}</h4>
                             <p>{bio}</p>
                             {/**
@@ -39,40 +41,40 @@ export default async function Profile({ params }: { params: { author: string } }
             </div>
 
             {/** @todo 하드코딩 데이터 페치 적용 예정 **/}
-            <div className="container">
+            {/* <div className="container">
                 <div className="row">
                     <div className="col-xs-12 col-md-10 offset-md-1">
                         <div className="articles-toggle">
                             <ul className="nav nav-pills outline-active">
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="">
+                                    <Link className="nav-link active" href="">
                                         My Articles
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="">
+                                    <Link className="nav-link" href="">
                                         Favorited Articles
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="article-preview">
                             <div className="article-meta">
-                                <a href="/profile/eric-simons">
-                                    <img src="http://i.imgur.com/Qr71crq.jpg" />
-                                </a>
+                                <Link href="/profile/eric-simons">
+                                    <Image src="http://i.imgur.com/Qr71crq.jpg" alt="" width={32} height={32} />
+                                </Link>
                                 <div className="info">
-                                    <a href="/profile/eric-simons" className="author">
+                                    <Link href="/profile/eric-simons" className="author">
                                         Eric Simons
-                                    </a>
+                                    </Link>
                                     <span className="date">January 20th</span>
                                 </div>
                                 <button className="btn btn-outline-primary btn-sm pull-xs-right">
                                     <i className="ion-heart"></i> 29
                                 </button>
                             </div>
-                            <a href="/article/how-to-buil-webapps-that-scale" className="preview-link">
+                            <Link href="/article/how-to-buil-webapps-that-scale" className="preview-link">
                                 <h1>How to build webapps that scale</h1>
                                 <p>This is the description for the post.</p>
                                 <span>Read more...</span>
@@ -80,25 +82,25 @@ export default async function Profile({ params }: { params: { author: string } }
                                     <li className="tag-default tag-pill tag-outline">realworld</li>
                                     <li className="tag-default tag-pill tag-outline">implementations</li>
                                 </ul>
-                            </a>
+                            </Link>
                         </div>
 
                         <div className="article-preview">
                             <div className="article-meta">
-                                <a href="/profile/albert-pai">
-                                    <img src="http://i.imgur.com/N4VcUeJ.jpg" />
-                                </a>
+                                <Link href="/profile/albert-pai">
+                                    <Image src="http://i.imgur.com/N4VcUeJ.jpg" alt="" width={32} height={32} />
+                                </Link>
                                 <div className="info">
-                                    <a href="/profile/albert-pai" className="author">
+                                    <Link href="/profile/albert-pai" className="author">
                                         Albert Pai
-                                    </a>
+                                    </Link>
                                     <span className="date">January 20th</span>
                                 </div>
                                 <button className="btn btn-outline-primary btn-sm pull-xs-right">
                                     <i className="ion-heart"></i> 32
                                 </button>
                             </div>
-                            <a href="/article/the-song-you" className="preview-link">
+                            <Link href="/article/the-song-you" className="preview-link">
                                 <h1>The song you won&apos;t ever stop singing. No matter how hard you try.</h1>
                                 <p>This is the description for the post.</p>
                                 <span>Read more...</span>
@@ -106,24 +108,24 @@ export default async function Profile({ params }: { params: { author: string } }
                                     <li className="tag-default tag-pill tag-outline">Music</li>
                                     <li className="tag-default tag-pill tag-outline">Song</li>
                                 </ul>
-                            </a>
+                            </Link>
                         </div>
 
                         <ul className="pagination">
                             <li className="page-item active">
-                                <a className="page-link" href="">
+                                <Link className="page-link" href="">
                                     1
-                                </a>
+                                </Link>
                             </li>
                             <li className="page-item">
-                                <a className="page-link" href="">
+                                <Link className="page-link" href="">
                                     2
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

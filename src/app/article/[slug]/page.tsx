@@ -1,6 +1,8 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import { Article } from '@/type/index';
-import CommentsList from '@/components/article/CommentsList';
-import CommentEditor from '@/components/article/CommentEditor';
+// import CommentsList from '@/components/article/CommentsList';
+// import CommentEditor from '@/components/article/CommentEditor';
 import { formatDate, formatProfileLink } from '@/util/format';
 import { fetchDetails } from '@/api';
 
@@ -30,13 +32,13 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
                     <h1>{title}</h1>
 
                     <div className="article-meta">
-                        <a href={profileLink}>
-                            <img src={image} alt="" />
-                        </a>
+                        <Link href={profileLink}>
+                            <Image src={image} alt="" width={32} height={32} />
+                        </Link>
                         <div className="info">
-                            <a href={profileLink} className="author">
+                            <Link href={profileLink} className="author">
                                 {username}
-                            </a>
+                            </Link>
                             <span className="date">{date}</span>
                         </div>
                         {/**
@@ -70,9 +72,9 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
                         <ul className="tag-list">
                             {tagList.map((tag, index) => (
                                 <li key={`tag-${tag}-${index}`}>
-                                    <a href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
+                                    <Link href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
                                         {tag}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -83,13 +85,13 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
 
                 <div className="article-actions">
                     <div className="article-meta">
-                        <a href={profileLink}>
-                            <img src={image} alt="" />
-                        </a>
+                        <Link href={profileLink}>
+                            <Image src={image} alt="" width={32} height={32} />
+                        </Link>
                         <div className="info">
-                            <a href="" className="author">
+                            <Link href="" className="author">
                                 {username}
-                            </a>
+                            </Link>
                             <span className="date">{date}</span>
                         </div>
 
@@ -115,8 +117,8 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
 
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
-                        <CommentEditor />
-                        <CommentsList slug={slug} />
+                        {/* <CommentEditor />
+                        <CommentsList slug={slug} /> */}
                     </div>
                 </div>
             </div>

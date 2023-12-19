@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { fetchArticles } from '@/api';
 import { Articles } from '@/type/index';
 import ArticleFeeds from './ArticleFeeds';
@@ -19,13 +20,13 @@ export default async function List() {
                     {/** 
                       * @todo 로그인 기능 구현 후 적용
                       <li className="nav-item">
-                          <a className="nav-link" href="">Your Feed</a>
+                          <Link className="nav-link" href="">Your Feed</Link>
                       </li> 
                     */}
                     <li className="nav-item">
-                        <a className="nav-link active" href="">
+                        <Link className="nav-link active" href="">
                             Global Feed
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>
