@@ -1,9 +1,34 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
+import { fetchArticles } from '@/api';
 import { Articles, Article } from '@/type/index';
 import { formatDate, formatProfileLink } from '@/util/format';
+import Pagination from './Pagination';
+
+export default function ArticleItems({
+    articles,
+    articlesCount,
+    currentPage,
+}: {
+    articles: Articles;
+    articlesCount: number;
+    currentPage: number;
+}) {
+    return (
+        <>
+            <ul>
+                {articles.map(article => {
+                    return (
+                        <li key={article.slug}>
+                            <ArticleItem article={article} />
+                        </li>
+                    );
+                })}
+            </ul>
+            <Pagination currentPage={currentPage} articlesCount={articlesCount} />
+        </>
+    );
+}
 
 function ArticleItem({ article }: { article: Article }) {
     const { slug, title, description, tagList, createdAt, favorited, favoritesCount, author } = article;
@@ -50,19 +75,5 @@ function ArticleItem({ article }: { article: Article }) {
                 </ul>
             </div>
         </article>
-    );
-}
-
-export default function ArticleItems({ articles }: { articles: Articles }) {
-    return (
-        <ul>
-            {articles.map(article => {
-                return (
-                    <li key={article.slug}>
-                        <ArticleItem article={article} />
-                    </li>
-                );
-            })}
-        </ul>
     );
 }

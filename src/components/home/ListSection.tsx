@@ -1,17 +1,27 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { fetchArticles } from '@/api';
-import { Articles } from '@/type/index';
-import ArticleFeeds from './ArticleFeeds';
+import { Articles, Article } from '@/type/index';
+import ArticleItems from './ArticleItems';
+import Loading from '@/app/loading';
 
-export default async function List() {
-    const data = await fetchArticles({});
+const resource = (currentPage: number) =>
+    fetchArticles({
+        offset: (currentPage - 1) * 10,
+        limit: 10,
+    });
+
+export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+    const currentPage = parseInt(searchParams?.page ?? '1', 10);
+
     const {
         articles,
         articlesCount,
     }: {
         articles: Articles;
         articlesCount: number;
-    } = data;
+    } = resource(currentPage).read();
 
     return (
         <>
@@ -30,7 +40,11 @@ export default async function List() {
                     </li>
                 </ul>
             </nav>
-            <ArticleFeeds articles={articles} articlesCount={articlesCount} />
+            <ErrorBoundary fallback={<p>Something went wrong</p>}>
+                <Suspense fallback={<Loading />}>
+                    <ArticleItems articles={articles} articlesCount={articlesCount} currentPage={currentPage} />
+                </Suspense>
+            </ErrorBoundary>
         </>
     );
 }
