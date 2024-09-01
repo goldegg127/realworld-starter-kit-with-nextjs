@@ -6,14 +6,12 @@ import { Articles, Article } from '@/type/index';
 import ArticleItems from './ArticleItems';
 import Loading from '@/app/loading';
 
-const resource = (currentPage: number) =>
-    fetchArticles({
+export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+    const currentPage = parseInt(searchParams?.page ?? '1', 10);
+    const data = await fetchArticles({
         offset: (currentPage - 1) * 10,
         limit: 10,
     });
-
-export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
-    const currentPage = parseInt(searchParams?.page ?? '1', 10);
 
     const {
         articles,
@@ -21,7 +19,7 @@ export default async function ArticleList({ searchParams }: { searchParams?: { [
     }: {
         articles: Articles;
         articlesCount: number;
-    } = resource(currentPage).read();
+    } = data;
 
     return (
         <>
