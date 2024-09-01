@@ -1,5 +1,4 @@
 import API from '@/config';
-import fetchData from './fetchData';
 
 export async function fetchArticles({ offset = 0, limit = 10 }: { offset?: number; limit?: number }) {
     const res = await fetch(`${API.ARTICLES}?offset=${offset}&limit=${limit}`);
