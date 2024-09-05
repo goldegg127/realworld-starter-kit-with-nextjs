@@ -8,9 +8,11 @@ import Loading from '@/app/loading';
 
 export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
+    const tag = searchParams?.tag ?? '';
+
     const data = await fetchArticles({
         offset: (currentPage - 1) * 10,
-        limit: 10,
+        tag: tag,
     });
 
     const {
@@ -36,11 +38,23 @@ export default async function ArticleList({ searchParams }: { searchParams?: { [
                             Global Feed
                         </Link>
                     </li>
+                    {!!tag && (
+                        <li className="nav-item">
+                            <Link className="nav-link active" href="">
+                                {tag}
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </nav>
             <ErrorBoundary fallback={<p>Something went wrong</p>}>
                 <Suspense fallback={<Loading />}>
-                    <ArticleItems articles={articles} articlesCount={articlesCount} currentPage={currentPage} />
+                    <ArticleItems
+                        articles={articles}
+                        articlesCount={articlesCount}
+                        currentPage={currentPage}
+                        searchParams={searchParams}
+                    />
                 </Suspense>
             </ErrorBoundary>
         </>

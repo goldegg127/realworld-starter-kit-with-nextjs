@@ -9,10 +9,12 @@ export default function ArticleItems({
     articles,
     articlesCount,
     currentPage,
+    searchParams,
 }: {
     articles: Articles;
     articlesCount: number;
     currentPage: number;
+    searchParams?: { [key: string]: string | undefined };
 }) {
     return (
         <>
@@ -25,7 +27,7 @@ export default function ArticleItems({
                     );
                 })}
             </ul>
-            <Pagination currentPage={currentPage} articlesCount={articlesCount} />
+            <Pagination currentPage={currentPage} articlesCount={articlesCount} searchParams={searchParams} />
         </>
     );
 }
