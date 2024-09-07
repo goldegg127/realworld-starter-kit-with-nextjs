@@ -1,10 +1,20 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { fetchArticles } from '@/api';
-import { Articles } from '@/type/index';
-import ArticleFeeds from './ArticleFeeds';
+import { Articles, Article } from '@/type/index';
+import ArticleItems from './ArticleItems';
+import Loading from '@/app/loading';
 
-export default async function List() {
-    const data = await fetchArticles({});
+export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+    const currentPage = parseInt(searchParams?.page ?? '1', 10);
+    const tag = searchParams?.tag ?? '';
+
+    const data = await fetchArticles({
+        offset: (currentPage - 1) * 10,
+        tag: tag,
+    });
+
     const {
         articles,
         articlesCount,
@@ -28,9 +38,25 @@ export default async function List() {
                             Global Feed
                         </Link>
                     </li>
+                    {!!tag && (
+                        <li className="nav-item">
+                            <Link className="nav-link active" href="">
+                                {tag}
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </nav>
-            <ArticleFeeds articles={articles} articlesCount={articlesCount} />
+            <ErrorBoundary fallback={<p>Something went wrong</p>}>
+                <Suspense fallback={<Loading />}>
+                    <ArticleItems
+                        articles={articles}
+                        articlesCount={articlesCount}
+                        currentPage={currentPage}
+                        searchParams={searchParams}
+                    />
+                </Suspense>
+            </ErrorBoundary>
         </>
     );
 }

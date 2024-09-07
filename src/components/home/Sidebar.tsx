@@ -12,7 +12,7 @@ export default async function Sidebar() {
             <ul className="tag-list">
                 {tags.map((tag, index) => (
                     <li key={`tag-${tag}-${index}`}>
-                        <Link href={`/?tag=${tag}`} className="tag-pill tag-default">
+                        <Link href={`?tag=${tag}`} className="tag-pill tag-default">
                             {tag}
                         </Link>
                     </li>
