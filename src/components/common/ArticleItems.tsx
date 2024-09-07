@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchArticles } from '@/api';
-import { Articles, Article } from '@/type/index';
+import { Articles, Article } from '@/type';
 import { formatDate, formatProfileLink } from '@/util/format';
 import Pagination from './Pagination';
 

@@ -1,14 +1,8 @@
 import Banner from '@/components/home/Banner';
-import ArticleList from '@/components/home/ListSection';
+import ArticleList from '@/components/home/MainAriticleList';
 import Sidebar from '@/components/home/Sidebar';
 
-export default function Home({
-    params,
-    searchParams,
-}: {
-    params?: { slug: string };
-    searchParams?: { [key: string]: string | undefined };
-}) {
+export default function Home({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
     return (
         <main className="home-page">
             <Banner />

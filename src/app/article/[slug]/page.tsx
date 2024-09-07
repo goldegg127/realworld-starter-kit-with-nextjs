@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Article } from '@/type/index';
+import { Article } from '@/type';
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
 import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
 import { formatDate, formatProfileLink } from '@/util/format';
