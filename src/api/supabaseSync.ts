@@ -28,9 +28,13 @@ export async function syncArticlesWithSupabase({
         while (hasMoreArticles) {
             const { articles, articlesCount } = await fetchArticles({ offset, limit, tag });
 
-            console.log('syncArticlesWithSupabase offset: ', offset);
-            console.log('syncArticlesWithSupabase limit: ', limit);
-            console.log('syncArticlesWithSupabase tag: ', tag);
+            if (process.env.NODE_ENV !== 'production') {
+                console.log('syncArticlesWithSupabase articles.length: ', articles.length);
+                console.log('syncArticlesWithSupabase articlesCount: ', articlesCount);
+                console.log('syncArticlesWithSupabase offset: ', offset);
+                console.log('syncArticlesWithSupabase limit: ', limit);
+                console.log('syncArticlesWithSupabase tag: ', tag);
+            }
 
             for (const article of articles) {
                 const {
@@ -55,7 +59,7 @@ export async function syncArticlesWithSupabase({
 
                 // 중복된 경우 건너뛰기
                 if (existingArticle) {
-                    console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+                    // console.log(`Article with slug ${slug} already exists, skipping insertion.`);
                     continue; // 이미 존재하는 경우 다음 루프로 이동
                 }
 
@@ -100,7 +104,10 @@ export async function syncArticlesWithSupabase({
                     }
 
                     authorId = insertedAuthor?.id;
-                    console.log('Inserted author:', insertedAuthor);
+
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.log('Inserted author:', insertedAuthor);
+                    }
                 }
 
                 if (!existingArticle) {
@@ -121,7 +128,9 @@ export async function syncArticlesWithSupabase({
                     if (articleInsertError) {
                         console.error('Article insertion failed:', articleInsertError);
                     } else {
-                        console.log('Article inserted successfully:', slug);
+                        if (process.env.NODE_ENV !== 'production') {
+                            console.log('Article inserted successfully slug:');
+                        }
                     }
                 } else {
                     console.log(`Article with slug ${slug} already exists, skipping insertion.`);
@@ -132,22 +141,12 @@ export async function syncArticlesWithSupabase({
             offset += limit;
             hasMoreArticles = offset < articlesCount;
         }
-
-        console.log('Articles synchronized successfully!');
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Articles synchronized successfully!');
+        }
     } catch (error) {
         console.error('Error synchronizing articles:', error);
     }
-}
-
-// Supabase에서 articles 테이블의 총 row 수를 계산해서 articlesCount를 반환
-export async function getArticlesCountFromSupabase() {
-    const { count, error } = await supabase.from('articles').select('*', { count: 'exact', head: true });
-
-    if (error) {
-        throw new Error(`Failed to fetch articles count: ${error.message}`);
-    }
-
-    return count;
 }
 
 // Supabase에서 articles 데이터를 가져와 페이징 처리 및 태그 필터링
@@ -162,7 +161,7 @@ export async function fetchArticlesFromSupabase({
 }) {
     let query = supabase
         .from('articles')
-        .select('*, author(*)') // author 테이블과의 관계도 조회
+        .select('*, author(*)', { count: 'exact' }) // author 테이블과의 관계도 조회
         .range(offset, offset + limit - 1); // 페이지네이션 처리
 
     if (tag) {
@@ -175,8 +174,9 @@ export async function fetchArticlesFromSupabase({
         throw new Error(`Failed to fetch articles from Supabase: ${error.message}`);
     }
 
-    console.log('Fetched articles from Supabase:', data); // 콘솔에 데이터 확인 추가
-    console.log('Articles count:', count); // 콘솔에 articlesCount 확인 추가
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('fetchArticlesFromSupabase 함수 Articles count:', count);
+    }
 
     // articles와 articlesCount 반환
     return {
