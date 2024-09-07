@@ -7,11 +7,11 @@ export async function fetchArticles({
 }: {
     offset?: number;
     limit?: number;
-    tag: string;
+    tag?: string;
 }) {
     const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}`;
     const res = await fetch(url, {
-        cache: 'no-store',
+        cache: 'force-cache',
     });
 
     if (!res.ok) {
@@ -19,13 +19,7 @@ export async function fetchArticles({
         throw new Error(`Failed to fetch Articles data: ${res.status} ${res.statusText}`);
     }
 
-    const result = await res.json();
-
-    console.log('========================================= Fetched Articles:', result);
-    console.log('========================================= Fetched Articles offset:', offset);
-    console.log('========================================= Fetched Articles tag:', tag);
-
-    return result;
+    return res.json();
 }
 
 export async function fetchDetails(slug: string) {
