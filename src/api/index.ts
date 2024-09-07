@@ -11,7 +11,7 @@ export async function fetchArticles({
 }) {
     const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}`;
     const res = await fetch(url, {
-        cache: 'no-store',
+        cache: 'force-cache',
     });
 
     if (!res.ok) {
