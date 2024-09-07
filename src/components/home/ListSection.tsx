@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabaseSync';
 import { fetchArticles } from '@/api';
-import { Articles, Article } from '@/type/index';
+import { Articles } from '@/type/index';
 import ArticleItems from './ArticleItems';
 import Loading from '@/app/loading';
 
@@ -10,7 +11,10 @@ export default async function ArticleList({ searchParams }: { searchParams?: { [
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
     const tag = searchParams?.tag ?? '';
 
-    const data = await fetchArticles({
+    // 서버에서 Supabase와 동기화
+    await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, limit: 10, tag });
+
+    const data = await fetchArticlesFromSupabase({
         offset: (currentPage - 1) * 10,
         tag: tag,
     });
@@ -34,15 +38,13 @@ export default async function ArticleList({ searchParams }: { searchParams?: { [
                       </li> 
                     */}
                     <li className="nav-item">
-                        <Link className="nav-link active" href="">
+                        <Link className={`nav-link${!tag ? ' active' : ''}`} href="/">
                             Global Feed
                         </Link>
                     </li>
                     {!!tag && (
                         <li className="nav-item">
-                            <Link className="nav-link active" href="">
-                                {tag}
-                            </Link>
+                            <a className="nav-link active">{tag}</a>
                         </li>
                     )}
                 </ul>
