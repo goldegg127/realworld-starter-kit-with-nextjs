@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabaseSync';
-import { fetchArticles } from '@/api';
+import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/syncArticles';
 import { Articles } from '@/type/index';
 import ArticleItems from './ArticleItems';
 import Loading from '@/app/loading';
