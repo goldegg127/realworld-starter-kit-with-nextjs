@@ -1,16 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/services/supabaseClient';
 import { fetchArticles } from '@/api';
-
-if (!process.env.SUPABASE_URL) {
-    throw new Error('SUPABASE_URL is not defined');
-}
-
-if (!process.env.SUPABASE_KEY) {
-    throw new Error('SUPABASE_KEY is not defined');
-}
-
-// Supabase 클라이언트 초기화
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
 
 // Supabase와 동기화하는 함수 : RealWorld API에서 데이터를 가져와 Supabase에 저장하고, 이미 존재하는 데이터는 중복 삽입을 방지
 export async function syncArticlesWithSupabase({
