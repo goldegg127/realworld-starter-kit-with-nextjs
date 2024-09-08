@@ -2,7 +2,7 @@ import { supabase } from '@/services/supabaseClient';
 import { fetchArticles } from '@/api';
 
 // Supabase와 동기화하는 함수 : RealWorld API에서 데이터를 가져와 Supabase에 저장하고, 이미 존재하는 데이터는 중복 삽입을 방지
-export async function syncArticlesWithSupabase({
+async function syncArticlesWithSupabase({
     offset = 0,
     limit = 10,
     tag = '',
@@ -122,7 +122,7 @@ export async function syncArticlesWithSupabase({
 }
 
 // Supabase에서 articles 데이터를 가져와 페이징 처리 및 태그 필터링
-export async function fetchArticlesFromSupabase({
+async function fetchArticlesFromSupabase({
     offset = 0,
     limit = 10,
     tag = '',
@@ -156,3 +156,5 @@ export async function fetchArticlesFromSupabase({
         articlesCount: count || 0,
     };
 }
+
+export { syncArticlesWithSupabase, fetchArticlesFromSupabase };
