@@ -29,7 +29,7 @@ async function syncArticlesWithSupabase({
             // Supabase에 중복된 기사 확인
             const { data: existingArticle, error: existingArticleError } = await supabase
                 .from('articles')
-                .select('id')
+                .select('slug') // select에서 선택한 컬럼만 eq 값으로 가져올 수 있다
                 .eq('slug', slug)
                 .maybeSingle(); // maybeSingle 사용하여 중복된 기사 확인
 
