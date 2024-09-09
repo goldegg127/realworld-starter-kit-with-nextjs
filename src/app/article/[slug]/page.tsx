@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/type/index';
+import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
+import { formatDate, formatProfileLink } from '@/util/format';
 // import CommentsList from '@/components/article/CommentsList';
 // import CommentEditor from '@/components/article/CommentEditor';
-import { formatDate, formatProfileLink } from '@/util/format';
-import { fetchDetails } from '@/api';
 
 export default async function ArticleDetails({ params }: { params: { slug: string } }) {
-    const data = await fetchDetails(params.slug);
+    await syncDetailsWithSupabase(params.slug);
+
+    const data = await fetchDetailsFromSupabase(params.slug);
 
     const {
         slug,

@@ -1,4 +1,5 @@
 export type Articles = Article[];
+
 export type Article = {
     slug: string;
     title: string;
@@ -9,10 +10,12 @@ export type Article = {
     updatedAt: string;
     favorited: boolean;
     favoritesCount: number;
-    author: {
-        username: string;
-        bio?: string;
-        image: string;
-        following: boolean;
-    };
+    author: Author;
+};
+
+export type Author = {
+    username: string;
+    bio?: string;
+    image: string;
+    following: boolean;
 };
