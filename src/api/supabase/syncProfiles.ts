@@ -19,12 +19,12 @@ async function syncProfilesWithSupabase(userName: string) {
 
         const { data: existingProfile, error: profileError } = await supabase
             .from('profile')
-            .select('*')
+            .select('id, username')
             .eq('username', decodedUser)
             .maybeSingle();
 
         if (existingProfile) {
-            console.log(`Article with username ${userName} already exists, skipping insertion.`);
+            console.log(`Profile with username ${decodedUser} already exists, skipping insertion.`);
             return;
         }
 
@@ -70,7 +70,7 @@ async function syncProfilesWithSupabase(userName: string) {
     }
 }
 
-async function fetchProfilesFromSupabase(userName: string) {
+async function fetchProfilesFromSupabase(userName: string): Promise<{ profile: Profile }> {
     const decodedUser = decodeURIComponent(userName); // URL 인코딩된 username을 디코딩
 
     const { data: profileData, error } = await supabase
