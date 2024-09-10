@@ -42,7 +42,7 @@ export async function fetchComments(slug: string) {
     return res.json();
 }
 
-export async function fetchProfile(username: string) {
+export async function fetchProfiles(username: string) {
     const res = await fetch(`${API.PROFILES}/${username}`);
 
     if (!res.ok) {

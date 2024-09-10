@@ -19,3 +19,10 @@ export type Author = {
     image: string;
     following: boolean;
 };
+
+export type Profile = {
+    username: string;
+    bio: string;
+    image: string;
+    following: boolean;
+};
