@@ -1,19 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/services/supabaseClient';
 import { fetchArticles } from '@/api';
 
-if (!process.env.SUPABASE_URL) {
-    throw new Error('SUPABASE_URL is not defined');
-}
-
-if (!process.env.SUPABASE_KEY) {
-    throw new Error('SUPABASE_KEY is not defined');
-}
-
-// Supabase 클라이언트 초기화
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
-
 // Supabase와 동기화하는 함수 : RealWorld API에서 데이터를 가져와 Supabase에 저장하고, 이미 존재하는 데이터는 중복 삽입을 방지
-export async function syncArticlesWithSupabase({
+async function syncArticlesWithSupabase({
     offset = 0,
     limit = 10,
     tag = '',
@@ -23,46 +12,40 @@ export async function syncArticlesWithSupabase({
     tag?: string;
 }) {
     try {
+        // 1. Real World API fetch
         const { articles, articlesCount } = await fetchArticles({ offset, limit, tag });
-
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('syncArticlesWithSupabase articles.length: ', articles.length);
-            console.log('syncArticlesWithSupabase articlesCount: ', articlesCount);
-            console.log('syncArticlesWithSupabase offset: ', offset);
-            console.log('syncArticlesWithSupabase limit: ', limit);
-            console.log('syncArticlesWithSupabase tag: ', tag);
-        }
 
         for (const article of articles) {
             const { title, description, body, tagList, createdAt, updatedAt, slug, favorited, favoritesCount, author } =
                 article;
 
-            // Supabase에 중복된 기사 확인
-            const { data: existingArticle, error: existingArticleError } = await supabase
+            // 2. Supabase 테이블에서 데이터 확인
+            const { data: existingArticle, error: articleError } = await supabase
                 .from('articles')
-                .select('id')
+                .select('id, slug') // select에서 선택한 컬럼만 eq 값으로 가져올 수 있다
                 .eq('slug', slug)
-                .maybeSingle(); // maybeSingle 사용하여 중복된 기사 확인
+                .maybeSingle();
 
-            // 중복된 경우 건너뛰기
             if (existingArticle) {
-                // console.log(`Article with slug ${slug} already exists, skipping insertion.`);
-                continue; // 이미 존재하는 경우 다음 루프로 이동
-            }
-
-            if (existingArticleError) {
-                console.error('Error fetching existing article:', existingArticleError);
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+                }
                 continue;
             }
 
-            // Author가 Supabase에 있는지 확인 후 삽입
-            const { data: existingAuthors, error: authorFetchError } = await supabase
+            if (articleError) {
+                console.error('Error fetching existing article from Supabase:', articleError);
+                continue;
+            }
+
+            // 3. Supabase의 author 테이블에서 데이터 확인
+            const { data: existingAuthors, error: authorError } = await supabase
                 .from('author')
                 .select('*')
                 .eq('username', author.username);
 
-            if (authorFetchError) {
-                console.error('Error fetching author:', authorFetchError);
+            if (authorError) {
+                console.error('Error fetching author:', authorError);
                 continue;
             }
 
@@ -71,7 +54,10 @@ export async function syncArticlesWithSupabase({
             // 저자가 이미 존재하는 경우 중복 삽입을 방지하기 위해 계속 진행
             if (existingAuthors && existingAuthors.length > 0) {
                 authorId = existingAuthors[0].id; // 첫 번째 저자의 ID 사용
-                console.log(`Author with username ${author.username} already exists.`);
+
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(`Author with username ${author.username} already exists.`);
+                }
             } else {
                 // 저자가 존재하지 않으면 새로운 저자를 삽입
                 const { data: insertedAuthor, error: authorInsertError } = await supabase
@@ -91,35 +77,28 @@ export async function syncArticlesWithSupabase({
                 }
 
                 authorId = insertedAuthor?.id;
-
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('Inserted author:', insertedAuthor);
-                }
             }
 
+            // 5. 중복 없을 시 articles 테이블에 데이터 삽입
             if (!existingArticle) {
-                // 새 기사 Articles 테이블에 데이터 삽입
                 const { error: articleInsertError } = await supabase.from('articles').insert({
+                    slug,
                     title,
                     description,
                     body,
-                    tagList,
+                    tag_list: tagList,
                     created_at: createdAt,
                     updated_at: updatedAt,
-                    slug,
                     favorited,
-                    favoritesCount,
+                    favorites_count: favoritesCount,
                     author_id: authorId, // Foreign Key로 연결
                 });
 
                 if (articleInsertError) {
                     console.error('Article insertion failed:', articleInsertError);
-                } else {
-                    if (process.env.NODE_ENV !== 'production') {
-                        console.log('Article inserted successfully slug:');
-                    }
+                    continue;
                 }
-            } else {
+            } else if (process.env.NODE_ENV !== 'production') {
                 console.log(`Article with slug ${slug} already exists, skipping insertion.`);
             }
         }
@@ -133,7 +112,7 @@ export async function syncArticlesWithSupabase({
 }
 
 // Supabase에서 articles 데이터를 가져와 페이징 처리 및 태그 필터링
-export async function fetchArticlesFromSupabase({
+async function fetchArticlesFromSupabase({
     offset = 0,
     limit = 10,
     tag = '',
@@ -148,7 +127,7 @@ export async function fetchArticlesFromSupabase({
         .range(offset, offset + limit - 1); // 페이지네이션 처리
 
     if (tag) {
-        query = query.contains('tagList', [tag]); // tagList에 해당 태그가 있는지 확인
+        query = query.contains('tag_list', [tag]); // tag_list에 해당 태그가 있는지 확인
     }
 
     const { data, error, count } = await query;
@@ -157,13 +136,23 @@ export async function fetchArticlesFromSupabase({
         throw new Error(`Failed to fetch articles from Supabase: ${error.message}`);
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-        console.log('fetchArticlesFromSupabase 함수 Articles count:', count);
-    }
+    const articles = data?.map(article => ({
+        slug: article.slug,
+        title: article.title,
+        description: article.description,
+        body: article.body,
+        tagList: article.tag_list,
+        createdAt: article.created_at,
+        updatedAt: article.updated_at,
+        favorited: article.favorited,
+        favoritesCount: article.favorites_count,
+        author: article.author,
+    }));
 
-    // articles와 articlesCount 반환
     return {
-        articles: data || [],
+        articles: articles || [],
         articlesCount: count || 0,
     };
 }
+
+export { syncArticlesWithSupabase, fetchArticlesFromSupabase };

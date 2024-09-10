@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/type/index';
+import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
+import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
+import { formatDate, formatProfileLink } from '@/util/format';
 // import CommentsList from '@/components/article/CommentsList';
 // import CommentEditor from '@/components/article/CommentEditor';
-import { formatDate, formatProfileLink } from '@/util/format';
-import { fetchDetails } from '@/api';
 
 export default async function ArticleDetails({ params }: { params: { slug: string } }) {
-    const data = await fetchDetails(params.slug);
+    await syncDetailsWithSupabase(params.slug);
 
+    const { article } = await fetchDetailsFromSupabase(params.slug);
     const {
         slug,
         title,
@@ -20,10 +22,14 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
         favorited,
         favoritesCount,
         author,
-    }: Article = data.article;
+    }: Article = article;
     const { username, bio, image, following } = author;
     const profileLink = formatProfileLink(username);
     const date = formatDate(createdAt);
+
+    await syncCommentsWithSupabase(params.slug);
+    const { comments } = await fetchCommentsFromSupabase(params.slug);
+    console.log('===================== Fetch comments data: ', comments);
 
     return (
         <div className="article-page">

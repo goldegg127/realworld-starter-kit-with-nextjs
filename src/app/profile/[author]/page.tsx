@@ -2,18 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchProfile } from '@/api';
+import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from '@/api/supabase';
+import { Profile } from '@/type';
 
-type Profile = {
-    username: string;
-    bio: string;
-    image: string;
-    following: boolean;
-};
+export default async function UserProfile({ params }: { params: { author: string } }) {
+    await syncProfilesWithSupabase(params.author);
 
-export default async function Profile({ params }: { params: { author: string } }) {
-    const data = await fetchProfile(params.author);
-    const { username, bio, image, following }: Profile = data.profile;
+    const { profile } = await fetchProfilesFromSupabase(params.author);
+    const { username, bio, image, following }: Profile = profile;
 
     return (
         <div className="profile-page">
