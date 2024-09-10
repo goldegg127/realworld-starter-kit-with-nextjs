@@ -8,17 +8,17 @@ async function syncTagListWithSupabase() {
         for (const tag of tags) {
             const { data: existingTag, error: tagError } = await supabase
                 .from('tags')
-                .select('id')
+                .select('id, tag')
                 .eq('tag', tag)
-                .single();
-
-            if (tagError) {
-                console.error('Error fetching tag:', tagError);
-                continue;
-            }
+                .maybeSingle();
 
             if (existingTag) {
                 console.log(`Tag ${tag} already exists, skipping insertion.`);
+                continue;
+            }
+
+            if (tagError) {
+                console.error('Error fetching existing tag from Supabase:', tagError);
                 continue;
             }
 
@@ -29,6 +29,7 @@ async function syncTagListWithSupabase() {
 
             if (error) {
                 console.error('Error insert tag: ', error);
+                continue;
             } else {
                 console.log(`Tag ${tag} inserted successfully.`);
             }
@@ -51,6 +52,7 @@ async function syncTagListWithSupabase() {
 
 async function fetchTagListFromSupabase() {
     const { data: tags, error } = await supabase.from('tags').select('"tag"');
+    // 쌍따옴표(대소문자 구분 목적)를 제거한 값 select('tag')을 넣으면 UI 화면에 중복된 tag가 노출된다
 
     if (error) {
         throw new Error(`Failed to fetch tags: ${error.message}`);

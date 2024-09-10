@@ -7,8 +7,6 @@ export default async function Sidebar() {
 
     const tags: Article['tagList'] = await fetchTagListFromSupabase();
 
-    console.log('Tags in Sidebar:', tags); // 데이터 확인
-
     return (
         <article className="sidebar">
             <p>Popular Tags</p>
