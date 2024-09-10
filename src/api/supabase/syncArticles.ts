@@ -140,6 +140,7 @@ async function fetchArticlesFromSupabase({
         slug: article.slug,
         title: article.title,
         description: article.description,
+        body: article.body,
         tagList: article.tag_list,
         createdAt: article.created_at,
         updatedAt: article.updated_at,
