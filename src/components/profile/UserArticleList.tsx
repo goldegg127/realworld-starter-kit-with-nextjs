@@ -14,13 +14,12 @@ export default async function UserArticleList({
     searchParams?: { [key: string]: string | undefined };
 }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
-    const tag = searchParams?.tag ?? '';
 
-    await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, limit: 10, tag });
+    await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, author });
 
     const data = await fetchArticlesFromSupabase({
         offset: (currentPage - 1) * 10,
-        tag: tag,
+        author: author,
     });
 
     const {

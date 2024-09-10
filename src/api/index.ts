@@ -4,12 +4,16 @@ export async function fetchArticles({
     offset = 0,
     limit = 10,
     tag = '',
+    author = '',
 }: {
     offset?: number;
     limit?: number;
     tag?: string;
+    author?: string;
 }) {
-    const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}`;
+    const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
+        author ? `&author=${author}` : ''
+    }`;
     const res = await fetch(url, {
         cache: 'force-cache',
     });

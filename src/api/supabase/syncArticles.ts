@@ -6,14 +6,16 @@ async function syncArticlesWithSupabase({
     offset = 0,
     limit = 10,
     tag = '',
+    author = '',
 }: {
     offset?: number;
     limit?: number;
     tag?: string;
+    author?: string;
 }) {
     try {
         // 1. Real World API fetch
-        const { articles, articlesCount } = await fetchArticles({ offset, limit, tag });
+        const { articles } = await fetchArticles({ offset, limit, tag, author });
 
         for (const article of articles) {
             const { title, description, body, tagList, createdAt, updatedAt, slug, favorited, favoritesCount, author } =
@@ -111,15 +113,17 @@ async function syncArticlesWithSupabase({
     }
 }
 
-// Supabase에서 articles 데이터를 가져와 페이징 처리 및 태그 필터링
+// Supabase에서 articles 데이터를 가져와 페이징 처리 및 tag 또는 author 필터링
 async function fetchArticlesFromSupabase({
     offset = 0,
     limit = 10,
     tag = '',
+    author = '',
 }: {
     offset?: number;
     limit?: number;
     tag?: string;
+    author?: string;
 }) {
     let query = supabase
         .from('articles')
@@ -127,10 +131,19 @@ async function fetchArticlesFromSupabase({
         .range(offset, offset + limit - 1); // 페이지네이션 처리
 
     if (tag) {
-        query = query.contains('tag_list', [tag]); // tag_list에 해당 태그가 있는지 확인
+        query = query.contains('tag_list', [tag]); // tag_list로 필터링
+    }
+
+    if (author) {
+        const decodedAuthor = decodeURIComponent(author); // URL 인코딩된 author 값을 디코딩
+        console.log('Filtering by author:', decodedAuthor);
+        query = query.eq('author.username', decodedAuthor); // author.username 으로 필터링
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ query: ', query);
     }
 
     const { data, error, count } = await query;
+
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! data: ', data);
 
     if (error) {
         throw new Error(`Failed to fetch articles from Supabase: ${error.message}`);
