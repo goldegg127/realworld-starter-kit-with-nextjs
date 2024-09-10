@@ -1,4 +1,12 @@
-export default function UserBanner() {
+import Image from 'next/image';
+import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from '@/api/supabase';
+
+export default async function UserBanner({ author }: { author: string }) {
+    await syncProfilesWithSupabase(author);
+
+    const { profile } = await fetchProfilesFromSupabase(author);
+    const { username, bio, image, following } = profile;
+
     return (
         <>
             <Image src={image} alt={`${username} profile image`} className="user-img" width={32} height={32} />

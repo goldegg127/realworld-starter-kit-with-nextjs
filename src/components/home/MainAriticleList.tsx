@@ -6,7 +6,11 @@ import { Articles } from '@/type';
 import Loading from '@/app/loading';
 import ArticleItems from '@/components/common/ArticleItems';
 
-export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+export default async function MainAriticleList({
+    searchParams,
+}: {
+    searchParams?: { [key: string]: string | undefined };
+}) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
     const tag = searchParams?.tag ?? '';
 
