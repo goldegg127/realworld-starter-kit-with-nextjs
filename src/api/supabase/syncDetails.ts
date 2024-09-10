@@ -4,21 +4,19 @@ import { Article, Author } from '@/type';
 
 async function syncDetailsWithSupabase(slug: string) {
     try {
-        console.log(`Fetching article details for slug: ${slug}`);
-
+        // 1. Real World API fetch
         const { article } = await fetchDetails(slug);
         console.log('Fetched article from API:', article);
 
         const { title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author } = article;
 
-        // Supabase에서 해당 슬러그로 기존 기사가 있는지 확인
+        // 2. Supabase 테이블에서 데이터 확인
         const { data: existingArticle, error: articleError } = await supabase
             .from('article_details')
-            .select('*')
+            .select('id, slug')
             .eq('slug', slug)
-            .maybeSingle(); // maybeSingle 사용하여 중복된 기사 확인
+            .maybeSingle();
 
-        // 중복된 경우 건너뛰기
         if (existingArticle) {
             console.log(`Article with slug ${slug} already exists, skipping insertion.`);
             return;
@@ -31,16 +29,16 @@ async function syncDetailsWithSupabase(slug: string) {
 
         console.log('No existing article found, proceeding to insert.');
 
-        // Author가 Supabase에 있는지 확인 후 삽입
+        // 2. Supabase의 author 테이블에서 데이터 확인
         const { data: existingAuthor, error: authorError } = await supabase
             .from('author')
-            .select('*')
+            .select('id, username')
             .eq('username', author.username)
             .maybeSingle(); // maybeSingle 사용하여 중복된 작가 확인
 
         let authorId = existingAuthor ? existingAuthor.id : null;
 
-        // Author가 없다면 새로 추가
+        // 3. 중복 없을 시 Supabase의 author 테이블 데이터 삽입
         if (!existingAuthor && !authorError) {
             const { data: insertedAuthor, error: authorInsertError } = await supabase
                 .from('author')
@@ -62,10 +60,8 @@ async function syncDetailsWithSupabase(slug: string) {
             console.log(`Author ${author.username} inserted successfully.`);
         }
 
+        // 4. 중복 없을 시 article_details 테이블에 데이터 삽입
         if (!existingArticle) {
-            // article_details 테이블에 데이터 삽입
-            console.log('Inserting new article into Supabase...');
-
             const { error: articleInsertError } = await supabase.from('article_details').insert({
                 slug,
                 title,
@@ -76,30 +72,32 @@ async function syncDetailsWithSupabase(slug: string) {
                 updated_at: updatedAt,
                 favorited,
                 favorites_count: favoritesCount,
-                author_id: authorId, // 기존 또는 새로 추가된 author ID 사용
+                author_id: authorId,
             });
 
             if (articleInsertError) {
                 console.error('Article insertion failed:', articleInsertError);
                 return;
-            } else {
+            } else if (process.env.NODE_ENV !== 'production') {
                 console.log(`Article ${slug} inserted successfully.`);
             }
         } else {
             console.log(`Article with slug ${slug} already exists, skipping insertion.`);
         }
 
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('Articles synchronized successfully!');
+        // 5. Supabase 테이블에 제대로 삽입되었는지 바로 확인
+        const { data: insertedDetails, error: fetchError } = await supabase.from('article_details').select('*');
+        if (fetchError) {
+            console.error('Error fetching Article Details after insert:', fetchError);
+        } else if (process.env.NODE_ENV !== 'production') {
+            console.log('Article Details synchronized successfully! : ', insertedDetails);
         }
     } catch (error) {
-        console.error('Error synchronizing article:', error);
+        console.error('Error synchronizing Article Details:', error);
     }
 }
 
 async function fetchDetailsFromSupabase(slug: string): Promise<{ article: Article }> {
-    console.log(`Fetching article from Supabase for slug: ${slug}`);
-
     const { data: articleData, error } = await supabase
         .from('article_details')
         .select(
@@ -109,47 +107,31 @@ async function fetchDetailsFromSupabase(slug: string): Promise<{ article: Articl
         `,
         )
         .eq('slug', slug)
-        .single(); // 단일 article 객체만 가져옴
+        .single();
 
     if (error) {
-        if (error.code === 'PGRST116') {
-            // 데이터가 없거나 다중 결과가 반환된 경우
-            console.error('No rows or multiple rows found for the slug:', slug);
-        }
-        throw new Error(`Failed to fetch article: ${error.message}`);
+        throw new Error(`Failed to fetch Article Details: ${error.message}`);
     }
 
-    console.log('Fetched article details data from Supabase:', articleData);
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('Fetched Article Details data from Supabase:', articleData);
+        console.log('Fetched Article Details **author** data from Supabase:', articleData.author);
+    }
 
-    const {
-        slug: slugData,
-        title,
-        description,
-        body,
-        tag_list,
-        created_at,
-        updated_at,
-        favorited,
-        favorites_count,
-        author,
-    } = articleData;
-
-    console.log('fetchDetailsFromSupabase 함수 Author data:', author);
-
-    const article: Article = {
-        slug: slugData,
-        title: title,
-        description: description,
-        body: body,
-        tagList: tag_list,
-        createdAt: created_at,
-        updatedAt: updated_at,
-        favorited: favorited,
-        favoritesCount: favorites_count,
-        author: author as any as Author, // 관계형 데이터는 배열로 타입추론되서 강제적으로 캐스팅
+    return {
+        article: {
+            slug: articleData.slug,
+            title: articleData.title,
+            description: articleData.description,
+            body: articleData.body,
+            tagList: articleData.tag_list,
+            createdAt: articleData.created_at,
+            updatedAt: articleData.updated_at,
+            favorited: articleData.favorited,
+            favoritesCount: articleData.favorites_count,
+            author: articleData.author as any as Author, // 관계형 데이터는 배열로 타입추론되서 강제적으로 캐스팅
+        },
     };
-
-    return { article };
 }
 
 export { syncDetailsWithSupabase, fetchDetailsFromSupabase };

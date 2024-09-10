@@ -4,10 +4,8 @@ import { fetchComments } from '@/api';
 async function syncCommentsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
-        console.log(`Fetching Article Comments for slug: ${slug}`);
-
         const { comments } = await fetchComments(slug);
-        console.log('Fetched comments from API:', comments);
+        console.log('Fetched Comments from API:', comments);
 
         for (const comment of comments) {
             const { body, createdAt, updatedAt, author } = comment;
@@ -21,7 +19,7 @@ async function syncCommentsWithSupabase(slug: string) {
 
             let authorId = existingAuthor ? existingAuthor.id : null;
 
-            // 3. 중복 없을 시 Supabase의 author 테이블과 comments 테이블에 데이터 삽입
+            // 3. 중복 없을 시 Supabase의 author 테이블 데이터 삽입
             if (!existingAuthor && !authorError) {
                 const { data: insertedAuthor, error: authorInsertError } = await supabase
                     .from('author')
@@ -40,6 +38,7 @@ async function syncCommentsWithSupabase(slug: string) {
                 }
 
                 authorId = insertedAuthor.id;
+                console.log(`Author ${author.username} inserted successfully.`);
             }
 
             // 4. comment는 author가 여러번 작성 가능. 중복체크 생략하고 데이터 삽입
@@ -66,11 +65,11 @@ async function syncCommentsWithSupabase(slug: string) {
             if (fetchError) {
                 console.error('Error fetching comments after insert:', fetchError);
             } else if (process.env.NODE_ENV !== 'production') {
-                console.log('Inserted comments in Supabase:', insertedComments);
+                console.log('Comments synchronized successfully! :', insertedComments);
             }
         }
     } catch (error) {
-        console.error('Error synchronizing Article Comments:', error);
+        console.error('Error synchronizing Comments:', error);
     }
 }
 
@@ -87,10 +86,10 @@ async function fetchCommentsFromSupabase(slug: string) {
         .eq('article_slug', slug);
 
     if (error) {
-        throw new Error(`Failed to fetch comments: ${error.message}`);
+        throw new Error(`Failed to fetch Comments: ${error.message}`);
     }
 
-    return comments;
+    return { comments };
 }
 
 export { syncCommentsWithSupabase, fetchCommentsFromSupabase };

@@ -5,7 +5,6 @@ import { Profile } from '@/type';
 async function syncProfilesWithSupabase(userName: string) {
     try {
         // 1. Real World API fetch
-
         const decodedUser = decodeURIComponent(userName); // URL 인코딩된 username을 디코딩
         const { profile } = await fetchProfiles(userName);
 
@@ -16,7 +15,6 @@ async function syncProfilesWithSupabase(userName: string) {
         const { username, bio, image, following } = profile;
 
         // 2. Supabase 테이블에서 데이터 확인
-
         const { data: existingProfile, error: profileError } = await supabase
             .from('profile')
             .select('id, username')
@@ -38,7 +36,6 @@ async function syncProfilesWithSupabase(userName: string) {
         }
 
         // 3. 중복 없을 시 Supabase 테이블에 데이터 삽입
-
         const { error } = await supabase.from('profile').insert({
             username,
             bio,
@@ -56,17 +53,15 @@ async function syncProfilesWithSupabase(userName: string) {
         }
 
         // 4. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-
-        const { data: insertProfile, error: fetchError } = await supabase.from('profile').select('*');
+        const { data: insertedProfile, error: fetchError } = await supabase.from('profile').select('*');
 
         if (fetchError) {
             console.error('Error fetching Profile after insert:', fetchError);
-            return;
         } else if (process.env.NODE_ENV !== 'production') {
-            console.log('Inserted Profile in Supabase:', insertProfile);
+            console.log('Profile synchronized successfully! :', insertedProfile);
         }
     } catch (error) {
-        console.error('Error synchronizing profile:', error);
+        console.error('Error synchronizing Profile:', error);
     }
 }
 

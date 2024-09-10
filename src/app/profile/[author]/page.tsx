@@ -8,8 +8,8 @@ import { Profile } from '@/type';
 export default async function UserProfile({ params }: { params: { author: string } }) {
     await syncProfilesWithSupabase(params.author);
 
-    const data = await fetchProfilesFromSupabase(params.author);
-    const { username, bio, image, following }: Profile = data.profile;
+    const { profile } = await fetchProfilesFromSupabase(params.author);
+    const { username, bio, image, following }: Profile = profile;
 
     return (
         <div className="profile-page">

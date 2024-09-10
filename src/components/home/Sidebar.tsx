@@ -1,11 +1,10 @@
 import Link from 'next/link';
-import { Article } from '@/type';
 import { syncTagListWithSupabase, fetchTagListFromSupabase } from '@/api/supabase';
 
 export default async function Sidebar() {
     await syncTagListWithSupabase();
 
-    const tags: Article['tagList'] = await fetchTagListFromSupabase();
+    const { tags } = await fetchTagListFromSupabase();
 
     return (
         <article className="sidebar">

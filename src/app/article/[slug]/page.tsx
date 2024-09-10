@@ -10,7 +10,7 @@ import { formatDate, formatProfileLink } from '@/util/format';
 export default async function ArticleDetails({ params }: { params: { slug: string } }) {
     await syncDetailsWithSupabase(params.slug);
 
-    const data = await fetchDetailsFromSupabase(params.slug);
+    const { article } = await fetchDetailsFromSupabase(params.slug);
     const {
         slug,
         title,
@@ -22,13 +22,13 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
         favorited,
         favoritesCount,
         author,
-    }: Article = data.article;
+    }: Article = article;
     const { username, bio, image, following } = author;
     const profileLink = formatProfileLink(username);
     const date = formatDate(createdAt);
 
     await syncCommentsWithSupabase(params.slug);
-    const comments = await fetchCommentsFromSupabase(params.slug);
+    const { comments } = await fetchCommentsFromSupabase(params.slug);
     console.log('===================== Fetch comments data: ', comments);
 
     return (
