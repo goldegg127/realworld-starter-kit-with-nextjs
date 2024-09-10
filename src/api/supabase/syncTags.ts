@@ -16,7 +16,10 @@ async function syncTagListWithSupabase() {
                 .maybeSingle();
 
             if (existingTag) {
-                console.log(`Tag ${tag} already exists, skipping insertion.`);
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(`Tag ${tag} already exists, skipping insertion.`);
+                }
+
                 continue;
             }
 
@@ -34,8 +37,6 @@ async function syncTagListWithSupabase() {
             if (error) {
                 console.error('Error insert tag: ', error);
                 continue;
-            } else {
-                console.log(`Tag ${tag} inserted successfully.`);
             }
 
             // 4. Supabase 테이블에 제대로 삽입되었는지 바로 확인
@@ -65,7 +66,6 @@ async function fetchTagListFromSupabase(): Promise<{ tags: Article['tagList'] }>
     }
 
     if (!tags || tags.length === 0) {
-        console.log('No tags found in Supabase');
         return { tags: [] };
     }
 

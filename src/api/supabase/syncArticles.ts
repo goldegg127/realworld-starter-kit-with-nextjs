@@ -15,12 +15,6 @@ async function syncArticlesWithSupabase({
         // 1. Real World API fetch
         const { articles, articlesCount } = await fetchArticles({ offset, limit, tag });
 
-        console.log('Fetched articles.length from API:', articles.length);
-        console.log('Fetched articlesCount from API:', articlesCount);
-        console.log('Parameter offset:', offset);
-        console.log('Parameter limit:', limit);
-        console.log('Parameter tag:', tag);
-
         for (const article of articles) {
             const { title, description, body, tagList, createdAt, updatedAt, slug, favorited, favoritesCount, author } =
                 article;
@@ -33,7 +27,9 @@ async function syncArticlesWithSupabase({
                 .maybeSingle();
 
             if (existingArticle) {
-                console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+                }
                 continue;
             }
 
@@ -58,7 +54,10 @@ async function syncArticlesWithSupabase({
             // 저자가 이미 존재하는 경우 중복 삽입을 방지하기 위해 계속 진행
             if (existingAuthors && existingAuthors.length > 0) {
                 authorId = existingAuthors[0].id; // 첫 번째 저자의 ID 사용
-                console.log(`Author with username ${author.username} already exists.`);
+
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(`Author with username ${author.username} already exists.`);
+                }
             } else {
                 // 저자가 존재하지 않으면 새로운 저자를 삽입
                 const { data: insertedAuthor, error: authorInsertError } = await supabase
@@ -78,7 +77,6 @@ async function syncArticlesWithSupabase({
                 }
 
                 authorId = insertedAuthor?.id;
-                console.log(`Author ${author.username} inserted successfully.`);
             }
 
             // 5. 중복 없을 시 articles 테이블에 데이터 삽입
@@ -99,10 +97,8 @@ async function syncArticlesWithSupabase({
                 if (articleInsertError) {
                     console.error('Article insertion failed:', articleInsertError);
                     continue;
-                } else if (process.env.NODE_ENV !== 'production') {
-                    console.log(`Article ${slug} inserted successfully.`);
                 }
-            } else {
+            } else if (process.env.NODE_ENV !== 'production') {
                 console.log(`Article with slug ${slug} already exists, skipping insertion.`);
             }
         }
@@ -151,10 +147,6 @@ async function fetchArticlesFromSupabase({
         favoritesCount: article.favorites_count,
         author: article.author,
     }));
-
-    if (process.env.NODE_ENV !== 'production') {
-        console.log('fetchArticlesFromSupabase 함수 Articles count:', count);
-    }
 
     return {
         articles: articles || [],

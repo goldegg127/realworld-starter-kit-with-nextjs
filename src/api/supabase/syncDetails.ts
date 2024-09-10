@@ -6,7 +6,6 @@ async function syncDetailsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
         const { article } = await fetchDetails(slug);
-        console.log('Fetched article from API:', article);
 
         const { title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author } = article;
 
@@ -18,7 +17,9 @@ async function syncDetailsWithSupabase(slug: string) {
             .maybeSingle();
 
         if (existingArticle) {
-            console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+            }
             return;
         }
 
@@ -26,8 +27,6 @@ async function syncDetailsWithSupabase(slug: string) {
             console.error('Error fetching existing article from Supabase:', articleError);
             return;
         }
-
-        console.log('No existing article found, proceeding to insert.');
 
         // 3. Supabase의 author 테이블에서 데이터 확인
         const { data: existingAuthor, error: authorError } = await supabase
@@ -57,7 +56,10 @@ async function syncDetailsWithSupabase(slug: string) {
             }
 
             authorId = insertedAuthor.id;
-            console.log(`Author ${author.username} inserted successfully.`);
+
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(`Author ${author.username} inserted successfully.`);
+            }
         }
 
         // 5. 중복 없을 시 article_details 테이블에 데이터 삽입
@@ -78,11 +80,11 @@ async function syncDetailsWithSupabase(slug: string) {
             if (articleInsertError) {
                 console.error('Article insertion failed:', articleInsertError);
                 return;
-            } else if (process.env.NODE_ENV !== 'production') {
-                console.log(`Article ${slug} inserted successfully.`);
             }
         } else {
-            console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(`Article with slug ${slug} already exists, skipping insertion.`);
+            }
         }
 
         // 6. Supabase 테이블에 제대로 삽입되었는지 바로 확인
@@ -111,11 +113,6 @@ async function fetchDetailsFromSupabase(slug: string): Promise<{ article: Articl
 
     if (error) {
         throw new Error(`Failed to fetch Article Details: ${error.message}`);
-    }
-
-    if (process.env.NODE_ENV !== 'production') {
-        console.log('Fetched Article Details data from Supabase:', articleData);
-        console.log('Fetched Article Details **author** data from Supabase:', articleData.author);
     }
 
     return {
