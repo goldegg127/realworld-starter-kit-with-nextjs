@@ -29,7 +29,7 @@ async function syncDetailsWithSupabase(slug: string) {
 
         console.log('No existing article found, proceeding to insert.');
 
-        // 2. Supabase의 author 테이블에서 데이터 확인
+        // 3. Supabase의 author 테이블에서 데이터 확인
         const { data: existingAuthor, error: authorError } = await supabase
             .from('author')
             .select('id, username')
@@ -38,7 +38,7 @@ async function syncDetailsWithSupabase(slug: string) {
 
         let authorId = existingAuthor ? existingAuthor.id : null;
 
-        // 3. 중복 없을 시 Supabase의 author 테이블 데이터 삽입
+        // 4. 중복 없을 시 Supabase의 author 테이블 데이터 삽입
         if (!existingAuthor && !authorError) {
             const { data: insertedAuthor, error: authorInsertError } = await supabase
                 .from('author')
@@ -60,7 +60,7 @@ async function syncDetailsWithSupabase(slug: string) {
             console.log(`Author ${author.username} inserted successfully.`);
         }
 
-        // 4. 중복 없을 시 article_details 테이블에 데이터 삽입
+        // 5. 중복 없을 시 article_details 테이블에 데이터 삽입
         if (!existingArticle) {
             const { error: articleInsertError } = await supabase.from('article_details').insert({
                 slug,
@@ -85,7 +85,7 @@ async function syncDetailsWithSupabase(slug: string) {
             console.log(`Article with slug ${slug} already exists, skipping insertion.`);
         }
 
-        // 5. Supabase 테이블에 제대로 삽입되었는지 바로 확인
+        // 6. Supabase 테이블에 제대로 삽입되었는지 바로 확인
         const { data: insertedDetails, error: fetchError } = await supabase.from('article_details').select('*');
         if (fetchError) {
             console.error('Error fetching Article Details after insert:', fetchError);
