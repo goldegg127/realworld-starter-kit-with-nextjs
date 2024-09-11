@@ -18,21 +18,29 @@ async function syncProfilesWithSupabase(userName: string) {
         const { data: existingProfile, error: profileError } = await supabase
             .from('profile')
             .select('id, username')
-            .eq('username', decodedUser)
-            .maybeSingle();
+            .eq('username', decodedUser);
 
-        if (existingProfile) {
-            console.log(`Profile with username ${decodedUser} already exists, skipping insertion.`);
+        if (profileError) {
+            console.error(`Error fetching existing username "${decodedUser}" from Supabase:`, profileError);
             return;
         }
 
-        if (profileError) {
-            console.error('Error fetching existing username from Supabase:', profileError);
+        if (existingProfile.length > 1) {
+            console.warn(
+                `Warning: Multiple entries found for the same username: "${decodedUser}", skipping insertion.`,
+            );
+            return;
+        }
+
+        if (existingProfile.length === 1) {
+            console.log(`Profile with username "${decodedUser}" already exists, skipping insertion.`);
             return;
         }
 
         if (process.env.NODE_ENV !== 'production') {
-            console.log('No existing Profile found, proceeding to insert.');
+            console.log(
+                `Profile username "${decodedUser}" data does not exist in Supabase. Proceeding with insertion...`,
+            );
         }
 
         // 3. 중복 없을 시 Supabase 테이블에 데이터 삽입
@@ -46,14 +54,22 @@ async function syncProfilesWithSupabase(userName: string) {
         });
 
         if (error) {
-            console.error('Error insert Profile: ', error);
+            if (error.code === '23505') {
+                console.warn('Warning: Profile data insertion failed due to existing data.');
+            } else {
+                console.error(`Error Profile username "${decodedUser}" insertion failed:`, error);
+            }
             return;
         } else if (process.env.NODE_ENV !== 'production') {
-            console.log(`Profile ${username} inserted successfully.`);
+            console.log(`Profile username "${decodedUser}" inserted successfully!`);
         }
 
         // 4. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-        const { data: insertedProfile, error: fetchError } = await supabase.from('profile').select('*');
+        const { data: insertedProfile, error: fetchError } = await supabase
+            .from('profile')
+            .select('id, username')
+            .eq('username', decodedUser)
+            .single();
 
         if (fetchError) {
             console.error('Error fetching Profile after insert:', fetchError);
