@@ -1,19 +1,19 @@
 import API from '@/config';
+import { ArticlesApiParam } from '@/type';
 
 export async function fetchArticles({
     offset = 0,
     limit = 10,
     tag = '',
     author = '',
-}: {
-    offset?: number;
-    limit?: number;
-    tag?: string;
-    author?: string;
-}) {
+    favorited = '',
+}: ArticlesApiParam) {
     const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
-        author ? `&author=${author}` : ''
+        author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
     }`;
+
+    console.log(url);
+
     const res = await fetch(url, {
         cache: 'force-cache',
     });
