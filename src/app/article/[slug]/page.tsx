@@ -29,7 +29,7 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
 
     await syncCommentsWithSupabase(params.slug);
     const { comments } = await fetchCommentsFromSupabase(params.slug);
-    console.log('===================== Fetch comments data: ', comments);
+    // console.log('===================== Fetch comments data: ', comments);
 
     return (
         <div className="article-page">
