@@ -1,6 +1,5 @@
 import UserBanner from '@/components/profile/UserBanner';
 import UserArticleList from '@/components/profile/UserArticleList';
-import { Children } from 'react';
 
 export default function UserProfile({
     params,
