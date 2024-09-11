@@ -127,7 +127,7 @@ async function fetchArticlesFromSupabase({
 }) {
     let query = supabase
         .from('articles')
-        .select('*, author(*)', { count: 'exact' }) // author 테이블과의 관계도 조회
+        .select('*, author!inner(*)', { count: 'exact' }) // author 테이블과의 관계도 조회
         .range(offset, offset + limit - 1); // 페이지네이션 처리
 
     if (tag) {
@@ -136,14 +136,10 @@ async function fetchArticlesFromSupabase({
 
     if (author) {
         const decodedAuthor = decodeURIComponent(author); // URL 인코딩된 author 값을 디코딩
-        console.log('Filtering by author:', decodedAuthor);
         query = query.eq('author.username', decodedAuthor); // author.username 으로 필터링
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ query: ', query);
     }
 
     const { data, error, count } = await query;
-
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! data: ', data);
 
     if (error) {
         throw new Error(`Failed to fetch articles from Supabase: ${error.message}`);
