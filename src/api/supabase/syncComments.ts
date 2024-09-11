@@ -5,7 +5,7 @@ async function syncCommentsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
         const { comments } = await fetchComments(slug);
-        console.log('Fetched Comments from API:', comments);
+        console.log('Fetched Comments from API:', comments.length);
 
         for (const comment of comments) {
             const { body, createdAt, updatedAt, author } = comment;
@@ -65,7 +65,7 @@ async function syncCommentsWithSupabase(slug: string) {
             if (fetchError) {
                 console.error('Error fetching comments after insert:', fetchError);
             } else if (process.env.NODE_ENV !== 'production') {
-                console.log('Comments synchronized successfully! :', insertedComments);
+                console.log('Comments synchronized successfully! : ', insertedComments.length);
             }
         }
     } catch (error) {

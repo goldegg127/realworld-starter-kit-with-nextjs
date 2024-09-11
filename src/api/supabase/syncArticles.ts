@@ -45,13 +45,13 @@ async function syncArticlesWithSupabase({
                 .eq('username', author.username);
 
             if (authorError) {
-                console.error('Error fetching author:', authorError);
+                console.error('Error fetching author from syncArticlesWithSupabase:', authorError);
                 continue;
             }
 
             let authorId;
 
-            // 저자가 이미 존재하는 경우 중복 삽입을 방지하기 위해 계속 진행
+            // 4. author 데이터가 없을 시 Supabase의 author 테이블 데이터 삽입
             if (existingAuthors && existingAuthors.length > 0) {
                 authorId = existingAuthors[0].id; // 첫 번째 저자의 ID 사용
 
