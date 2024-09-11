@@ -69,22 +69,24 @@ async function syncTagListWithSupabase() {
 }
 
 async function fetchTagListFromSupabase(): Promise<{ tags: Article['tagList'] }> {
-    const { data: tags, error } = await supabase.from('tags').select('"tag"');
-    // 쌍따옴표(대소문자 구분 목적)를 제거한 값 select('tag')을 넣으면 UI 화면에 중복된 tag가 노출된다
+    const { data: tagsData, error } = await supabase.from('tags').select('tag');
 
     if (error) {
         throw new Error(`Failed to fetch tags: ${error.message}`);
     }
 
     if (process.env.NODE_ENV !== 'production') {
-        console.log('Fetched tags from Supabase:', tags);
+        console.log('Fetched tags from Supabase:', tagsData);
     }
 
-    if (!tags || tags.length === 0) {
+    if (!tagsData || tagsData.length === 0) {
         return { tags: [] };
     }
 
-    return { tags: tags.map(tagRow => tagRow.tag) };
+    const tags: string[] = tagsData.map(tagRow => tagRow.tag);
+    const uniqueTags = [...new Set(tags)];
+
+    return { tags: uniqueTags };
 }
 
 export { syncTagListWithSupabase, fetchTagListFromSupabase };
