@@ -1,19 +1,27 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchArticles } from '@/api';
+import { ArticlesApiParam } from '@/type';
 
 // Supabase와 동기화하는 함수 : RealWorld API에서 데이터를 가져와 Supabase에 저장하고, 이미 존재하는 데이터는 중복 삽입을 방지
 async function syncArticlesWithSupabase({
     offset = 0,
     limit = 10,
     tag = '',
-}: {
-    offset?: number;
-    limit?: number;
-    tag?: string;
-}) {
+    author = '',
+    favorited = '',
+}: ArticlesApiParam) {
     try {
         // 1. Real World API fetch
-        const { articles, articlesCount } = await fetchArticles({ offset, limit, tag });
+        const { articles } = await fetchArticles({ offset, limit, tag, author, favorited });
+
+        if (favorited && articles.length === 0) {
+            console.log(`Real World Articles API fetch: `, { offset, limit, tag, author, favorited }, articles);
+            console.log('No articles found for the favorited user.');
+            return;
+        } else {
+            // @todo
+            console.error(`❗️favorited 관계형 테이블을 생성해서 삽입하는 개발 과정이 필요합니다.`);
+        }
 
         for (const article of articles) {
             const { title, description, body, tagList, createdAt, updatedAt, slug, favorited, favoritesCount, author } =
@@ -111,23 +119,36 @@ async function syncArticlesWithSupabase({
     }
 }
 
-// Supabase에서 articles 데이터를 가져와 페이징 처리 및 태그 필터링
+// Supabase에서 articles 데이터를 가져와 페이징 처리 및 tag 또는 author 필터링
 async function fetchArticlesFromSupabase({
     offset = 0,
     limit = 10,
     tag = '',
-}: {
-    offset?: number;
-    limit?: number;
-    tag?: string;
-}) {
+    author = '',
+    favorited = '',
+}: ArticlesApiParam) {
     let query = supabase
         .from('articles')
-        .select('*, author(*)', { count: 'exact' }) // author 테이블과의 관계도 조회
+        .select('*, author!inner(*)', { count: 'exact' }) // author 테이블과의 관계도 조회
         .range(offset, offset + limit - 1); // 페이지네이션 처리
 
     if (tag) {
-        query = query.contains('tag_list', [tag]); // tag_list에 해당 태그가 있는지 확인
+        query = query.contains('tag_list', [tag]); // tag_list로 필터링
+    }
+
+    if (author) {
+        const decodedUsername = decodeURIComponent(author); // URL 인코딩된 author 값을 디코딩
+        query = query.eq('author.username', decodedUsername); // author.username 으로 필터링
+    }
+
+    if (favorited) {
+        // @todo
+        console.error(`❗️ favorited 관계형 테이블을 조회해서 필터링하는 개발 과정이 필요합니다.`);
+
+        return {
+            articles: [],
+            articlesCount: 0,
+        };
     }
 
     const { data, error, count } = await query;

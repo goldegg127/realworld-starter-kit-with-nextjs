@@ -2,21 +2,28 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
-import { Articles } from '@/type/index';
-import ArticleItems from './ArticleItems';
+import { Articles, ArticlesApiParam } from '@/type';
+import { formatProfileLink } from '@/util/format';
 import Loading from '@/app/loading';
+import ArticleItems from '@/components/common/ArticleItems';
 
-export default async function ArticleList({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+export default async function UserArticleList({
+    author,
+    searchParams,
+}: {
+    author: string;
+    searchParams?: { [key: string]: string | undefined };
+}) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
-    const tag = searchParams?.tag ?? '';
+    const favorited = searchParams?.favorited ?? '';
 
-    // 서버에서 Supabase와 동기화
-    await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, limit: 10, tag });
-
-    const data = await fetchArticlesFromSupabase({
+    const param: ArticlesApiParam = {
         offset: (currentPage - 1) * 10,
-        tag: tag,
-    });
+        author,
+        favorited: favorited,
+    };
+
+    await syncArticlesWithSupabase(param);
 
     const {
         articles,
@@ -24,28 +31,24 @@ export default async function ArticleList({ searchParams }: { searchParams?: { [
     }: {
         articles: Articles;
         articlesCount: number;
-    } = data;
+    } = await fetchArticlesFromSupabase(param);
+
+    const profileLink = formatProfileLink(author);
 
     return (
         <>
-            <nav className="feed-toggle">
+            <nav className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
-                    {/** 
-                      * @todo 로그인 기능 구현 후 적용
-                      <li className="nav-item">
-                          <Link className="nav-link" href="">Your Feed</Link>
-                      </li> 
-                    */}
                     <li className="nav-item">
-                        <Link className={`nav-link${!tag ? ' active' : ''}`} href="/">
-                            Global Feed
+                        <Link className={`nav-link${!favorited ? ' active' : ''}`} href={profileLink}>
+                            My Articles
                         </Link>
                     </li>
-                    {!!tag && (
-                        <li className="nav-item">
-                            <a className="nav-link active">{tag}</a>
-                        </li>
-                    )}
+                    <li className="nav-item">
+                        <Link className={`nav-link${favorited ? ' active' : ''}`} href={`?favorited=${author}`}>
+                            Favorited Articles
+                        </Link>
+                    </li>
                 </ul>
             </nav>
             <ErrorBoundary fallback={<p>Something went wrong</p>}>

@@ -26,3 +26,11 @@ export type Profile = {
     image: string;
     following: boolean;
 };
+
+export type ArticlesApiParam = {
+    offset?: number;
+    limit?: number;
+    tag?: string;
+    author?: string;
+    favorited?: string;
+};
