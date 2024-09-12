@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 import { SignupUser } from '@/api';
 
 export default async function SignupForm() {
@@ -16,7 +17,14 @@ export default async function SignupForm() {
 
         try {
             const res = await SignupUser({ username, email, password });
-            console.log('res: ', res);
+            const { token } = res.data;
+
+            Cookies.set('token', token, {
+                secure: true,
+                sameSite: 'Strict',
+                expires: 7,
+            });
+            console.log('Login successful:', res);
         } catch (error) {
             setErrorMessage('Login failed. Please check your credentials and try again.');
             console.log('error: ', error);

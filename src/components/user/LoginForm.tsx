@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 import { loginUser } from '@/api';
 
 export default async function LoginForm() {
@@ -14,10 +15,18 @@ export default async function LoginForm() {
 
         try {
             const res = await loginUser({ email, password });
-            console.log('res: ', res);
+            const { token } = res.data;
+
+            Cookies.set('token', token, {
+                secure: true,
+                sameSite: 'Strict',
+                expires: 7,
+            });
+
+            console.log('Login successful:', res);
         } catch (error) {
             setErrorMessage('Login failed. Please check your credentials and try again.');
-            console.log('error: ', error);
+            console.error('error: ', error);
         }
     };
 
