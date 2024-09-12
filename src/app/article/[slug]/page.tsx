@@ -5,7 +5,7 @@ import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabas
 import { formatDate, formatProfileLink } from '@/util/format';
 import { ArticleBanner, ArticleContent, ArticleActions, CommentsList } from '@/components/article';
 
-export default async function ArticleDetails({ params }: { params: { slug: string } }) {
+export default async function ArticleDetailsPage({ params }: { params: { slug: string } }) {
     await syncDetailsWithSupabase(params.slug);
 
     const { article } = await fetchDetailsFromSupabase(params.slug);

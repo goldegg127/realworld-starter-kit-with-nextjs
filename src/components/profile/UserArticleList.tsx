@@ -5,7 +5,7 @@ import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supab
 import { Articles, ArticlesApiParam } from '@/type';
 import { formatProfileLink } from '@/util/format';
 import Loading from '@/app/loading';
-import ArticleItems from '@/components/common/ArticleItems';
+import { ArticleItems } from '@/components/common';
 
 export default async function UserArticleList({
     author,
