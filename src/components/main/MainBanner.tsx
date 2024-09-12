@@ -1,4 +1,4 @@
-export default function Banner() {
+export default function MainBanner() {
     return (
         <section className="banner">
             <div className="container">
