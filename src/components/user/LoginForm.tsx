@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { loginUser } from '@/api';
 
-export default async function LoginForm() {
+export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
