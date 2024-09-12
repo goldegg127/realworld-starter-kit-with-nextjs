@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
 import { Articles, ArticlesApiParam } from '@/type';
-import { formatProfileLink } from '@/util/format';
+import { formatProfileLink, formatFavoritedLink } from '@/util/format';
 import Loading from '@/app/loading';
 import { ArticleItems } from '@/components/common';
 
@@ -33,19 +33,17 @@ export default async function UserArticleList({
         articlesCount: number;
     } = await fetchArticlesFromSupabase(param);
 
-    const profileLink = formatProfileLink(author);
-
     return (
         <>
             <nav className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
                     <li className="nav-item">
-                        <Link className={`nav-link${!favorited ? ' active' : ''}`} href={profileLink}>
+                        <Link className={`nav-link${!favorited ? ' active' : ''}`} href={formatProfileLink(author)}>
                             My Articles
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className={`nav-link${favorited ? ' active' : ''}`} href={`?favorited=${author}`}>
+                        <Link className={`nav-link${favorited ? ' active' : ''}`} href={formatFavoritedLink(author)}>
                             Favorited Articles
                         </Link>
                     </li>

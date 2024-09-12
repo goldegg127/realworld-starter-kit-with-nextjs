@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { formatTagLink } from '@/util/format';
 
 export default function ArticleContent({
     title,
@@ -20,7 +21,7 @@ export default function ArticleContent({
                 <ul className="tag-list">
                     {tagList.map((tag, index) => (
                         <li key={`tag-${tag}-${index}`}>
-                            <Link href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
+                            <Link href={formatTagLink(tag)} className="tag-default tag-pill tag-outline">
                                 {tag}
                             </Link>
                         </li>

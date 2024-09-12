@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { syncTagListWithSupabase, fetchTagListFromSupabase } from '@/api/supabase';
+import { formatTagLink } from '@/util/format';
 
 export default async function Sidebar() {
     return (
@@ -22,7 +23,7 @@ async function TagList() {
             ) : (
                 tags.map((tag, index) => (
                     <li key={`tag-${tag}-${index}`}>
-                        <Link href={`?tag=${tag}`} className="tag-pill tag-default">
+                        <Link href={formatTagLink(tag)} className="tag-pill tag-default">
                             {tag}
                         </Link>
                     </li>

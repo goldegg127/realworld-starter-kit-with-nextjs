@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Articles, Article } from '@/type';
-import { formatDate, formatProfileLink } from '@/util/format';
+import { formatDate, formatProfileLink, formatArticleLink, formatTagLink } from '@/util/format';
 import Pagination from './Pagination';
 
 export default function ArticleItems({
@@ -35,7 +35,7 @@ function ArticleItem({ article }: { article: Article }) {
     const { slug, title, description, tagList, createdAt, favorited, favoritesCount, author } = article;
     const { username, image } = author;
     const profileLink = formatProfileLink(username);
-    const articleLink = `/article/${slug}`;
+    const articleLink = formatArticleLink(slug);
     const date = formatDate(createdAt);
 
     return (
@@ -68,7 +68,7 @@ function ArticleItem({ article }: { article: Article }) {
                 <ul className="tag-list">
                     {tagList.map((tag, index) => (
                         <li key={`${slug}-${tag}-${index}`}>
-                            <Link href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
+                            <Link href={formatTagLink(tag)} className="tag-default tag-pill tag-outline">
                                 {tag}
                             </Link>
                         </li>
