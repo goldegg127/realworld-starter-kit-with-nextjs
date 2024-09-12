@@ -2,9 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/type';
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
-import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
 import { formatDate, formatProfileLink } from '@/util/format';
-// import CommentsList from '@/components/article/CommentsList';
+import CommentsList from '@/components/article/CommentsList';
 // import CommentEditor from '@/components/article/CommentEditor';
 
 export default async function ArticleDetails({ params }: { params: { slug: string } }) {
@@ -26,10 +25,6 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
     const { username, bio, image, following } = author;
     const profileLink = formatProfileLink(username);
     const date = formatDate(createdAt);
-
-    await syncCommentsWithSupabase(params.slug);
-    const { comments } = await fetchCommentsFromSupabase(params.slug);
-    // console.log('===================== Fetch comments data: ', comments);
 
     return (
         <div className="article-page">
@@ -123,8 +118,10 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
 
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
-                        {/* <CommentEditor />
-                        <CommentsList slug={slug} /> */}
+                        {
+                            // * @todo 로그인 기능 구현 후 적용 예정 <CommentEditor />
+                        }
+                        <CommentsList slug={slug} />
                     </div>
                 </div>
             </div>
