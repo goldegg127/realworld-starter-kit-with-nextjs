@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { loginUser } from '@/api';
 
@@ -6,6 +7,7 @@ export default async function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const router = useRouter();
 
     const handleInputEmail = (event: React.FocusEvent<HTMLInputElement>) => setEmail(event.target.value);
     const handleInputPassword = (event: React.FocusEvent<HTMLInputElement>) => setPassword(event.target.value);
@@ -14,16 +16,19 @@ export default async function LoginForm() {
         event.preventDefault();
 
         try {
-            const res = await loginUser({ email, password });
-            const { token } = res.data;
+            const { user } = await loginUser({ email, password });
+            const { token } = user;
 
-            Cookies.set('token', token, {
-                secure: true,
-                sameSite: 'Strict',
-                expires: 7,
-            });
-
-            console.log('Login successful:', res);
+            if (token) {
+                Cookies.set('real-world-token', token, {
+                    secure: true,
+                    sameSite: 'Strict',
+                    expires: 7,
+                });
+                router.push('/');
+            } else {
+                setErrorMessage('Login successful but no token received. Please try again later.');
+            }
         } catch (error) {
             setErrorMessage('Login failed. Please check your credentials and try again.');
             console.error('error: ', error);
