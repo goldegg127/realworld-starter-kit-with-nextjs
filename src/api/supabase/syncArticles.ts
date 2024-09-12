@@ -19,7 +19,7 @@ async function syncArticlesWithSupabase({
             console.log('No articles found for the favorited user.');
             return;
         } else {
-            // @todo
+            /** @todo **/
             console.error(`❗️favorited 관계형 테이블을 생성해서 삽입하는 개발 과정이 필요합니다.`);
         }
 
@@ -142,7 +142,7 @@ async function fetchArticlesFromSupabase({
     }
 
     if (favorited) {
-        // @todo
+        /** @todo **/
         console.error(`❗️ favorited 관계형 테이블을 조회해서 필터링하는 개발 과정이 필요합니다.`);
 
         return {
