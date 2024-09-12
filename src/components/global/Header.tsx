@@ -35,11 +35,6 @@ export default function Header() {
                     conduit
                 </Link>
                 <ul className="nav navbar-nav pull-xs-right">
-                    <li className="nav-item">
-                        <Link className={`nav-link${pathname === '/' ? ' active' : ''}`} href="/">
-                            Home
-                        </Link>
-                    </li>
                     {!token ? (
                         <>
                             <li className="nav-item">
