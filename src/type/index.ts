@@ -15,7 +15,7 @@ export type Article = {
 
 export type Author = {
     username: string;
-    bio?: string;
+    bio: string;
     image: string;
     following: boolean;
 };
@@ -33,4 +33,18 @@ export type ArticlesApiParam = {
     tag?: string;
     author?: string;
     favorited?: string;
+};
+
+export type Comments = Comment[];
+export type Comment = {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    body: string;
+    author: {
+        username: string;
+        bio: string;
+        image: string;
+        following: boolean;
+    };
 };

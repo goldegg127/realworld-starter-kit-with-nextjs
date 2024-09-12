@@ -1,25 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchComments } from '@/api';
+import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
 import { formatDate, formatProfileLink } from '@/util/format';
-
-type Comments = Comment[];
-type Comment = {
-    id: number;
-    createdAt: string;
-    updatedAt: string;
-    body: string;
-    author: {
-        username: string;
-        bio: string;
-        image: string;
-        following: boolean;
-    };
-};
+import { Comments } from '@/type';
 
 export default async function CommentsList({ slug }: { slug: string }) {
-    const data = await fetchComments(slug);
-    const { comments }: { comments: Comments } = data;
+    await syncCommentsWithSupabase(slug);
+
+    const { comments }: { comments: Comments } = await fetchCommentsFromSupabase(slug);
 
     return (
         <ul>

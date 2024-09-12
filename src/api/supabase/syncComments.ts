@@ -1,5 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchComments } from '@/api';
+import { Author } from '@/type';
 
 async function syncCommentsWithSupabase(slug: string) {
     try {
@@ -74,7 +75,7 @@ async function syncCommentsWithSupabase(slug: string) {
 }
 
 async function fetchCommentsFromSupabase(slug: string) {
-    const { data: comments, error } = await supabase
+    const { data: commentsData, error } = await supabase
         .from('comments')
         .select(
             `
@@ -88,6 +89,18 @@ async function fetchCommentsFromSupabase(slug: string) {
     if (error) {
         throw new Error(`Failed to fetch Comments: ${error.message}`);
     }
+
+    if (!commentsData || commentsData.length === 0) {
+        return { comments: [] };
+    }
+
+    const comments = commentsData?.map(comment => ({
+        id: comment.id,
+        body: comment.body,
+        createdAt: comment.created_at,
+        updatedAt: comment.updated_at,
+        author: comment.author as any as Author, // 관계형 데이터는 배열로 타입추론되서 강제적으로 캐스팅
+    }));
 
     return { comments };
 }
