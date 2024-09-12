@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { loginUser } from '@/api';
+import { SignupUser } from '@/api';
 
-export default async function LoginForm() {
+export default async function SignupForm() {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    const handleInputName = (event: React.FocusEvent<HTMLInputElement>) => setUsername(event.target.value);
     const handleInputEmail = (event: React.FocusEvent<HTMLInputElement>) => setEmail(event.target.value);
     const handleInputPassword = (event: React.FocusEvent<HTMLInputElement>) => setPassword(event.target.value);
 
-    const handleLogin = async (event: React.FormEvent) => {
+    const handleSignup = async (event: React.FormEvent) => {
         event.preventDefault();
 
         try {
-            const res = await loginUser({ email, password });
+            const res = await SignupUser({ username, email, password });
             console.log('res: ', res);
         } catch (error) {
             setErrorMessage('Login failed. Please check your credentials and try again.');
@@ -28,7 +30,16 @@ export default async function LoginForm() {
                     <li>{errorMessage}</li>
                 </ul>
             )}
-            <form onSubmit={handleLogin}>
+
+            <form onSubmit={handleSignup}>
+                <fieldset className="form-group">
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Username"
+                        onBlur={handleInputName}
+                    />
+                </fieldset>
                 <fieldset className="form-group">
                     <input
                         className="form-control form-control-lg"
@@ -45,8 +56,8 @@ export default async function LoginForm() {
                         onBlur={handleInputPassword}
                     />
                 </fieldset>
-                <button type="submit" className="btn btn-lg btn-primary pull-xs-right">
-                    Sign in
+                <button className="btn btn-lg btn-primary pull-xs-right" type="submit">
+                    Sign up
                 </button>
             </form>
         </>
