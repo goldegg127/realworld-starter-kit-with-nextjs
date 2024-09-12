@@ -6,9 +6,17 @@ import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 export default function Header() {
-    const [token, setToken] = useState<string | null>(null);
     const pathname = usePathname();
+    const [token, setToken] = useState<string | null>(null);
     const [isReady, setIsReady] = useState(false); // 서버-클라이언트 렌더 차이 방지
+
+    const handleLogout = () => {
+        Cookies.remove('real-world-token', {
+            secure: true,
+            sameSite: 'Strict',
+        });
+        setToken('');
+    };
 
     useEffect(() => {
         const token = Cookies.get('real-world-token');
@@ -69,6 +77,11 @@ export default function Header() {
                                     Eric Simons
                                 </Link>
                             </li> */}
+                            <li className="nav-item">
+                                <Link className="nav-link" onClick={handleLogout} href="/">
+                                    <i className="ion-log-out"></i> Logout
+                                </Link>
+                            </li>
                         </>
                     )}
                 </ul>
