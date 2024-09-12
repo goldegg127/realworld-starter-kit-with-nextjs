@@ -30,7 +30,7 @@ export async function fetchDetails(slug: string) {
     const res = await fetch(`${API.ARTICLES}/${slug}`);
 
     if (!res.ok) {
-        throw new Error(`failed to fetch for article details: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to fetch for article details: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -40,7 +40,7 @@ export async function fetchComments(slug: string) {
     const res = await fetch(`${API.ARTICLES}/${slug}/comments`);
 
     if (!res.ok) {
-        throw new Error(`failed to fetch comments: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -50,7 +50,7 @@ export async function fetchProfiles(username: string) {
     const res = await fetch(`${API.PROFILES}/${username}`);
 
     if (!res.ok) {
-        throw new Error(`failed to fetch profile: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to fetch profile: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -61,6 +61,26 @@ export async function fetchTagList() {
 
     if (!res.ok) {
         throw Error(`failed fetching tag list: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function loginUser({ email, password }: { email: string; password: string }) {
+    const url = `${API.USERS}/login`;
+
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user: { email, password },
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to login: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
