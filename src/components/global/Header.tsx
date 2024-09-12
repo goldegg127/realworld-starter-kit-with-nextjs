@@ -50,22 +50,24 @@ export default function Header() {
                     ) : (
                         <>
                             <li className="nav-item">
-                                <a className={`nav-link${pathname === '/editor' ? ' active' : ''}`} href="/editor">
+                                <Link className={`nav-link${pathname === '/editor' ? ' active' : ''}`} href="/editor">
                                     <i className="ion-compose"></i> New Article
-                                </a>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className={`nav-link${pathname === '/settings' ? ' active' : ''}`} href="/settings">
+                                <Link
+                                    className={`nav-link${pathname === '/settings' ? ' active' : ''}`}
+                                    href="/settings">
                                     <i className="ion-gear-a"></i> Settings
-                                </a>
+                                </Link>
                             </li>
                             {/** 
                             * @todo 전역 상태관리 설치 후 적용
                             <li className="nav-item">
-                                <a className="nav-link" href="/profile/eric-simons">
+                                <Link className="nav-link" href="/profile/eric-simons">
                                     <img src="" className="user-pic" />
                                     Eric Simons
-                                </a>
+                                </Link>
                             </li> */}
                         </>
                     )}
