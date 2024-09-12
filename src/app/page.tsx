@@ -1,11 +1,9 @@
-import Banner from '@/components/home/Banner';
-import MainAriticleList from '@/components/home/MainAriticleList';
-import Sidebar from '@/components/home/Sidebar';
+import { MainBanner, MainAriticleList, Sidebar } from '@/components/main';
 
-export default function Home({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+export default function MainPage({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
     return (
         <main className="home-page">
-            <Banner />
+            <MainBanner />
             <section className="container page">
                 <div className="row">
                     <section className="col-md-9">

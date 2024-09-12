@@ -1,7 +1,6 @@
-import UserBanner from '@/components/profile/UserBanner';
-import UserArticleList from '@/components/profile/UserArticleList';
+import { UserBanner, UserArticleList } from '@/components/profile';
 
-export default function UserProfile({
+export default function UserProfilePage({
     params,
     searchParams,
 }: {
@@ -22,11 +21,7 @@ export default function UserProfile({
     );
 }
 
-type LayoutContinerProps = {
-    children: React.ReactNode;
-};
-
-function LayoutContiner({ children }: LayoutContinerProps) {
+function LayoutContiner({ children }: { children: React.ReactNode }) {
     return (
         <section className="container">
             <div className="row">

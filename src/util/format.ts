@@ -9,3 +9,15 @@ export const formatDate = (date: string): string =>
 export const formatProfileLink = (username: string) => {
     return `/profile/${username}`;
 };
+
+export const formatArticleLink = (slug: string) => {
+    return `/article/${slug}`;
+};
+
+export const formatTagLink = (tag: string) => {
+    return `/?tag=${tag}`;
+};
+
+export const formatFavoritedLink = (favorited: string) => {
+    return `?favorited=${favorited}`;
+};

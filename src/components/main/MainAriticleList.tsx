@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
 import { Articles } from '@/type';
 import Loading from '@/app/loading';
-import ArticleItems from '@/components/common/ArticleItems';
+import { ArticleItems } from '@/components/common';
 
 export default async function MainAriticleList({
     searchParams,
