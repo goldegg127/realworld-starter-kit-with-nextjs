@@ -3,8 +3,7 @@ import Image from 'next/image';
 import { Article } from '@/type';
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
 import { formatDate, formatProfileLink } from '@/util/format';
-import CommentsList from '@/components/article/CommentsList';
-// import CommentEditor from '@/components/article/CommentEditor';
+import { ArticleBanner, ArticleContent, ArticleActions, CommentsList } from '@/components/article';
 
 export default async function ArticleDetails({ params }: { params: { slug: string } }) {
     await syncDetailsWithSupabase(params.slug);
@@ -28,94 +27,11 @@ export default async function ArticleDetails({ params }: { params: { slug: strin
 
     return (
         <div className="article-page">
-            <div className="banner">
-                <div className="container">
-                    <h1>{title}</h1>
-
-                    <div className="article-meta">
-                        <Link href={profileLink}>
-                            <Image src={image} alt="" width={32} height={32} />
-                        </Link>
-                        <div className="info">
-                            <Link href={profileLink} className="author">
-                                {username}
-                            </Link>
-                            <span className="date">{date}</span>
-                        </div>
-                        {/**
-                          * @todo 로그인 기능 구현 후 적용 예정
-                          <button className="btn btn-sm btn-outline-secondary"> 
-                              <i className="ion-plus-round"></i>
-                              &nbsp; Follow Eric Simons <span className="counter">(10)</span>
-                          </button>
-                          &nbsp;&nbsp;
-                          <button className="btn btn-sm btn-outline-primary">
-                              <i className="ion-heart"></i>
-                              &nbsp; Favorite Post <span className="counter">(29)</span>
-                          </button>
-                          <button className="btn btn-sm btn-outline-secondary">
-                              <i className="ion-edit"></i> Edit Article
-                          </button>
-                          <button className="btn btn-sm btn-outline-danger">
-                              <i className="ion-trash-a"></i> Delete Article
-                          </button> 
-                        */}
-                    </div>
-                </div>
-            </div>
-
+            <ArticleBanner title={title} profileLink={profileLink} image={image} username={username} date={date} />
             <div className="container page">
-                <div className="row article-content">
-                    <div className="col-md-12">
-                        <p>{description}</p>
-                        <h2 id="introducing-ionic">{title}</h2>
-                        <p>{body}</p>
-                        <ul className="tag-list">
-                            {tagList.map((tag, index) => (
-                                <li key={`tag-${tag}-${index}`}>
-                                    <Link href={`/?tag=${tag}`} className="tag-default tag-pill tag-outline">
-                                        {tag}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-
+                <ArticleContent title={title} description={description} body={body} tagList={tagList} />
                 <hr />
-
-                <div className="article-actions">
-                    <div className="article-meta">
-                        <Link href={profileLink}>
-                            <Image src={image} alt="" width={32} height={32} />
-                        </Link>
-                        <div className="info">
-                            <Link href="" className="author">
-                                {username}
-                            </Link>
-                            <span className="date">{date}</span>
-                        </div>
-
-                        {/**
-                          * @todo 로그인 기능 구현 후 적용 예정
-                          <button className="btn btn-sm btn-outline-secondary">
-                              <i className="ion-plus-round"></i>
-                              &nbsp; Follow Eric Simons
-                          </button>
-                          <button className="btn btn-sm btn-outline-primary">
-                              <i className="ion-heart"></i>
-                              &nbsp; Favorite Article <span className="counter">(29)</span>
-                          </button>
-                          <button className="btn btn-sm btn-outline-secondary">
-                              <i className="ion-edit"></i> Edit Article
-                          </button>
-                          <button className="btn btn-sm btn-outline-danger">
-                              <i className="ion-trash-a"></i> Delete Article
-                          </button> 
-                        */}
-                    </div>
-                </div>
-
+                <ArticleActions profileLink={profileLink} image={image} username={username} date={date} />
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
                         {
