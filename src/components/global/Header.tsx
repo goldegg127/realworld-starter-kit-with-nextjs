@@ -4,23 +4,16 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
+import useAuthStore from '@/store/authStore';
 
 export default function Header() {
-    const pathname = usePathname();
-    const [token, setToken] = useState<string | null>(null);
+    const { token, isLoggedIn, login, logout } = useAuthStore();
     const [isReady, setIsReady] = useState(false); // 서버-클라이언트 렌더 차이 방지
-
-    const handleLogout = () => {
-        Cookies.remove('real-world-token', {
-            secure: true,
-            sameSite: 'Strict',
-        });
-        setToken('');
-    };
+    const pathname = usePathname();
+    const styleActive = (path: string) => (pathname === path ? ' active' : '');
 
     useEffect(() => {
-        const token = Cookies.get('real-world-token');
-        setToken(token || null);
+        token && login(token);
         setIsReady(true); // 렌더링 준비 완료
     }, []);
 
@@ -35,17 +28,15 @@ export default function Header() {
                     conduit
                 </Link>
                 <ul className="nav navbar-nav pull-xs-right">
-                    {!token ? (
+                    {!isLoggedIn ? (
                         <>
                             <li className="nav-item">
-                                <Link className={`nav-link${pathname === '/login' ? ' active' : ''}`} href="/login">
+                                <Link className={`nav-link${styleActive('/login')}`} href="/login">
                                     Sign in
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link
-                                    className={`nav-link${pathname === '/register' ? ' active' : ''}`}
-                                    href="/register">
+                                <Link className={`nav-link${styleActive('/register')}`} href="/register">
                                     Sign up
                                 </Link>
                             </li>
@@ -53,14 +44,12 @@ export default function Header() {
                     ) : (
                         <>
                             <li className="nav-item">
-                                <Link className={`nav-link${pathname === '/editor' ? ' active' : ''}`} href="/editor">
+                                <Link className={`nav-link${styleActive('/editor')}`} href="/editor">
                                     <i className="ion-compose"></i> New Article
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link
-                                    className={`nav-link${pathname === '/settings' ? ' active' : ''}`}
-                                    href="/settings">
+                                <Link className={`nav-link${styleActive('/settings')}`} href="/settings">
                                     <i className="ion-gear-a"></i> Settings
                                 </Link>
                             </li>
@@ -73,7 +62,7 @@ export default function Header() {
                                 </Link>
                             </li> */}
                             <li className="nav-item">
-                                <Link className="nav-link" onClick={handleLogout} href="/">
+                                <Link className="nav-link" onClick={logout} href="/">
                                     <i className="ion-log-out"></i> Logout
                                 </Link>
                             </li>
