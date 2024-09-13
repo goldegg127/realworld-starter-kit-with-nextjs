@@ -32,7 +32,7 @@ export default async function CommentsList({ slug }: { slug: string }) {
                                     {username}
                                 </Link>
                                 <span className="date-posted">{date}</span>
-                                <DeleteCommentButton slug={slug} commentId={commentId} />
+                                <DeleteCommentButton slug={slug} commentId={commentId} username={username} />
                             </div>
                         </article>
                     </li>
