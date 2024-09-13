@@ -32,7 +32,7 @@ export default async function ArticleDetailsPage({ params }: { params: { slug: s
                 <ArticleActions profileLink={profileLink} image={image} username={username} date={date} />
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
-                        {/* <CommentEditor slug={slug} /> */}
+                        <CommentEditor slug={slug} />
                         <CommentsList slug={slug} />
                     </div>
                 </div>

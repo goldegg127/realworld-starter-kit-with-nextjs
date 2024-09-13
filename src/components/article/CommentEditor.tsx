@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { postComment } from '@/api';
 import useAuthStore from '@/store/authStore';
@@ -8,11 +8,16 @@ import useAuthStore from '@/store/authStore';
 export default function CommentEditor({ slug }: { slug: string }) {
     const [commentBody, setCommentBody] = useState('');
     const { token, userInfo } = useAuthStore();
-    const imagePath = userInfo?.image ?? '/image/demo-avatar.png';
+    const initImage = '/image/demo-avatar.png';
+    const [imagePath, setImagePath] = useState(initImage);
 
     const handleTextarea = (event: React.FocusEvent<HTMLTextAreaElement>) => {
         setCommentBody(event.target.value);
     };
+
+    useEffect(() => {
+        setImagePath(userInfo?.image || initImage);
+    }, []);
 
     const handlePostComment = async () => {
         try {
