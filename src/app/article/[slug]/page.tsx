@@ -1,9 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Article } from '@/type';
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
+import { Article } from '@/type';
 import { formatDate, formatProfileLink } from '@/util/format';
-import { ArticleBanner, ArticleContent, ArticleActions, CommentsList } from '@/components/article';
+import { ArticleBanner, ArticleContent, ArticleActions, CommentsList, CommentEditor } from '@/components/article';
 
 export default async function ArticleDetailsPage({ params }: { params: { slug: string } }) {
     await syncDetailsWithSupabase(params.slug);
@@ -34,9 +32,7 @@ export default async function ArticleDetailsPage({ params }: { params: { slug: s
                 <ArticleActions profileLink={profileLink} image={image} username={username} date={date} />
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
-                        {
-                            // * @todo 로그인 기능 구현 후 적용 예정 <CommentEditor />
-                        }
+                        {/* <CommentEditor slug={slug} /> */}
                         <CommentsList slug={slug} />
                     </div>
                 </div>
