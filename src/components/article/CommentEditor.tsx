@@ -19,7 +19,9 @@ export default function CommentEditor({ slug }: { slug: string }) {
         setImagePath(userInfo?.image || initImage);
     }, []);
 
-    const handlePostComment = async () => {
+    const handlePostComment = async (event: React.FormEvent) => {
+        event.preventDefault();
+
         try {
             await postComment({ slug, commentBody, token });
         } catch (error) {
