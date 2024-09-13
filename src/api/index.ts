@@ -1,8 +1,5 @@
 import API from '@/config';
 import { ArticlesApiParam } from '@/type';
-import useAuthStore from '@/store/authStore';
-
-const { token } = useAuthStore();
 
 export async function fetchArticles({
     offset = 0,
@@ -47,7 +44,15 @@ export async function fetchComments(slug: string) {
     return res.json();
 }
 
-export async function postComment(slug: string, body: {}) {
+export async function postComment({
+    slug,
+    commentBody,
+    token,
+}: {
+    slug: string;
+    commentBody: string;
+    token: string | null;
+}) {
     const url = `${API.ARTICLES}/${slug}/comments`;
     const res = await fetch(url, {
         method: 'POST',
@@ -56,7 +61,7 @@ export async function postComment(slug: string, body: {}) {
             Authorization: `Token ${token}`,
         },
         body: JSON.stringify({
-            comment: { body },
+            comment: { body: commentBody },
         }),
     });
 
@@ -67,7 +72,15 @@ export async function postComment(slug: string, body: {}) {
     return res.json();
 }
 
-export async function deleteComment(slug: string, commentId: string) {
+export async function deleteComment({
+    slug,
+    commentId,
+    token,
+}: {
+    slug: string;
+    commentId: number;
+    token: string | null;
+}) {
     const url = `${API.ARTICLES}/${slug}/comments/${commentId}`;
     const res = await fetch(url, {
         method: 'DELETE',
