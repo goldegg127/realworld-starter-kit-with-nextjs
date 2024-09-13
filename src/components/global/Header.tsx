@@ -3,17 +3,18 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Cookies from 'js-cookie';
 import useAuthStore from '@/store/authStore';
+import { formatProfileLink } from '@/util/format';
 
 export default function Header() {
-    const { token, isLoggedIn, login, logout } = useAuthStore();
+    const { userInfo, isLoggedIn, logout } = useAuthStore();
     const [isReady, setIsReady] = useState(false); // 서버-클라이언트 렌더 차이 방지
     const pathname = usePathname();
     const styleActive = (path: string) => (pathname === path ? ' active' : '');
+    const username = userInfo?.username || '';
+    const myProfilePath = formatProfileLink(username);
 
     useEffect(() => {
-        token && login(token);
         setIsReady(true); // 렌더링 준비 완료
     }, []);
 
@@ -53,14 +54,12 @@ export default function Header() {
                                     <i className="ion-gear-a"></i> Settings
                                 </Link>
                             </li>
-                            {/** 
-                            * @todo 전역 상태관리 설치 후 적용
                             <li className="nav-item">
-                                <Link className="nav-link" href="/profile/eric-simons">
-                                    <img src="" className="user-pic" />
-                                    Eric Simons
+                                <Link className={`nav-link${styleActive(myProfilePath)}`} href={myProfilePath}>
+                                    <img src={userInfo?.image} className="user-pic" />
+                                    {username}
                                 </Link>
-                            </li> */}
+                            </li>
                             <li className="nav-item">
                                 <Link className="nav-link" onClick={logout} href="/">
                                     <i className="ion-log-out"></i> Logout

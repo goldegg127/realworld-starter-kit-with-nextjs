@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { loginUser } from '@/api';
 import useAuthStore from '@/store/authStore';
 
@@ -19,10 +18,9 @@ export default function LoginForm() {
 
         try {
             const { user } = await loginUser({ email, password });
-            const { token } = user;
 
-            if (token) {
-                login(token);
+            if (user) {
+                login(user);
                 router.push('/');
             } else {
                 setErrorMessage('Login successful but no token received. Please try again later.');
