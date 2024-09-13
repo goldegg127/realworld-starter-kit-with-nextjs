@@ -1,5 +1,8 @@
 import API from '@/config';
 import { ArticlesApiParam } from '@/type';
+import useAuthStore from '@/store/authStore';
+
+const { token } = useAuthStore();
 
 export async function fetchArticles({
     offset = 0,
@@ -11,8 +14,6 @@ export async function fetchArticles({
     const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
         author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
     }`;
-
-    console.log(url);
 
     const res = await fetch(url, {
         cache: 'force-cache',
@@ -41,6 +42,42 @@ export async function fetchComments(slug: string) {
 
     if (!res.ok) {
         throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function postComment(slug: string, body: {}) {
+    const url = `${API.ARTICLES}/${slug}/comments`;
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({
+            comment: { body },
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to post your comment: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function deleteComment(slug: string, commentId: string) {
+    const url = `${API.ARTICLES}/${slug}/comments/${commentId}`;
+    const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token ${token}`,
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete your comment: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
