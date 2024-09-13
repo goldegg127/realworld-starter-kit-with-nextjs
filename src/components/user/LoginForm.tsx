@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { loginUser } from '@/api';
+import useAuthStore from '@/store/authStore';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
+    const { login } = useAuthStore();
 
     const handleInputEmail = (event: React.FocusEvent<HTMLInputElement>) => setEmail(event.target.value);
     const handleInputPassword = (event: React.FocusEvent<HTMLInputElement>) => setPassword(event.target.value);
@@ -17,14 +18,9 @@ export default function LoginForm() {
 
         try {
             const { user } = await loginUser({ email, password });
-            const { token } = user;
 
-            if (token) {
-                Cookies.set('real-world-token', token, {
-                    secure: true,
-                    sameSite: 'Strict',
-                    expires: 7,
-                });
+            if (user) {
+                login(user);
                 router.push('/');
             } else {
                 setErrorMessage('Login successful but no token received. Please try again later.');
