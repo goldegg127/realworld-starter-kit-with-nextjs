@@ -12,8 +12,6 @@ export async function fetchArticles({
         author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
     }`;
 
-    console.log(url);
-
     const res = await fetch(url, {
         cache: 'force-cache',
     });
@@ -41,6 +39,58 @@ export async function fetchComments(slug: string) {
 
     if (!res.ok) {
         throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function postComment({
+    slug,
+    commentBody,
+    token,
+}: {
+    slug: string;
+    commentBody: string;
+    token: string | null;
+}) {
+    const url = `${API.ARTICLES}/${slug}/comments`;
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({
+            comment: { body: commentBody },
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to post your comment: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function deleteComment({
+    slug,
+    commentId,
+    token,
+}: {
+    slug: string;
+    commentId: number;
+    token: string | null;
+}) {
+    const url = `${API.ARTICLES}/${slug}/comments/${commentId}`;
+    const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token ${token}`,
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete your comment: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
