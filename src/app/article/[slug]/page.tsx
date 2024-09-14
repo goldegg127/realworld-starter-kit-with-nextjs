@@ -1,7 +1,14 @@
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
 import { Article } from '@/type';
 import { formatDate, formatProfileLink } from '@/util/format';
-import { ArticleBanner, ArticleContent, ArticleActions, CommentsList, CommentEditor } from '@/components/article';
+import {
+    ArticleBanner,
+    ArticleContent,
+    ArticleActions,
+    CommentsList,
+    CommentEditor,
+    ArticleGlobalStateUpdater,
+} from '@/components/article';
 
 export default async function ArticleDetailsPage({ params }: { params: { slug: string } }) {
     await syncDetailsWithSupabase(params.slug);
@@ -37,6 +44,7 @@ export default async function ArticleDetailsPage({ params }: { params: { slug: s
                 <ArticleContent title={title} description={description} body={body} tagList={tagList} />
                 <hr />
                 <ArticleActions slug={slug} profileLink={profileLink} image={image} username={username} date={date} />
+                <ArticleGlobalStateUpdater article={article} />
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
                         <CommentEditor slug={slug} />
