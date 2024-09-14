@@ -6,6 +6,7 @@ import CommentsList from './CommentsList';
 import DeleteCommentButton from './buttons/DeleteCommentButton';
 import DeleteArticleButton from './buttons/DeleteArticleButton';
 import EditArticleButton from './buttons/EditArticleButton';
+import ArticleGlobalStateUpdater from './ArticleGlobalStateUpdater';
 
 export {
     ArticleBanner,
@@ -16,4 +17,5 @@ export {
     DeleteCommentButton,
     DeleteArticleButton,
     EditArticleButton,
+    ArticleGlobalStateUpdater,
 };
