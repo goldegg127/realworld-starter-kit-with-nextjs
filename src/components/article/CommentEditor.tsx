@@ -9,15 +9,15 @@ export default function CommentEditor({ slug }: { slug: string }) {
     const [commentBody, setCommentBody] = useState('');
     const { token, userInfo } = useAuthStore();
     const initImage = '/image/demo-avatar.png';
-    const [imagePath, setImagePath] = useState(initImage);
+    const [image, setImage] = useState(initImage); // hydration error 해결
 
     const handleTextarea = (event: React.FocusEvent<HTMLTextAreaElement>) => {
         setCommentBody(event.target.value);
     };
 
     useEffect(() => {
-        setImagePath(userInfo?.image || initImage);
-    }, []);
+        setImage(userInfo?.image || initImage);
+    }, [userInfo?.image]);
 
     const handlePostComment = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -39,7 +39,13 @@ export default function CommentEditor({ slug }: { slug: string }) {
                     onBlur={handleTextarea}></textarea>
             </div>
             <div className="card-footer">
-                <Image src={imagePath} alt="" className="comment-author-img" width={32} height={32} />
+                <Image
+                    src={image}
+                    alt={`${userInfo?.username} profile image`}
+                    className="comment-author-img"
+                    width={32}
+                    height={32}
+                />
                 <button className="btn btn-sm btn-primary" type="submit">
                     Post Comment
                 </button>

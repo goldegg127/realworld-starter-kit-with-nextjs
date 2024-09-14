@@ -42,7 +42,7 @@ function ArticleItem({ article }: { article: Article }) {
         <article className="article-preview">
             <div className="article-meta">
                 <Link href={profileLink}>
-                    <Image src={image} alt="" width={32} height={32} />
+                    <Image src={image} alt={`${username} profile image`} width={32} height={32} />
                 </Link>
                 <div className="info">
                     <Link href={profileLink} className="author">
