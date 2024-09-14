@@ -35,8 +35,8 @@ export async function fetchDetails(slug: string) {
 }
 
 export async function postArticleDetails(
-    token: string,
     { title, description, body, tagList }: { title: string; description: string; body: string; tagList: string[] },
+    token: string,
 ) {
     const res = await fetch(`${API.ARTICLES}`, {
         method: 'POST',
@@ -56,6 +56,33 @@ export async function postArticleDetails(
 
     if (!res.ok) {
         throw new Error(`Failed to post for your article: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function updateArticleDetails(
+    slug: string,
+    { title, description, body }: { title: string; description: string; body: string },
+    token: string,
+) {
+    const res = await fetch(`${API.ARTICLES}/${slug}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({
+            article: {
+                title,
+                description,
+                body,
+            },
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to update for your article: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
