@@ -21,7 +21,13 @@ export default function EditorForm({ slug }: { slug: string }) {
         if (slug && token) {
             console.log({ slug, token });
         }
-    }, [slug, token]);
+        console.log({
+            title,
+            description,
+            body,
+            tagList,
+        });
+    }, [slug, token, title, description, body, tagList]);
 
     const createArticle = async () => {
         if (token) {
@@ -78,10 +84,22 @@ export default function EditorForm({ slug }: { slug: string }) {
             </ul>
 
             <fieldset>
-                <InputField onBlurHandler={handleInputTitle} placeholder="Article Title" />
-                <InputField onBlurHandler={handleInputDescription} placeholder="What's this article about?" />
-                <TextareaField onBlurHandler={handleTextarea} placeholder="Write your article (in markdown)" />
-                <InputField onKeyboardHandler={handleInputTags} placeholder="Enter tags" />
+                <InputField value={title} onChangeHandler={handleInputTitle} placeholder="Article Title" />
+                <InputField
+                    value={description}
+                    onChangeHandler={handleInputDescription}
+                    placeholder="What's this article about?"
+                />
+                <TextareaField
+                    value={body}
+                    onChangeHandler={handleTextarea}
+                    placeholder="Write your article (in markdown)"
+                />
+                <InputField
+                    onKeyboardHandler={handleInputTags}
+                    placeholder="Enter tags"
+                    readOnly={slug ? true : false}
+                />
                 <TagList tagList={tagList} />
                 <button className="btn btn-lg pull-xs-right btn-primary" type="button" onClick={handleSubmit}>
                     Publish Article

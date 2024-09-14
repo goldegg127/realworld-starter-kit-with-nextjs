@@ -56,3 +56,5 @@ export type User = {
     bio: string;
     image: string;
 };
+
+export type HandleInputEvent<T> = React.ChangeEvent<T>;
