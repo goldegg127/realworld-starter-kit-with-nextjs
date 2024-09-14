@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { postArticleDetails } from '@/api';
 import useAuthStore from '@/store/authStore';
-import { InputField, TextareaField, TagList } from '@/components/editor';
+import InputField from './InputField';
+import TextareaField from './TextareaField';
+import TagList from './TagList';
 
 export default function EditorForm({ slug }: { slug: string }) {
     const [articleTitle, setArticleTitle] = useState('');
