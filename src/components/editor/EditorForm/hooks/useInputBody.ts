@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useArticleStore } from '@/stores';
 
 function useInputBody() {
-    const [articleBody, setArticleBody] = useState('');
-    const handleTextarea = (event: React.FocusEvent<HTMLTextAreaElement>) => setArticleBody(event.target.value);
+    const { body, setBody } = useArticleStore();
+    const handleTextarea = (event: React.FocusEvent<HTMLTextAreaElement>) => setBody(event.target.value);
 
-    return { articleBody, handleTextarea };
+    return { body, handleTextarea };
 }
 
 export { useInputBody };

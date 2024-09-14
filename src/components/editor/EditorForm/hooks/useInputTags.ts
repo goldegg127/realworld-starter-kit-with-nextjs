@@ -1,21 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useArticleStore } from '@/stores';
 
 function useInputTags() {
-    const [articleTags, setArticleTags] = useState(['']);
+    const { tagList, setTagList } = useArticleStore();
 
     const handleInputTags = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const newTag = event.currentTarget.value;
 
         if (newTag && event.key === 'Enter') {
             event.preventDefault();
-            setArticleTags(prevStates => [...prevStates, newTag]);
+            setTagList([...tagList, newTag]);
             event.currentTarget.value = '';
         }
     };
 
-    return { articleTags, handleInputTags };
+    return { tagList, handleInputTags };
 }
 
 export { useInputTags };

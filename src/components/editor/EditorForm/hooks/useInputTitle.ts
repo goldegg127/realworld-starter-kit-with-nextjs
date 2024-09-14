@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useArticleStore } from '@/stores';
 
 function useInputTitle() {
-    const [articleTitle, setArticleTitle] = useState('');
-    const handleInputTitle = (event: React.FocusEvent<HTMLInputElement>) => setArticleTitle(event.target.value);
+    const { title, setTitle } = useArticleStore();
+    const handleInputTitle = (event: React.FocusEvent<HTMLInputElement>) => setTitle(event.target.value);
 
-    return { articleTitle, handleInputTitle };
+    return { title, handleInputTitle };
 }
 
 export { useInputTitle };

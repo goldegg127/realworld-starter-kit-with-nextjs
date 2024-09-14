@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useArticleStore } from '@/stores';
 
 function useInputDescription() {
-    const [articleDescription, setArticleDescription] = useState('');
-    const handleInputDescription = (event: React.FocusEvent<HTMLInputElement>) =>
-        setArticleDescription(event.target.value);
+    const { description, setDescription } = useArticleStore();
+    const handleInputDescription = (event: React.FocusEvent<HTMLInputElement>) => setDescription(event.target.value);
 
-    return { articleDescription, handleInputDescription };
+    return { description, handleInputDescription };
 }
 
 export { useInputDescription };

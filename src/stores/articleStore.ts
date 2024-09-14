@@ -5,22 +5,22 @@ type ArticleState = {
     title: string;
     description: string;
     body: string;
-    tags: string[];
+    tagList: string[];
     setTitle: (title: string) => void;
     setDescription: (description: string) => void;
     setBody: (body: string) => void;
-    setTags: (tags: string[]) => void;
+    setTagList: (tagList: string[]) => void;
 };
 
 const useArticleStore = create<ArticleState>(set => ({
     title: '',
     description: '',
     body: '',
-    tags: [],
+    tagList: [],
     setTitle: title => set({ title }),
     setDescription: description => set({ description }),
     setBody: body => set({ body }),
-    setTags: tags => set({ tags }),
+    setTagList: tagList => set({ tagList }),
 }));
 
 export { useArticleStore };

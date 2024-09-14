@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { postArticleDetails, updateArticleDetails } from '@/api';
-import useAuthStore from '@/store/authStore';
+import { useAuthStore } from '@/stores';
 import { useInputTitle, useInputDescription, useInputBody, useInputTags } from './hooks';
 import InputField from './InputField';
 import TextareaField from './TextareaField';
@@ -12,26 +12,47 @@ export default function EditorForm({ slug }: { slug: string }) {
     const [errorMessage, setErrorMessage] = useState('');
     const { token } = useAuthStore();
 
-    const { articleTitle, handleInputTitle } = useInputTitle();
-    const { articleDescription, handleInputDescription } = useInputDescription();
-    const { articleBody, handleTextarea } = useInputBody();
-    const { articleTags, handleInputTags } = useInputTags();
+    const { title, handleInputTitle } = useInputTitle();
+    const { description, handleInputDescription } = useInputDescription();
+    const { body, handleTextarea } = useInputBody();
+    const { tagList, handleInputTags } = useInputTags();
 
     useEffect(() => {
-        if (slug) {
-            console.log('Slug:', slug);
+        if (slug && token) {
+            console.log({ slug, token });
         }
-    }, [slug]);
+    }, [slug, token]);
 
     const createArticle = async () => {
         if (token) {
             try {
                 await postArticleDetails(
                     {
-                        title: articleTitle,
-                        description: articleDescription,
-                        body: articleBody,
-                        tagList: articleTags,
+                        title,
+                        description,
+                        body,
+                        tagList,
+                    },
+                    token,
+                );
+            } catch (error) {
+                setErrorMessage('error: ');
+                console.error('error: ', error);
+            }
+        } else {
+            setErrorMessage('An account is required. Please log in to continue.');
+        }
+    };
+
+    const editArticle = async () => {
+        if (token) {
+            try {
+                await updateArticleDetails(
+                    slug,
+                    {
+                        title,
+                        description,
+                        body,
                     },
                     token,
                 );
@@ -47,7 +68,7 @@ export default function EditorForm({ slug }: { slug: string }) {
     const handleSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
 
-        slug && createArticle();
+        slug ? editArticle() : createArticle();
     };
 
     return (
@@ -61,7 +82,7 @@ export default function EditorForm({ slug }: { slug: string }) {
                 <InputField onBlurHandler={handleInputDescription} placeholder="What's this article about?" />
                 <TextareaField onBlurHandler={handleTextarea} placeholder="Write your article (in markdown)" />
                 <InputField onKeyboardHandler={handleInputTags} placeholder="Enter tags" />
-                <TagList articleTags={articleTags} />
+                <TagList tagList={tagList} />
                 <button className="btn btn-lg pull-xs-right btn-primary" type="button" onClick={handleSubmit}>
                     Publish Article
                 </button>

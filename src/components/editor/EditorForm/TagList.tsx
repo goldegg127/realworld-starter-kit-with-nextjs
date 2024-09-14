@@ -1,7 +1,7 @@
-export default function TagList({ articleTags }: { articleTags: string[] }) {
+export default function TagList({ tagList }: { tagList: string[] }) {
     return (
         <div className="tag-list">
-            {articleTags.map(
+            {tagList.map(
                 (tag, index) =>
                     tag && (
                         <span key={`${index}-${tag}`} className="tag-default tag-pill">
