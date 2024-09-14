@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { postArticleDetails } from '@/api';
 import useAuthStore from '@/store/authStore';
+import { InputField, TextareaField, TagList } from '@/components/editor';
 
 export default function EditorForm() {
     const [articleTitle, setArticleTitle] = useState('');
@@ -52,52 +53,15 @@ export default function EditorForm() {
             </ul>
 
             <fieldset>
-                <fieldset className="form-group">
-                    <input
-                        type="text"
-                        className="form-control form-control-lg"
-                        placeholder="Article Title"
-                        onBlur={handleInputTitle}
-                    />
-                </fieldset>
-                <fieldset className="form-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="What's this article about?"
-                        onBlur={handleInputDescription}
-                    />
-                </fieldset>
-                <fieldset className="form-group">
-                    <textarea
-                        className="form-control"
-                        rows={8}
-                        placeholder="Write your article (in markdown)"
-                        onBlur={handleTextarea}></textarea>
-                </fieldset>
-                <fieldset className="form-group">
-                    <input type="text" className="form-control" placeholder="Enter tags" onKeyDown={handleInputTags} />
-                </fieldset>
+                <InputField onBlurHandler={handleInputTitle} placeholder="Article Title" />
+                <InputField onBlurHandler={handleInputDescription} placeholder="What's this article about?" />
+                <TextareaField onBlurHandler={handleTextarea} placeholder="Write your article (in markdown)" />
+                <InputField onKeyboardHandler={handleInputTags} placeholder="Enter tags" />
                 <TagList articleTags={articleTags} />
                 <button className="btn btn-lg pull-xs-right btn-primary" type="button" onClick={handleSubmit}>
                     Publish Article
                 </button>
             </fieldset>
         </>
-    );
-}
-
-function TagList({ articleTags }: { articleTags: string[] }) {
-    return (
-        <div className="tag-list">
-            {articleTags.map(
-                (tag, index) =>
-                    tag && (
-                        <span key={`${index}-${tag}`} className="tag-default tag-pill">
-                            <i className="ion-close-round"></i> {tag}
-                        </span>
-                    ),
-            )}
-        </div>
     );
 }
