@@ -34,6 +34,48 @@ export async function fetchDetails(slug: string) {
     return res.json();
 }
 
+export async function postArticleDetails(
+    token: string,
+    { title, description, body, tagList }: { title: string; description: string; body: string; tagList: string[] },
+) {
+    const res = await fetch(`${API.ARTICLES}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({
+            article: {
+                title,
+                description,
+                body,
+                tagList,
+            },
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to post for your article: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function deleteArticleDetails(slug: string, token: string) {
+    const res = await fetch(`${API.ARTICLES}/${slug}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token ${token}`,
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to post for your article: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
 export async function fetchComments(slug: string) {
     const res = await fetch(`${API.ARTICLES}/${slug}/comments`);
 
