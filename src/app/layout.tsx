@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Head from 'next/head';
 import { Header, Footer } from '@/components/global';
 import './globals.css';
-import './external.css';
 
 export const metadata: Metadata = {
     title: 'Conduit',
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            {/* <head>
+            <head>
                 <link
                     href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
                     rel="stylesheet"
@@ -24,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     type="text/css"
                 />
                 <link rel="stylesheet" href="//demo.productionready.io/main.css" />
-            </head> */}
+            </head>
             <body>
                 <Header />
                 {children}
