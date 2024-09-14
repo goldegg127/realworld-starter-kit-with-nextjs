@@ -1,17 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { postArticleDetails } from '@/api';
 import useAuthStore from '@/store/authStore';
 import { InputField, TextareaField, TagList } from '@/components/editor';
 
-export default function EditorForm() {
+export default function EditorForm({ slug }: { slug: string }) {
     const [articleTitle, setArticleTitle] = useState('');
     const [articleDescription, setArticleDescription] = useState('');
     const [articleBody, setArticleBody] = useState('');
     const [articleTags, setArticleTags] = useState(['']);
     const [errorMessage, setErrorMessage] = useState('');
     const { token } = useAuthStore();
+
+    useEffect(() => {
+        if (slug) {
+            console.log('Slug:', slug);
+        }
+    }, [slug]);
 
     const handleInputTitle = (event: React.FocusEvent<HTMLInputElement>) => setArticleTitle(event.target.value);
     const handleInputDescription = (event: React.FocusEvent<HTMLInputElement>) =>
@@ -31,12 +37,15 @@ export default function EditorForm() {
 
         if (token) {
             try {
-                await postArticleDetails(token, {
-                    title: articleTitle,
-                    description: articleDescription,
-                    body: articleBody,
-                    tagList: articleTags,
-                });
+                await postArticleDetails(
+                    {
+                        title: articleTitle,
+                        description: articleDescription,
+                        body: articleBody,
+                        tagList: articleTags,
+                    },
+                    token,
+                );
             } catch (error) {
                 setErrorMessage('error: ');
                 console.error('error: ', error);
