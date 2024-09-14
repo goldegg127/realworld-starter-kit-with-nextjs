@@ -61,8 +61,8 @@ export default function Header() {
                                         src={`${userInfo?.image}`}
                                         alt={`${userInfo?.username} profile photo`}
                                         className="user-pic"
-                                        width={32}
-                                        height={32}
+                                        width={26}
+                                        height={26}
                                     />
                                     {username}
                                 </Link>
