@@ -17,7 +17,9 @@ async function syncTagListWithSupabase() {
             }
 
             if (existingTag.length > 1) {
-                console.warn(`Warning: Multiple entries found for the same Tag: "${tag}", skipping insertion.`);
+                if (process.env.NODE_ENV !== 'production') {
+                    console.warn(`Warning: Multiple entries found for the same Tag: "${tag}", skipping insertion.`);
+                }
                 continue;
             }
 
@@ -41,7 +43,9 @@ async function syncTagListWithSupabase() {
             if (error) {
                 console.error('Error insert tag: ', error);
                 if (error.code === '23505') {
-                    console.warn('Warning: Profile data insertion failed due to existing data.');
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.warn('Warning: Profile data insertion failed due to existing data.');
+                    }
                 } else {
                     console.error(`Error Tag "${tag}" insertion failed:`, error);
                 }

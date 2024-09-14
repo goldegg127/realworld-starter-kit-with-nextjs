@@ -26,7 +26,13 @@ export default async function CommentsList({ slug }: { slug: string }) {
                             </div>
                             <div className="card-footer">
                                 <Link href={profileLink} className="comment-author">
-                                    <Image src={image} alt="" className="comment-author-img" width={32} height={32} />
+                                    <Image
+                                        src={image}
+                                        alt={`${username} profile image`}
+                                        className="comment-author-img"
+                                        width={32}
+                                        height={32}
+                                    />
                                 </Link>{' '}
                                 <Link href={profileLink} className="comment-author">
                                     {username}

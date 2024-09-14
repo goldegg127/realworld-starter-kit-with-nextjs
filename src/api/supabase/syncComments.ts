@@ -53,7 +53,7 @@ async function syncCommentsWithSupabase(slug: string) {
 
             if (commentInsertError) {
                 console.error('Comment insertion failed:', commentInsertError);
-            } else {
+            } else if (process.env.NODE_ENV !== 'production') {
                 console.log(`Comment by ${author.username} inserted successfully.`);
             }
 

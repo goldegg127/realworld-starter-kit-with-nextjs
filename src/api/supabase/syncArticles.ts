@@ -18,7 +18,7 @@ async function syncArticlesWithSupabase({
             console.log(`Real World Articles API fetch: `, { offset, limit, tag, author, favorited }, articles);
             console.log('No articles found for the favorited user.');
             return;
-        } else {
+        } else if (process.env.NODE_ENV !== 'production') {
             /** @todo **/
             console.error(`❗️favorited 관계형 테이블을 생성해서 삽입하는 개발 과정이 필요합니다.`);
         }
@@ -143,7 +143,9 @@ async function fetchArticlesFromSupabase({
 
     if (favorited) {
         /** @todo **/
-        console.error(`❗️ favorited 관계형 테이블을 조회해서 필터링하는 개발 과정이 필요합니다.`);
+        if (process.env.NODE_ENV !== 'production') {
+            console.error(`❗️ favorited 관계형 테이블을 조회해서 필터링하는 개발 과정이 필요합니다.`);
+        }
 
         return {
             articles: [],

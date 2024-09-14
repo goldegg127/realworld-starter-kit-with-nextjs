@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
 import { formatProfileLink } from '@/util/format';
@@ -56,7 +57,13 @@ export default function Header() {
                             </li>
                             <li className="nav-item">
                                 <Link className={`nav-link${styleActive(myProfilePath)}`} href={myProfilePath}>
-                                    <img src={userInfo?.image} className="user-pic" />
+                                    <Image
+                                        src={`${userInfo?.image}`}
+                                        alt={`${userInfo?.username} profile photo`}
+                                        className="user-pic"
+                                        width={32}
+                                        height={32}
+                                    />
                                     {username}
                                 </Link>
                             </li>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import Head from 'next/head';
 import { Header, Footer } from '@/components/global';
+import './globals.css';
 
 export const metadata: Metadata = {
     title: 'Conduit',
