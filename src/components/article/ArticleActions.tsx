@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { DeleteArticleButton } from '@/components/article';
 
 export default function ArticleActions({
+    slug,
     profileLink,
     image,
     username,
     date,
 }: {
+    slug: string;
     profileLink: string;
     image: string;
     username: string;
@@ -35,13 +38,11 @@ export default function ArticleActions({
                       <i className="ion-heart"></i>
                       &nbsp; Favorite Article <span className="counter">(29)</span>
                   </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                      <i className="ion-edit"></i> Edit Article
-                  </button>
-                  <button className="btn btn-sm btn-outline-danger">
-                      <i className="ion-trash-a"></i> Delete Article
-                  </button> 
+                <button className="btn btn-sm btn-outline-secondary">
+                    <i className="ion-edit"></i> Edit Article
+                </button>
                 */}
+                <DeleteArticleButton slug={slug} />
             </div>
         </div>
     );

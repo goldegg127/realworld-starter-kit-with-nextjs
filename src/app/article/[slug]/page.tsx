@@ -25,11 +25,18 @@ export default async function ArticleDetailsPage({ params }: { params: { slug: s
 
     return (
         <div className="article-page">
-            <ArticleBanner title={title} profileLink={profileLink} image={image} username={username} date={date} />
+            <ArticleBanner
+                slug={slug}
+                title={title}
+                profileLink={profileLink}
+                image={image}
+                username={username}
+                date={date}
+            />
             <div className="container page">
                 <ArticleContent title={title} description={description} body={body} tagList={tagList} />
                 <hr />
-                <ArticleActions profileLink={profileLink} image={image} username={username} date={date} />
+                <ArticleActions slug={slug} profileLink={profileLink} image={image} username={username} date={date} />
                 <div className="row">
                     <div className="col-xs-12 col-md-8 offset-md-2">
                         <CommentEditor slug={slug} />
