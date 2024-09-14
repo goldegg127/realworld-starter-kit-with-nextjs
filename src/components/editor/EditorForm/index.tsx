@@ -1,19 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { postArticleDetails } from '@/api';
+import { postArticleDetails, updateArticleDetails } from '@/api';
 import useAuthStore from '@/store/authStore';
+import { useInputTitle, useInputDescription, useInputBody, useInputTags } from './hooks';
 import InputField from './InputField';
 import TextareaField from './TextareaField';
 import TagList from './TagList';
 
 export default function EditorForm({ slug }: { slug: string }) {
-    const [articleTitle, setArticleTitle] = useState('');
-    const [articleDescription, setArticleDescription] = useState('');
-    const [articleBody, setArticleBody] = useState('');
-    const [articleTags, setArticleTags] = useState(['']);
     const [errorMessage, setErrorMessage] = useState('');
     const { token } = useAuthStore();
+
+    const { articleTitle, handleInputTitle } = useInputTitle();
+    const { articleDescription, handleInputDescription } = useInputDescription();
+    const { articleBody, handleTextarea } = useInputBody();
+    const { articleTags, handleInputTags } = useInputTags();
 
     useEffect(() => {
         if (slug) {
@@ -21,22 +23,7 @@ export default function EditorForm({ slug }: { slug: string }) {
         }
     }, [slug]);
 
-    const handleInputTitle = (event: React.FocusEvent<HTMLInputElement>) => setArticleTitle(event.target.value);
-    const handleInputDescription = (event: React.FocusEvent<HTMLInputElement>) =>
-        setArticleDescription(event.target.value);
-    const handleTextarea = (event: React.FocusEvent<HTMLTextAreaElement>) => setArticleBody(event.target.value);
-    const handleInputTags = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        const newTag = event.currentTarget.value;
-
-        if (newTag && event.key === 'Enter') {
-            event.preventDefault();
-            setArticleTags(prevStates => [...prevStates, newTag]);
-            event.currentTarget.value = '';
-        }
-    };
-    const handleSubmit = async (event: React.MouseEvent) => {
-        event.preventDefault();
-
+    const createArticle = async () => {
         if (token) {
             try {
                 await postArticleDetails(
@@ -55,6 +42,12 @@ export default function EditorForm({ slug }: { slug: string }) {
         } else {
             setErrorMessage('An account is required. Please log in to continue.');
         }
+    };
+
+    const handleSubmit = async (event: React.MouseEvent) => {
+        event.preventDefault();
+
+        slug && createArticle();
     };
 
     return (
