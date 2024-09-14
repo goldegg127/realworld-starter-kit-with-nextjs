@@ -3,8 +3,9 @@ import ArticleContent from './ArticleContent';
 import ArticleActions from './ArticleActions';
 import CommentEditor from './CommentEditor';
 import CommentsList from './CommentsList';
-import DeleteCommentButton from './DeleteCommentButton';
-import DeleteArticleButton from './DeleteArticleButton';
+import DeleteCommentButton from './buttons/DeleteCommentButton';
+import DeleteArticleButton from './buttons/DeleteArticleButton';
+import EditArticleButton from './buttons/EditArticleButton';
 
 export {
     ArticleBanner,
@@ -14,4 +15,5 @@ export {
     CommentsList,
     DeleteCommentButton,
     DeleteArticleButton,
+    EditArticleButton,
 };
