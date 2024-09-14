@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { persist, PersistStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
+import { localStoragePersist } from '@/util/storageUtils';
 import Cookies from 'js-cookie';
 import { User } from '@/type';
 
@@ -9,13 +10,6 @@ type AuthState = {
     isLoggedIn: boolean;
     login: (user: User) => void;
     logout: () => void;
-};
-
-// 비동기 localStorage 구현
-const localStoragePersist: PersistStorage<AuthState> = {
-    getItem: name => Promise.resolve(localStorage.getItem(name) ? JSON.parse(localStorage.getItem(name)!) : null),
-    setItem: (name, value) => Promise.resolve(localStorage.setItem(name, JSON.stringify(value))),
-    removeItem: name => Promise.resolve(localStorage.removeItem(name)),
 };
 
 const useAuthStore = create<AuthState>()(

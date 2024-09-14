@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { persist, PersistStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
+import { localStoragePersist } from '@/util/storageUtils';
 
 type ArticleState = {
     title: string;
@@ -12,15 +13,23 @@ type ArticleState = {
     setTagList: (tagList: string[]) => void;
 };
 
-const useArticleStore = create<ArticleState>(set => ({
-    title: '',
-    description: '',
-    body: '',
-    tagList: [],
-    setTitle: title => set({ title }),
-    setDescription: description => set({ description }),
-    setBody: body => set({ body }),
-    setTagList: tagList => set({ tagList }),
-}));
+const useArticleStore = create<ArticleState>()(
+    persist<ArticleState>(
+        set => ({
+            title: '',
+            description: '',
+            body: '',
+            tagList: [],
+            setTitle: title => set({ title }),
+            setDescription: description => set({ description }),
+            setBody: body => set({ body }),
+            setTagList: tagList => set({ tagList }),
+        }),
+        {
+            name: 'article-storage',
+            storage: localStoragePersist,
+        },
+    ),
+);
 
 export { useArticleStore };
