@@ -21,7 +21,9 @@ async function syncDetailsWithSupabase(slug: string) {
         }
 
         if (existingArticles.length > 1) {
-            console.warn(`Warning: Multiple entries found for the same Article: "${slug}", skipping insertion.`);
+            if (process.env.NODE_ENV !== 'production') {
+                console.warn(`Warning: Multiple entries found for the same Article: "${slug}", skipping insertion.`);
+            }
             return;
         }
 
@@ -93,7 +95,9 @@ async function syncDetailsWithSupabase(slug: string) {
 
         if (error) {
             if (error.code === '23505') {
-                console.warn('Warning: Article data insertion failed due to existing data.');
+                if (process.env.NODE_ENV !== 'production') {
+                    console.warn('Warning: Article data insertion failed due to existing data.');
+                }
             } else {
                 console.error('Error Article insertion failed:', error);
             }
