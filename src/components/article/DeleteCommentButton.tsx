@@ -3,7 +3,7 @@
 import { deleteComment } from '@/api';
 import useAuthStore from '@/store/authStore';
 
-export default async function DeleteCommentButton({
+export default function DeleteCommentButton({
     slug,
     commentId,
     username: authorName,
