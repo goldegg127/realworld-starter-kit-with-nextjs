@@ -15,7 +15,13 @@ function useInputTags() {
         }
     };
 
-    return { tagList, handleInputTags };
+    const initInputTags = () => {
+        if (tagList.length > 1 && tagList[0] !== '') {
+            setTagList([]);
+        }
+    };
+
+    return { tagList, handleInputTags, initInputTags };
 }
 
 export { useInputTags };

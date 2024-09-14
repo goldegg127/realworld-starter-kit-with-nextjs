@@ -6,8 +6,9 @@ import { useArticleStore } from '@/stores';
 function useInputBody() {
     const { body, setBody } = useArticleStore();
     const handleTextarea = (event: HandleInputEvent<HTMLTextAreaElement>) => setBody(event.target.value);
+    const initTextarea = () => body && setBody('');
 
-    return { body, handleTextarea };
+    return { body, handleTextarea, initTextarea };
 }
 
 export { useInputBody };

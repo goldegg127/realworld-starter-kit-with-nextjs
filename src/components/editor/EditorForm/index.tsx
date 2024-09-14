@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { postArticleDetails, updateArticleDetails } from '@/api';
-import { useAuthStore } from '@/stores';
+import { useAuthStore, useArticleStore } from '@/stores';
 import { useInputTitle, useInputDescription, useInputBody, useInputTags } from './hooks';
 import InputField from './InputField';
 import TextareaField from './TextareaField';
@@ -10,23 +10,28 @@ import TagList from './TagList';
 
 export default function EditorForm({ slug }: { slug: string }) {
     const [errorMessage, setErrorMessage] = useState('');
-    const { token } = useAuthStore();
+    const { token, userInfo } = useAuthStore();
+    const { author } = useArticleStore();
 
-    const { title, handleInputTitle } = useInputTitle();
-    const { description, handleInputDescription } = useInputDescription();
-    const { body, handleTextarea } = useInputBody();
-    const { tagList, handleInputTags } = useInputTags();
+    const isEditable = slug && token && userInfo?.username === author?.username;
+
+    const { title, handleInputTitle, initInputTitle } = useInputTitle();
+    const { description, handleInputDescription, initInputDescription } = useInputDescription();
+    const { body, handleTextarea, initTextarea } = useInputBody();
+    const { tagList, handleInputTags, initInputTags } = useInputTags();
 
     useEffect(() => {
+        /**
+         * @todo 개발 완료 후 if (slug && token) 에서 if (isEditable) 으로 교체
+        }**/
         if (slug && token) {
             console.log({ slug, token });
+        } else if (!isEditable) {
+            initInputTitle();
+            initTextarea();
+            initInputDescription();
+            initInputTags();
         }
-        console.log({
-            title,
-            description,
-            body,
-            tagList,
-        });
     }, [slug, token, title, description, body, tagList]);
 
     const createArticle = async () => {
@@ -74,6 +79,9 @@ export default function EditorForm({ slug }: { slug: string }) {
     const handleSubmit = async (event: React.MouseEvent) => {
         event.preventDefault();
 
+        /**
+         * @todo 개발 완료 후 if (isEditable) 으로 교체
+        }**/
         slug ? editArticle() : createArticle();
     };
 

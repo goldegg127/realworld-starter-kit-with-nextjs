@@ -13,7 +13,12 @@ export default function ArticleGlobalStateUpdater({ article }: { article: Articl
         /**
          * @todo 개발 완료 후 주석의 조건문 적용
          * if (token && userInfo?.username === author?.username) {
-        }**/
+                setTitle(title);
+                setDescription(description);
+                setBody(body);
+                setTagList(tagList);
+            }
+         **/
         setTitle(title);
         setDescription(description);
         setBody(body);
