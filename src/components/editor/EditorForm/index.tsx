@@ -32,6 +32,14 @@ export default function EditorForm({ slug }: { slug: string }) {
             initInputDescription();
             initInputTags();
         }
+    }, []);
+
+    useEffect(() => {
+        /**
+         * @todo 개발 완료 후 제거
+        }**/
+        console.log({ slug, token });
+        console.log({ title, description, body, tagList });
     }, [slug, token, title, description, body, tagList]);
 
     const createArticle = async () => {
