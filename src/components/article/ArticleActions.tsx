@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { DeleteArticleButton, EditArticleButton } from '@/components/article';
+import { DeleteArticleButton, EditArticleButton } from '@/components/article/buttons';
 
 export default function ArticleActions({
     slug,
