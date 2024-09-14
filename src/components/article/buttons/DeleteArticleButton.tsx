@@ -1,6 +1,6 @@
 'use client';
 
-import useAuthStore from '@/store/authStore';
+import { useAuthStore } from '@/stores/authStore';
 import { deleteArticleDetails } from '@/api';
 
 export default function DeleteArticleButton({ slug }: { slug: string }) {
