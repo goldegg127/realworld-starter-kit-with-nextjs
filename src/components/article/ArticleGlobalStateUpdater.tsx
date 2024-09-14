@@ -10,8 +10,10 @@ export default function ArticleGlobalStateUpdater({ article }: { article: Articl
     const { token, userInfo } = useAuthStore();
 
     useEffect(() => {
-        if (token && userInfo?.username === author?.username) {
-        }
+        /**
+         * @todo 개발 완료 후 주석의 조건문 적용
+         * if (token && userInfo?.username === author?.username) {
+        }**/
         setTitle(title);
         setDescription(description);
         setBody(body);
