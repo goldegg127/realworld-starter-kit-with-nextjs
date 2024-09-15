@@ -1,14 +1,30 @@
-export default function TagList({ tagList }: { tagList: string[] }) {
+'use client';
+
+import { useEffect } from 'react';
+import { useArticleStore } from '@/stores/articleStore';
+
+export default function TagList({ readOnly }: { readOnly: boolean }) {
+    const { tagList, setTagList } = useArticleStore();
+
+    const deleteTag = (clickedTag: string) => {
+        const newTags = tagList.filter(tag => tag !== clickedTag);
+        setTagList(newTags);
+    };
+
+    useEffect(() => {}, [tagList]);
+
     return (
         <div className="tag-list">
             {tagList.map(
                 (tag, index) =>
                     tag && (
                         <span key={`${index}-${tag}`} className="tag-default tag-pill">
-                            {/**
-                             * @todo 태그 삭제 기능, PUT 메서드는 태그 수정 불가 업데이트 시 삭제기능 제거
-                             */}
-                            <i className="ion-close-round"></i> {tag}
+                            {!readOnly && (
+                                <button type="button" aria-label={`remove tag ${tag}`} onClick={() => deleteTag(tag)}>
+                                    <i className="ion-close-round"></i>
+                                </button>
+                            )}
+                            {tag}
                         </span>
                     ),
             )}

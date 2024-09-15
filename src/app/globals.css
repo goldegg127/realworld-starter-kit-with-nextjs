@@ -23,3 +23,8 @@ li {
     text-decoration: none;
     color: inherit;
 }
+
+[class] button:focus,
+button[class]:focus {
+    outline: none;
+}
