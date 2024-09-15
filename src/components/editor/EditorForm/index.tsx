@@ -32,7 +32,7 @@ export default function EditorForm({ slug }: { slug: string }) {
             initInputDescription();
             initInputTags();
         }
-    }, []);
+    }, [slug]);
 
     useEffect(() => {
         /**
