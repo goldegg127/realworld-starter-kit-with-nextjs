@@ -32,7 +32,7 @@ export default function EditorForm({ slug }: { slug: string }) {
             initInputDescription();
             initInputTags();
         }
-    }, [slug]);
+    }, [slug, token, isEditable, initInputTitle, initTextarea, initInputDescription, initInputTags]);
 
     useEffect(() => {
         /**
@@ -116,7 +116,7 @@ export default function EditorForm({ slug }: { slug: string }) {
                     placeholder="Enter tags"
                     readOnly={slug ? true : false}
                 />
-                <TagList tagList={tagList} />
+                <TagList readOnly={slug ? true : false} />
                 <button className="btn btn-lg pull-xs-right btn-primary" type="button" onClick={handleSubmit}>
                     Publish Article
                 </button>
