@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
 import { Comments } from '@/type';
 import { formatDate, formatProfileLink } from '@/util/format';
-import DeleteCommentButton from './DeleteCommentButton';
+import DeleteCommentButton from './buttons/DeleteCommentButton';
 
 export default async function CommentsList({ slug }: { slug: string }) {
     await syncCommentsWithSupabase(slug);

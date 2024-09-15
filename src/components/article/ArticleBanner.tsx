@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { DeleteArticleButton, EditArticleButton } from '@/components/article/buttons';
 
 export default function ArticleBanner({
+    slug,
     title,
     profileLink,
     image,
     username,
     date,
 }: {
+    slug: string;
     title: string;
     profileLink: string;
     image: string;
@@ -40,13 +43,9 @@ export default function ArticleBanner({
                       <i className="ion-heart"></i>
                       &nbsp; Favorite Post <span className="counter">(29)</span>
                   </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                      <i className="ion-edit"></i> Edit Article
-                  </button>
-                  <button className="btn btn-sm btn-outline-danger">
-                      <i className="ion-trash-a"></i> Delete Article
-                  </button> 
                 */}
+                    <EditArticleButton slug={slug} />
+                    <DeleteArticleButton slug={slug} />
                 </div>
             </div>
         </section>

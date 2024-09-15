@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { postComment } from '@/api';
-import useAuthStore from '@/store/authStore';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function CommentEditor({ slug }: { slug: string }) {
     const [commentBody, setCommentBody] = useState('');

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import useAuthStore from '@/store/authStore';
+import { useAuthStore } from '@/stores/authStore';
 import { formatProfileLink } from '@/util/format';
 
 export default function Header() {
@@ -61,8 +61,8 @@ export default function Header() {
                                         src={`${userInfo?.image}`}
                                         alt={`${userInfo?.username} profile photo`}
                                         className="user-pic"
-                                        width={32}
-                                        height={32}
+                                        width={26}
+                                        height={26}
                                     />
                                     {username}
                                 </Link>

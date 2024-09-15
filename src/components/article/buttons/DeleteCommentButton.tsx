@@ -1,7 +1,7 @@
 'use client';
 
 import { deleteComment } from '@/api';
-import useAuthStore from '@/store/authStore';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function DeleteCommentButton({
     slug,
