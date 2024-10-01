@@ -6,8 +6,11 @@ li {
     list-style: none;
 }
 
+h1.logo {
+    font-size: inherit;
+}
+
 .hidden-text-target {
-    /* font-size: 15px; */
     max-height: 40px;
     overflow: hidden;
     display: -webkit-box;
