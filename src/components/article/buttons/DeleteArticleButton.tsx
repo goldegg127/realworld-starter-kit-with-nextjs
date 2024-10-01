@@ -1,25 +1,12 @@
 'use client';
 
-import { useAuthStore } from '@/stores/authStore';
-import { deleteArticleDetails } from '@/api';
+import { useHandleDeleteArticle } from '../hooks/useHandleDeleteArticle';
 
 export default function DeleteArticleButton({ slug }: { slug: string }) {
-    const { token } = useAuthStore();
-
-    const handleDeleteArticle = async () => {
-        if (token) {
-            try {
-                await deleteArticleDetails(slug, token);
-            } catch (error) {
-                console.error(error);
-            }
-        } else {
-            console.error('You have lost your account information. Please log in to proceed.');
-        }
-    };
+    const { handleDeleteArticle } = useHandleDeleteArticle(slug);
 
     return (
-        <button className="btn btn-sm btn-outline-danger" onClick={handleDeleteArticle}>
+        <button type="button" className="btn btn-sm btn-outline-danger" onClick={handleDeleteArticle}>
             <i className="ion-trash-a"></i> Delete Article
         </button>
     );

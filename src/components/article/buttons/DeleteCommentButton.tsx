@@ -1,7 +1,6 @@
 'use client';
 
-import { deleteComment } from '@/api';
-import { useAuthStore } from '@/stores/authStore';
+import { useHandleDeleteComment } from '../hooks/useHandleDeleteComment';
 
 export default function DeleteCommentButton({
     slug,
@@ -12,15 +11,7 @@ export default function DeleteCommentButton({
     commentId: number;
     username: string;
 }) {
-    const { token, userInfo } = useAuthStore();
-
-    const handleDeleteComment = async (commentId: number) => {
-        try {
-            await deleteComment({ slug, commentId, token });
-        } catch (error) {
-            console.error(`Error : ${error}`);
-        }
-    };
+    const { userInfo, handleDeleteComment } = useHandleDeleteComment(slug);
 
     return authorName === userInfo?.username ? (
         <button type="button" className="mod-options" onClick={() => handleDeleteComment(commentId)}>
