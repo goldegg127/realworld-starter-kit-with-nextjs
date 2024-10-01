@@ -8,12 +8,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { navigator } from '@/util/navigation';
 
 export default function Header() {
-    const { userInfo, isLoggedIn, logout } = useAuthStore();
     const [isReady, setIsReady] = useState(false); // 서버-클라이언트 렌더 차이 방지
-    const pathname = usePathname();
-    const styleActive = (path: string) => (pathname === path ? ' active' : '');
-    const username = userInfo?.username || '';
-    const myProfileLink = navigator.profile(username);
 
     useEffect(() => {
         setIsReady(true); // 렌더링 준비 완료
@@ -27,55 +22,78 @@ export default function Header() {
         <nav className="navbar navbar-light">
             <div className="container">
                 <Link className="navbar-brand" href="/">
-                    conduit
+                    <h1>conduit</h1>
                 </Link>
-                <ul className="nav navbar-nav pull-xs-right">
-                    {!isLoggedIn ? (
-                        <>
-                            <li className="nav-item">
-                                <Link className={`nav-link${styleActive('/login')}`} href="/login">
-                                    Sign in
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={`nav-link${styleActive('/register')}`} href="/register">
-                                    Sign up
-                                </Link>
-                            </li>
-                        </>
-                    ) : (
-                        <>
-                            <li className="nav-item">
-                                <Link className={`nav-link${styleActive('/editor')}`} href="/editor">
-                                    <i className="ion-compose"></i> New Article
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={`nav-link${styleActive('/settings')}`} href="/settings">
-                                    <i className="ion-gear-a"></i> Settings
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className={`nav-link${styleActive(myProfileLink)}`} href={myProfileLink}>
-                                    <Image
-                                        src={`${userInfo?.image}`}
-                                        alt={`${userInfo?.username} profile photo`}
-                                        className="user-pic"
-                                        width={26}
-                                        height={26}
-                                    />
-                                    {username}
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" onClick={logout} href="/">
-                                    <i className="ion-log-out"></i> Logout
-                                </Link>
-                            </li>
-                        </>
-                    )}
-                </ul>
+                <Nav />
             </div>
         </nav>
+    );
+}
+
+function Nav() {
+    const { userInfo, isLoggedIn, logout } = useAuthStore();
+    const username = userInfo?.username || '';
+
+    return (
+        <nav>
+            <ul className="nav navbar-nav pull-xs-right">
+                {!isLoggedIn ? (
+                    <>
+                        <NavItem navName="Sign in" path={navigator.login} />
+                        <NavItem navName="Sign up" path={navigator.register} />
+                    </>
+                ) : (
+                    <>
+                        <NavItem navName="New Article" path={navigator.editor}>
+                            <i className="ion-compose"></i>
+                        </NavItem>
+                        <NavItem navName="Settings" path={navigator.settings}>
+                            <i className="ion-gear-a"></i>
+                        </NavItem>
+                        <NavItem navName={username} path={navigator.profile(username)}>
+                            <Image
+                                src={`${userInfo?.image}`}
+                                alt={`${userInfo?.username} profile photo`}
+                                className="user-pic"
+                                width={26}
+                                height={26}
+                            />
+                        </NavItem>
+                        <NavItem navName="Logout" path="/" onClick={logout}>
+                            <i className="ion-log-out"></i>
+                        </NavItem>
+                    </>
+                )}
+            </ul>
+        </nav>
+    );
+}
+
+function NavItem({
+    navName,
+    path,
+    children,
+    onClick,
+}: {
+    navName: string;
+    path: string;
+    children?: React.ReactNode;
+    onClick?: () => void;
+}) {
+    const pathname = usePathname();
+    const styleActive = (navName: string, path: string) => {
+        if (navName === 'Logout') {
+            return '';
+        }
+
+        return pathname === path ? ' active' : '';
+    };
+
+    return (
+        <li className="nav-item">
+            <Link className={`nav-link${styleActive(navName, path)}`} href={path} onClick={onClick}>
+                {children} {navName}
+            </Link>
+        </li>
     );
 }

@@ -1,6 +1,10 @@
 export const navigator = {
     profile: (username: string) => `/profile/${username}`,
     articleDetails: (slug: string) => `/article/${slug}`,
-    tag: (tag: string) => `/?tag=${tag}`,
+    tag: (tag: string) => `?tag=${tag}`,
     favorited: (favorited: string) => `?favorited=${favorited}`,
+    login: `/login`,
+    register: `/register`,
+    editor: `/editor`,
+    settings: `/settings`,
 };
