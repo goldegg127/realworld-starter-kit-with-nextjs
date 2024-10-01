@@ -1,6 +1,6 @@
-import { UserBanner, UserArticleList } from '@/components/profile';
+import { ProfileBanner, ProfileArticleList } from '@/components/profile';
 
-export default function UserProfilePage({
+export default function ProfilePage({
     params,
     searchParams,
 }: {
@@ -11,11 +11,11 @@ export default function UserProfilePage({
         <main className="profile-page">
             <div className="user-info">
                 <Container>
-                    <UserBanner author={params.author} />
+                    <ProfileBanner author={params.author} />
                 </Container>
             </div>
             <Container>
-                <UserArticleList author={params.author} searchParams={searchParams} />
+                <ProfileArticleList author={params.author} searchParams={searchParams} />
             </Container>
         </main>
     );

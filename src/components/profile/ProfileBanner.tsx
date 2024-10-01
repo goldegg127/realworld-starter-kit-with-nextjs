@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from '@/api/supabase';
 
-export default async function UserBanner({ author }: { author: string }) {
+export default async function ProfileBanner({ author }: { author: string }) {
     await syncProfilesWithSupabase(author);
 
     const { profile } = await fetchProfilesFromSupabase(author);

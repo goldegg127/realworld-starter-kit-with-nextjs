@@ -1,4 +1,4 @@
-import UserBanner from './UserBanner';
-import UserArticleList from './UserArticleList';
+import ProfileBanner from './ProfileBanner';
+import ProfileArticleList from './ProfileArticleList';
 
-export { UserBanner, UserArticleList };
+export { ProfileBanner, ProfileArticleList };

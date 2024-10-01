@@ -7,7 +7,7 @@ import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
 import { ArticleItems } from '@/components/common';
 
-export default async function UserArticleList({
+export default async function ProfileArticleList({
     author,
     searchParams,
 }: {
