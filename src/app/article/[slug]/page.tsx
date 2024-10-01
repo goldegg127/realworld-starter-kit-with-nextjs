@@ -1,6 +1,7 @@
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
 import { Article } from '@/type';
-import { formatDate, formatProfileLink } from '@/util/format';
+import { formatDate } from '@/util/format';
+import { navigator } from '@/util/navigation';
 import {
     ArticleBanner,
     ArticleContent,
@@ -27,7 +28,7 @@ export default async function ArticleDetailsPage({ params }: { params: { slug: s
         author,
     }: Article = article;
     const { username, bio, image, following } = author;
-    const profileLink = formatProfileLink(username);
+    const profileLink = navigator.profile(username);
     const date = formatDate(createdAt);
 
     return (

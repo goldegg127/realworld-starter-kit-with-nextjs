@@ -2,7 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
 import { Comments } from '@/type';
-import { formatDate, formatProfileLink } from '@/util/format';
+import { formatDate } from '@/util/format';
+import { navigator } from '@/util/navigation';
 import DeleteCommentButton from './buttons/DeleteCommentButton';
 
 export default async function CommentsList({ slug }: { slug: string }) {
@@ -15,7 +16,7 @@ export default async function CommentsList({ slug }: { slug: string }) {
             {comments.map(comment => {
                 const { id: commentId, createdAt, body, author } = comment;
                 const { username, image } = author;
-                const profileLink = formatProfileLink(username);
+                const profileLink = navigator.profile(username);
                 const date = formatDate(createdAt);
 
                 return (

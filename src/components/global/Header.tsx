@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
-import { formatProfileLink } from '@/util/format';
+import { navigator } from '@/util/navigation';
 
 export default function Header() {
     const { userInfo, isLoggedIn, logout } = useAuthStore();
@@ -13,7 +13,7 @@ export default function Header() {
     const pathname = usePathname();
     const styleActive = (path: string) => (pathname === path ? ' active' : '');
     const username = userInfo?.username || '';
-    const myProfilePath = formatProfileLink(username);
+    const myProfileLink = navigator.profile(username);
 
     useEffect(() => {
         setIsReady(true); // 렌더링 준비 완료
@@ -56,7 +56,7 @@ export default function Header() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className={`nav-link${styleActive(myProfilePath)}`} href={myProfilePath}>
+                                <Link className={`nav-link${styleActive(myProfileLink)}`} href={myProfileLink}>
                                     <Image
                                         src={`${userInfo?.image}`}
                                         alt={`${userInfo?.username} profile photo`}
