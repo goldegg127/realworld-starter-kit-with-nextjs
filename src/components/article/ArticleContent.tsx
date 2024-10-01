@@ -18,16 +18,22 @@ export default function ArticleContent({
                 <p>{description}</p>
                 <h2 id="introducing-ionic">{title}</h2>
                 <p>{body}</p>
-                <ul className="tag-list">
-                    {tagList.map((tag, index) => (
-                        <li key={`tag-${tag}-${index}`}>
-                            <Link href={navigator.tag(tag)} className="tag-default tag-pill tag-outline">
-                                {tag}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                <Tags tagList={tagList} />
             </div>
         </section>
+    );
+}
+
+function Tags({ tagList }: { tagList: string[] }) {
+    return (
+        <ul className="tag-list">
+            {tagList.map((tag, index) => (
+                <li key={`tag-${tag}-${index}`}>
+                    <Link href={navigator.tag(tag)} className="tag-default tag-pill tag-outline">
+                        {tag}
+                    </Link>
+                </li>
+            ))}
+        </ul>
     );
 }
