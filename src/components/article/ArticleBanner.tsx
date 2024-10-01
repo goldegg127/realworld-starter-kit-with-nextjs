@@ -32,18 +32,6 @@ export default function ArticleBanner({
                         </Link>
                         <span className="date">{date}</span>
                     </div>
-                    {/**
-                  * @todo 로그인 기능 구현 후 적용 예정
-                  <button className="btn btn-sm btn-outline-secondary"> 
-                      <i className="ion-plus-round"></i>
-                      &nbsp; Follow Eric Simons <span className="counter">(10)</span>
-                  </button>
-                  &nbsp;&nbsp;
-                  <button className="btn btn-sm btn-outline-primary">
-                      <i className="ion-heart"></i>
-                      &nbsp; Favorite Post <span className="counter">(29)</span>
-                  </button>
-                */}
                     <ArticleButtons slug={slug} />
                 </div>
             </div>
