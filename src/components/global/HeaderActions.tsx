@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import { navigator } from '@/util/navigation';
+import { useActiveStyle } from '@/hooks/useActiveStyle';
 
 export default function HeaderActions() {
     const { userInfo, isLoggedIn, logout } = useAuthStore();
@@ -43,29 +43,20 @@ export default function HeaderActions() {
     );
 }
 
-function NavItem({
-    navName,
-    path,
-    children,
-    onClick,
-}: {
+type NavItemProps = {
     navName: string;
     path: string;
     children?: React.ReactNode;
     onClick?: () => void;
-}) {
-    const pathname = usePathname();
-    const styleActive = (navName: string, path: string) => {
-        if (navName === 'Logout') {
-            return '';
-        }
+};
 
-        return pathname === path ? ' active' : '';
-    };
+function NavItem({ navName, path, children, onClick }: NavItemProps) {
+    const { activeNav } = useActiveStyle();
+    const active = activeNav(navName, path);
 
     return (
         <li className="nav-item">
-            <Link className={`nav-link${styleActive(navName, path)}`} href={path} onClick={onClick}>
+            <Link className={`nav-link${active}`} href={path} onClick={onClick}>
                 {children} {navName}
             </Link>
         </li>
