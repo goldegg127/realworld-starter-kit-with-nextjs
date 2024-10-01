@@ -10,18 +10,18 @@ export default function UserProfilePage({
     return (
         <main className="profile-page">
             <div className="user-info">
-                <LayoutContiner>
+                <Container>
                     <UserBanner author={params.author} />
-                </LayoutContiner>
+                </Container>
             </div>
-            <LayoutContiner>
+            <Container>
                 <UserArticleList author={params.author} searchParams={searchParams} />
-            </LayoutContiner>
+            </Container>
         </main>
     );
 }
 
-function LayoutContiner({ children }: { children: React.ReactNode }) {
+function Container({ children }: { children: React.ReactNode }) {
     return (
         <section className="container">
             <div className="row">
