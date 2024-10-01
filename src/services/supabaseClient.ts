@@ -9,4 +9,4 @@ if (!process.env.SUPABASE_KEY) {
 }
 
 // Supabase 클라이언트 초기화
-export const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
+export const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
