@@ -2,7 +2,7 @@
 
 import { useHandleDeleteComment } from '../hooks/useHandleDeleteComment';
 
-export default function DeleteCommentButton({
+export default function CommentButtonDelete({
     slug,
     commentId,
     username: authorName,

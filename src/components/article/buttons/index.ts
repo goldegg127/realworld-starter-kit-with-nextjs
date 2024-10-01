@@ -1,5 +1,5 @@
-import DeleteCommentButton from './DeleteCommentButton';
-import DeleteArticleButton from './DeleteArticleButton';
-import EditArticleButton from './EditArticleButton';
+import CommentButtonDelete from './CommentButtonDelete';
+import ArticleButtonDelete from './ArticleButtonDelete';
+import ArticleButtonEdit from './ArticleButtonEdit';
 
-export { DeleteCommentButton, DeleteArticleButton, EditArticleButton };
+export { CommentButtonDelete, ArticleButtonDelete, ArticleButtonEdit };

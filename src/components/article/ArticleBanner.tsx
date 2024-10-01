@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { DeleteArticleButton, EditArticleButton } from '@/components/article/buttons';
+import { ArticleButtonDelete, ArticleButtonEdit } from '@/components/article/buttons';
 
 export default function ArticleBanner({
     slug,
@@ -44,8 +44,8 @@ export default function ArticleBanner({
                       &nbsp; Favorite Post <span className="counter">(29)</span>
                   </button>
                 */}
-                    <EditArticleButton slug={slug} />
-                    <DeleteArticleButton slug={slug} />
+                    <ArticleButtonEdit slug={slug} />
+                    <ArticleButtonDelete slug={slug} />
                 </div>
             </div>
         </section>

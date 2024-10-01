@@ -2,7 +2,7 @@
 
 import { useHandleDeleteArticle } from '../hooks/useHandleDeleteArticle';
 
-export default function DeleteArticleButton({ slug }: { slug: string }) {
+export default function ArticleButtonDelete({ slug }: { slug: string }) {
     const { handleDeleteArticle } = useHandleDeleteArticle(slug);
 
     return (

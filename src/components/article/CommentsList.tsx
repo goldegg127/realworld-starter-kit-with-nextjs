@@ -4,7 +4,7 @@ import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supab
 import { Comments } from '@/type';
 import { formatDate } from '@/util/format';
 import { navigator } from '@/util/navigation';
-import DeleteCommentButton from './buttons/DeleteCommentButton';
+import { CommentButtonDelete } from './buttons';
 
 export default async function CommentsList({ slug }: { slug: string }) {
     await syncCommentsWithSupabase(slug);
@@ -39,7 +39,7 @@ export default async function CommentsList({ slug }: { slug: string }) {
                                     {username}
                                 </Link>
                                 <span className="date-posted">{date}</span>
-                                <DeleteCommentButton slug={slug} commentId={commentId} username={username} />
+                                <CommentButtonDelete slug={slug} commentId={commentId} username={username} />
                             </div>
                         </article>
                     </li>
