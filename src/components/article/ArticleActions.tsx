@@ -1,20 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { ArticleActionsProps } from './type';
 import { ArticleButtons } from '@/components/article/buttons';
 
-export default function ArticleActions({
-    slug,
-    profileLink,
-    image,
-    username,
-    date,
-}: {
-    slug: string;
-    profileLink: string;
-    image: string;
-    username: string;
-    date: string;
-}) {
+export default function ArticleActions({ slug, profileLink, image, username, date }: ArticleActionsProps) {
     return (
         <div className="article-actions">
             <div className="article-meta">

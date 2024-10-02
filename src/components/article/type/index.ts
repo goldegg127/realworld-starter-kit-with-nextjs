@@ -1,5 +1,29 @@
 import { Comments, Comment, Author } from '@/type';
 
+export type ArticleActionsProps = {
+    slug: string;
+    profileLink: string;
+    image: string;
+    username: string;
+    date: string;
+};
+
+export type ArticleBannerProps = {
+    slug: string;
+    title: string;
+    profileLink: string;
+    image: string;
+    username: string;
+    date: string;
+};
+
+export type ArticleContentProps = {
+    title: string;
+    description: string;
+    body: string;
+    tagList: string[];
+};
+
 export type CardFooterProps = {
     slug: string;
     commentId: Comment['id'];
@@ -8,7 +32,7 @@ export type CardFooterProps = {
 };
 
 export type ProfileLinkProps = {
-    username: string;
+    username: Author['username'];
     children: React.ReactNode;
 };
 

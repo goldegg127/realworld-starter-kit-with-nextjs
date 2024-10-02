@@ -1,17 +1,8 @@
 import Link from 'next/link';
 import { navigator } from '@/util/navigation';
+import { ArticleContentProps } from './type';
 
-export default function ArticleContent({
-    title,
-    description,
-    body,
-    tagList,
-}: {
-    title: string;
-    description: string;
-    body: string;
-    tagList: string[];
-}) {
+export default function ArticleContent({ title, description, body, tagList }: ArticleContentProps) {
     return (
         <section className="row article-content">
             <div className="col-md-12">

@@ -1,22 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArticleButtons } from '@/components/article/buttons';
+import { ArticleBannerProps } from './type';
 
-export default function ArticleBanner({
-    slug,
-    title,
-    profileLink,
-    image,
-    username,
-    date,
-}: {
-    slug: string;
-    title: string;
-    profileLink: string;
-    image: string;
-    username: string;
-    date: string;
-}) {
+export default function ArticleBanner({ slug, title, profileLink, image, username, date }: ArticleBannerProps) {
     return (
         <section className="banner">
             <div className="container">
