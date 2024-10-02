@@ -5,7 +5,7 @@ import { Comments } from '@/type';
 import { CardFooterProps, CommentButtonDeleteProps, ProfileLinkProps } from './type';
 import { formatDate } from '@/util/format';
 import { navigator } from '@/util/navigation';
-import { useHandleDeleteComment } from './hooks/useHandleDeleteComment';
+import { useHandleDeleteComment } from './hooks';
 
 export default async function CommentsList({ slug }: { slug: string }) {
     await syncCommentsWithSupabase(slug);
