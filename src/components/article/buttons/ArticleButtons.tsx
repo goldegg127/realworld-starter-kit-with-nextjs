@@ -1,8 +1,7 @@
 'use client';
 
 import { useHandleDeleteArticle } from '../hooks/useHandleDeleteArticle';
-import ArticleButtonDelete from './ArticleButtonDelete';
-import ArticleButtonEdit from './ArticleButtonEdit';
+import { Button } from '@/components/common';
 
 export default function ArticleButtons({ slug }: { slug: string }) {
     const { handleDeleteArticle } = useHandleDeleteArticle(slug);
@@ -10,19 +9,22 @@ export default function ArticleButtons({ slug }: { slug: string }) {
     return (
         <div className="buttons">
             {/**
-             * @todo 로그인 기능 구현 후 적용 예정
-                 <button className="btn btn-sm btn-outline-secondary"> 
-                    <i className="ion-plus-round"></i>
-                    &nbsp; Follow Eric Simons <span className="counter">(10)</span>
-                </button>
-                &nbsp;&nbsp;
-                <button className="btn btn-sm btn-outline-primary">
-                    <i className="ion-heart"></i>
-                    &nbsp; Favorite Post <span className="counter">(29)</span>
-                </button>
+            * @todo 로그인 기능 구현 후 적용 예정
+            <Button type="button" style={{ size: 'sm', outline: true, color: 'secondary' }}>
+                <i className="ion-plus-round"></i>
+                &nbsp; Follow Eric Simons <span className="counter">(10)</span>
+            </Button>
+            <Button type="button" style={{ size: 'sm', outline: true, color: 'primary' }}>
+                <i className="ion-heart"></i>
+                &nbsp; Favorite Post <span className="counter">(29)</span>
+            </Button>
             */}
-            <ArticleButtonEdit slug={slug} />
-            <ArticleButtonDelete onClick={handleDeleteArticle} />
+            <Button link={`/editor?slug=${slug}`} style={{ size: 'sm', outline: true, color: 'secondary' }}>
+                <i className="ion-edit"></i> Edit Article
+            </Button>
+            <Button type="button" style={{ size: 'sm', outline: true, color: 'danger' }} onClick={handleDeleteArticle}>
+                <i className="ion-trash-a"></i> Delete Article
+            </Button>
         </div>
     );
 }

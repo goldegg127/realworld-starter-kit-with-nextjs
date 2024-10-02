@@ -1,3 +1,4 @@
 import ArticleItems from './ArticleItems';
+import Button from './Button';
 
-export { ArticleItems };
+export { ArticleItems, Button };
