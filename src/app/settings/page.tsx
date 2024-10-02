@@ -1,4 +1,10 @@
+import { Button } from '@/components/common';
+
 export default function SettingsPage() {
+    {
+        /** @todo 회원정보 수정 페이지 개발 예정 */
+    }
+
     return (
         <div className="settings-page">
             <div className="container page">
@@ -38,11 +44,22 @@ export default function SettingsPage() {
                                         placeholder="New Password"
                                     />
                                 </fieldset>
-                                <button className="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+                                <Button
+                                    type="button"
+                                    styleClass={{
+                                        size: 'lg',
+                                        outline: false,
+                                        color: 'primary',
+                                        pull: 'pull-xs-right',
+                                    }}>
+                                    Update Settings
+                                </Button>
                             </fieldset>
                         </form>
                         <hr />
-                        <button className="btn btn-outline-danger">Or click here to logout.</button>
+                        <Button type="button" styleClass={{ outline: true, color: 'danger' }}>
+                            Or click here to logout.
+                        </Button>
                     </div>
                 </div>
             </div>

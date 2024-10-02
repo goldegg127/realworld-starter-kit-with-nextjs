@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
+import { Button } from '@/components/common';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -57,9 +58,14 @@ export default function LoginForm() {
                         onBlur={handleInputPassword}
                     />
                 </fieldset>
-                <button type="submit" className="btn btn-lg btn-primary pull-xs-right">
+                {/**
+                 * @todo Button 컴포넌트 적용 후 발생하는 “Extra attributes from the server” 경고 해결하기
+                 */}
+                <Button
+                    type="submit"
+                    styleClass={{ size: 'lg', outline: false, color: 'primary', pull: 'pull-xs-right' }}>
                     Sign in
-                </button>
+                </Button>
             </form>
         </>
     );

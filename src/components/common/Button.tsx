@@ -26,12 +26,12 @@ type ButtonProps = {
     children: React.ReactNode;
     type?: 'submit' | 'reset' | 'button' | undefined;
     styleClass: {
-        size: 'xs' | 'sm' | 'lg';
+        size?: 'xs' | 'sm' | 'lg';
         outline: boolean;
         color: 'primary' | 'secondary' | 'danger';
         pull?: 'pull-xs-right';
         action?: boolean;
     };
-    onClick?: () => void;
+    onClick?: (event: React.MouseEvent) => Promise<void>;
     link?: string;
 };

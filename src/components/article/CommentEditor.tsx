@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { postComment } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
+import { Button } from '@/components/common';
 
 export default function CommentEditor({ slug }: { slug: string }) {
     const [commentBody, setCommentBody] = useState('');
@@ -46,9 +47,9 @@ export default function CommentEditor({ slug }: { slug: string }) {
                     width={32}
                     height={32}
                 />
-                <button className="btn btn-sm btn-primary" type="submit">
+                <Button type="submit" styleClass={{ size: 'sm', outline: false, color: 'primary' }}>
                     Post Comment
-                </button>
+                </Button>
             </div>
         </form>
     );

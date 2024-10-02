@@ -7,6 +7,7 @@ import { useInputTitle, useInputDescription, useInputBody, useInputTags } from '
 import InputField from './InputField';
 import TextareaField from './TextareaField';
 import TagList from './TagList';
+import { Button } from '@/components/common';
 
 export default function EditorForm({ slug }: { slug: string }) {
     const [errorMessage, setErrorMessage] = useState('');
@@ -117,9 +118,12 @@ export default function EditorForm({ slug }: { slug: string }) {
                     readOnly={slug ? true : false}
                 />
                 <TagList readOnly={slug ? true : false} />
-                <button className="btn btn-lg pull-xs-right btn-primary" type="button" onClick={handleSubmit}>
+                <Button
+                    type="button"
+                    onClick={handleSubmit}
+                    styleClass={{ size: 'lg', outline: false, color: 'primary' }}>
                     Publish Article
-                </button>
+                </Button>
             </fieldset>
         </>
     );
