@@ -1,6 +1,6 @@
 'use client';
 
-import { useHandleDeleteArticle } from '../hooks';
+import { useHandleDeleteArticle } from './hooks';
 import { Button } from '@/components/common';
 
 export default function ArticleButtons({ slug }: { slug: string }) {

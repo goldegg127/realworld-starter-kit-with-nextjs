@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArticleActionsProps } from './type';
-import { ArticleButtons } from '@/components/article/buttons';
+import ArticleButtons from '@/components/article/ArticleButtons';
 
 export default function ArticleActions({ slug, profileLink, image, username, date }: ArticleActionsProps) {
     return (
