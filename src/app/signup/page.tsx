@@ -1,19 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { LoginForm } from '@/components/user';
+import { navigator } from '@/util/navigation';
+import { SignupForm } from '@/components/sign';
 
-export default function LoginPage() {
+export default function SignupPage() {
     return (
         <div className="auth-page">
             <div className="container page">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center">Sign in</h1>
+                        <h1 className="text-xs-center">Sign up</h1>
                         <p className="text-xs-center">
-                            <Link href="/register">Need an account?</Link>
+                            <Link href={navigator.signin}>Have an account?</Link>
                         </p>
-                        <LoginForm />
+                        <SignupForm />
                     </div>
                 </div>
             </div>

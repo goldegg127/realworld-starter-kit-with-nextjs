@@ -14,8 +14,8 @@ export default function HeaderActions() {
         <ul className="nav navbar-nav pull-xs-right">
             {!isLoggedIn ? (
                 <>
-                    <NavItem navName="Sign in" path={navigator.login} />
-                    <NavItem navName="Sign up" path={navigator.register} />
+                    <NavItem navName="Sign in" path={navigator.signin} />
+                    <NavItem navName="Sign up" path={navigator.signup} />
                 </>
             ) : (
                 <>

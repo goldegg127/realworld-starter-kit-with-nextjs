@@ -6,7 +6,7 @@ import { loginUser } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '@/components/common';
 
-export default function LoginForm() {
+export default function SigninForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
