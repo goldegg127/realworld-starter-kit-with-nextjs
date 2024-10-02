@@ -2,10 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
 import { Comments } from '@/type';
-import { CardFooterProps, CommentButtonDeleteProps, ProfileLinkProps } from './type';
+import { CardFooterProps, ProfileLinkProps } from './type';
 import { formatDate } from '@/util/format';
 import { navigator } from '@/util/navigation';
-import { useHandleDeleteComment } from './hooks';
+import CommentButtonDelete from './CommentDeleteButton';
 
 export default async function CommentsList({ slug }: { slug: string }) {
     await syncCommentsWithSupabase(slug);
@@ -58,17 +58,5 @@ function ProfileLink({ username, children }: ProfileLinkProps) {
         <Link href={navigator.profile(username)} className="comment-author">
             {children}
         </Link>
-    );
-}
-
-function CommentButtonDelete({ slug, commentId, username: authorName }: CommentButtonDeleteProps) {
-    const { userInfo, handleDeleteComment } = useHandleDeleteComment(slug);
-
-    return authorName === userInfo?.username ? (
-        <button type="button" className="mod-options" onClick={() => handleDeleteComment(commentId)}>
-            <i className="ion-trash-a" aria-label="delete comment"></i>
-        </button>
-    ) : (
-        <></>
     );
 }
