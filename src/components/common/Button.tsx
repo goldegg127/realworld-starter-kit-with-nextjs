@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Button({
     children,
     type,
-    style: { size, outline, color, pull, action },
+    styleClass: { size, outline, color, pull, action },
     onClick,
     link,
 }: ButtonProps) {
@@ -25,7 +25,7 @@ export default function Button({
 type ButtonProps = {
     children: React.ReactNode;
     type?: 'submit' | 'reset' | 'button' | undefined;
-    style: {
+    styleClass: {
         size: 'xs' | 'sm' | 'lg';
         outline: boolean;
         color: 'primary' | 'secondary' | 'danger';
