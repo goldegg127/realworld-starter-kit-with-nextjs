@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { postComment } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
+import { uesHandlePostComment } from './hooks';
 import { Button } from '@/components/common';
 
 export default function CommentEditor({ slug }: { slug: string }) {
@@ -16,19 +16,11 @@ export default function CommentEditor({ slug }: { slug: string }) {
         setCommentBody(event.target.value);
     };
 
+    const { handlePostComment } = uesHandlePostComment({ slug, commentBody, token });
+
     useEffect(() => {
         setImage(userInfo?.image || initImage);
     }, [userInfo?.image]);
-
-    const handlePostComment = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        try {
-            await postComment({ slug, commentBody, token });
-        } catch (error) {
-            console.error(`Error: ${error}`);
-        }
-    };
 
     return (
         <form className="card comment-form" onSubmit={handlePostComment}>
