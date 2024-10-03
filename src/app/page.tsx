@@ -1,6 +1,7 @@
+import { searchParamsType } from '@/type';
 import { MainBanner, MainAriticleList, Sidebar } from '@/components/main';
 
-export default function MainPage({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+export default function MainPage({ searchParams }: { searchParams?: searchParamsType }) {
     return (
         <main className="home-page">
             <MainBanner />

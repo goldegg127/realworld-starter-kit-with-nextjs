@@ -1,3 +1,5 @@
+import { InputFieldProps } from './type';
+
 export default function InputField({
     type,
     styleClass: { size },
@@ -7,16 +9,7 @@ export default function InputField({
     onChangeHandler,
     onBlurHandler,
     onKeyboardHandler,
-}: {
-    type: 'text' | 'password';
-    styleClass: { size: 'xs' | 'sm' | 'lg' };
-    placeholder: string;
-    value?: string;
-    readOnly?: boolean;
-    onChangeHandler?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlurHandler?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    onKeyboardHandler?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-}) {
+}: InputFieldProps) {
     const className = `form-control form-control-${size}`;
 
     return (

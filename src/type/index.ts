@@ -53,3 +53,5 @@ export type User = {
 };
 
 export type HandleInputEvent<T> = React.ChangeEvent<T>;
+
+export type searchParamsType = { [key: string]: string | undefined };

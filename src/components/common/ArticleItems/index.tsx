@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Articles, Article } from '@/type';
+import { searchParamsType, Articles, Article } from '@/type';
 import { formatDate } from '@/util/format';
 import { navigator } from '@/util/navigation';
 import Pagination from './Pagination';
@@ -17,7 +17,7 @@ export default function ArticleItems({
     articles: Articles;
     articlesCount: number;
     currentPage: number;
-    searchParams?: { [key: string]: string | undefined };
+    searchParams?: searchParamsType;
 }) {
     return (
         <>

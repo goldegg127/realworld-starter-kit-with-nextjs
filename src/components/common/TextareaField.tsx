@@ -1,3 +1,5 @@
+import { TextareaFieldProps } from './type';
+
 export default function TextareaField({
     styleClass: { size },
     rows,
@@ -7,16 +9,7 @@ export default function TextareaField({
     onChangeHandler,
     onBlurHandler,
     onKeyboardHandler,
-}: {
-    styleClass: { size: 'xs' | 'sm' | 'lg' };
-    rows: number;
-    placeholder: string;
-    value?: string;
-    readOnly?: boolean;
-    onChangeHandler?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onBlurHandler?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
-    onKeyboardHandler?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-}) {
+}: TextareaFieldProps) {
     const className = `form-control form-control-${size}`;
 
     return (
