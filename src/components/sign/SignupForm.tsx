@@ -1,41 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { SignupUser } from '@/api';
-import { useAuthStore } from '@/stores/authStore';
-import { navigator } from '@/util/navigation';
 import { Button, InputField } from '@/components/common';
+import { useSignStates, useInputEmail, useInputName, useInputPassword, useHandleSignup } from './hooks';
 
 export default function SignupForm() {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const router = useRouter();
-    const { login } = useAuthStore();
-
-    const handleInputName = (event: React.FocusEvent<HTMLInputElement>) => setUsername(event.target.value);
-    const handleInputEmail = (event: React.FocusEvent<HTMLInputElement>) => setEmail(event.target.value);
-    const handleInputPassword = (event: React.FocusEvent<HTMLInputElement>) => setPassword(event.target.value);
-
-    const handleSignup = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        try {
-            const { user } = await SignupUser({ username, email, password });
-
-            if (user) {
-                login(user);
-                router.push(navigator.main);
-            } else {
-                setErrorMessage('Login successful but no token received. Please try again later.');
-            }
-        } catch (error) {
-            setErrorMessage('Login failed. Please check your credentials and try again.');
-            console.log('error: ', error);
-        }
-    };
+    const states = useSignStates();
+    const { handleInputName } = useInputName(states);
+    const { handleInputEmail } = useInputEmail(states);
+    const { handleInputPassword } = useInputPassword(states);
+    const { errorMessage, handleSignup } = useHandleSignup(states);
 
     return (
         <>
