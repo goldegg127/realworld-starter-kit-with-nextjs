@@ -1,4 +1,4 @@
 import ProfileBanner from './ProfileBanner';
-import ProfileArticleList from './ProfileArticleList';
+import AuthorArticlesSection from './AuthorArticlesSection';
 
-export { ProfileBanner, ProfileArticleList };
+export { ProfileBanner, AuthorArticlesSection };

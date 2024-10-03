@@ -1,3 +1,5 @@
+import { Articles, searchParamsType } from '@/type';
+
 export type ButtonProps = {
     children: React.ReactNode;
     type?: 'submit' | 'reset' | 'button' | undefined;
@@ -32,4 +34,31 @@ export type TextareaFieldProps = {
     onChangeHandler?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onBlurHandler?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
     onKeyboardHandler?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+};
+
+export type ArticleListProps = {
+    articles: Articles;
+    articlesCount: number;
+    currentPage: number;
+    searchParams?: searchParamsType;
+};
+
+export type TabNavProps = {
+    children: React.ReactNode;
+    navStyle: 'articles-toggle' | 'feed-toggle';
+};
+
+export type TabMenuProps = {
+    children: React.ReactNode;
+    isActive: boolean;
+    link: string;
+};
+
+export type ArticleTabListProps = {
+    children: TabNavProps['children'];
+    navStyle: TabNavProps['navStyle'];
+    articles: ArticleListProps['articles'];
+    articlesCount: ArticleListProps['articlesCount'];
+    currentPage: ArticleListProps['currentPage'];
+    searchParams?: ArticleListProps['searchParams'];
 };

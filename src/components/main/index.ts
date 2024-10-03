@@ -1,5 +1,5 @@
 import MainBanner from './MainBanner';
-import MainAriticleList from './MainAriticleList';
+import AllAriticlesSection from './AllAriticlesSection';
 import Sidebar from './Sidebar';
 
-export { MainBanner, MainAriticleList, Sidebar };
+export { MainBanner, AllAriticlesSection, Sidebar };
