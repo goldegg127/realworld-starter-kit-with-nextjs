@@ -1,4 +1,4 @@
-import { Button, InputField, TextareaField } from '@/components/common';
+import { SettingForm } from '@/components/settings';
 
 export default function SettingsPage() {
     {
@@ -11,38 +11,7 @@ export default function SettingsPage() {
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
                         <h1 className="text-xs-center">Your Settings</h1>
-
-                        <ul className="error-messages">
-                            <li>That name is required</li>
-                        </ul>
-
-                        <form>
-                            <fieldset>
-                                <InputField
-                                    type="text"
-                                    styleClass={{ size: 'xs' }}
-                                    placeholder="URL of profile picture"
-                                />
-                                <InputField type="text" styleClass={{ size: 'lg' }} placeholder="Your Name" />
-                                <TextareaField rows={8} styleClass={{ size: 'lg' }} placeholder="Short bio about you" />
-                                <InputField type="text" styleClass={{ size: 'lg' }} placeholder="Email" />
-                                <InputField type="password" styleClass={{ size: 'lg' }} placeholder="New Password" />
-                                <Button
-                                    type="button"
-                                    styleClass={{
-                                        size: 'lg',
-                                        outline: false,
-                                        color: 'primary',
-                                        pull: 'pull-xs-right',
-                                    }}>
-                                    Update Settings
-                                </Button>
-                            </fieldset>
-                        </form>
-                        <hr />
-                        <Button type="button" styleClass={{ outline: true, color: 'danger' }}>
-                            Or click here to logout.
-                        </Button>
+                        <SettingForm />
                     </div>
                 </div>
             </div>
