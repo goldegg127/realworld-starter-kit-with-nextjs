@@ -3,7 +3,7 @@
 import { useAuthStore } from '@/stores/authStore';
 import { deleteArticleDetails } from '@/api';
 
-export default function DeleteArticleButton({ slug }: { slug: string }) {
+function useHandleDeleteArticle(slug: string) {
     const { token } = useAuthStore();
 
     const handleDeleteArticle = async () => {
@@ -18,9 +18,7 @@ export default function DeleteArticleButton({ slug }: { slug: string }) {
         }
     };
 
-    return (
-        <button className="btn btn-sm btn-outline-danger" onClick={handleDeleteArticle}>
-            <i className="ion-trash-a"></i> Delete Article
-        </button>
-    );
+    return { handleDeleteArticle };
 }
+
+export { useHandleDeleteArticle };

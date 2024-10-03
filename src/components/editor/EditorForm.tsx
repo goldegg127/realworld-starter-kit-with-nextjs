@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import { postArticleDetails, updateArticleDetails } from '@/api';
 import { useAuthStore, useArticleStore } from '@/stores';
 import { useInputTitle, useInputDescription, useInputBody, useInputTags } from './hooks';
-import InputField from './InputField';
-import TextareaField from './TextareaField';
+import { Button, InputField, TextareaField } from '@/components/common';
 import TagList from './TagList';
 
 export default function EditorForm({ slug }: { slug: string }) {
@@ -100,26 +99,41 @@ export default function EditorForm({ slug }: { slug: string }) {
             </ul>
 
             <fieldset>
-                <InputField value={title} onChangeHandler={handleInputTitle} placeholder="Article Title" />
                 <InputField
+                    type="text"
+                    styleClass={{ size: 'lg' }}
+                    placeholder="Article Title"
+                    value={title}
+                    onChangeHandler={handleInputTitle}
+                />
+                <InputField
+                    type="text"
+                    styleClass={{ size: 'lg' }}
+                    placeholder="What's this article about?"
                     value={description}
                     onChangeHandler={handleInputDescription}
-                    placeholder="What's this article about?"
                 />
                 <TextareaField
+                    styleClass={{ size: 'lg' }}
+                    rows={8}
+                    placeholder="Write your article (in markdown)"
                     value={body}
                     onChangeHandler={handleTextarea}
-                    placeholder="Write your article (in markdown)"
                 />
                 <InputField
-                    onKeyboardHandler={handleInputTags}
+                    type="text"
+                    styleClass={{ size: 'lg' }}
                     placeholder="Enter tags"
                     readOnly={slug ? true : false}
+                    onKeyboardHandler={handleInputTags}
                 />
                 <TagList readOnly={slug ? true : false} />
-                <button className="btn btn-lg pull-xs-right btn-primary" type="button" onClick={handleSubmit}>
+                <Button
+                    type="button"
+                    onClick={handleSubmit}
+                    styleClass={{ size: 'lg', outline: false, color: 'primary' }}>
                     Publish Article
-                </button>
+                </Button>
             </fieldset>
         </>
     );

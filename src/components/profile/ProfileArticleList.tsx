@@ -3,11 +3,11 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
 import { Articles, ArticlesApiParam } from '@/type';
-import { formatProfileLink, formatFavoritedLink } from '@/util/format';
+import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
 import { ArticleItems } from '@/components/common';
 
-export default async function UserArticleList({
+export default async function ProfileArticleList({
     author,
     searchParams,
 }: {
@@ -38,12 +38,12 @@ export default async function UserArticleList({
             <nav className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
                     <li className="nav-item">
-                        <Link className={`nav-link${!favorited ? ' active' : ''}`} href={formatProfileLink(author)}>
+                        <Link className={`nav-link${!favorited ? ' active' : ''}`} href={navigator.profile(author)}>
                             My Articles
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className={`nav-link${favorited ? ' active' : ''}`} href={formatFavoritedLink(author)}>
+                        <Link className={`nav-link${favorited ? ' active' : ''}`} href={navigator.favorited(author)}>
                             Favorited Articles
                         </Link>
                     </li>

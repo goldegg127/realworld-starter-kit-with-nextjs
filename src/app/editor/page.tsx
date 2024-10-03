@@ -2,6 +2,7 @@ import { EditorForm } from '@/components/editor';
 
 export default function EditorPage({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
     const slug = searchParams?.slug ?? '';
+
     return (
         <div className="editor-page">
             <div className="container page">

@@ -1,54 +1,37 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { postComment } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
+import { uesHandlePostComment, useHandleCommentBody } from './hooks';
+import { Button, TextareaField } from '@/components/common';
 
 export default function CommentEditor({ slug }: { slug: string }) {
-    const [commentBody, setCommentBody] = useState('');
-    const { token, userInfo } = useAuthStore();
     const initImage = '/image/demo-avatar.png';
-    const [image, setImage] = useState(initImage); // hydration error 해결
-
-    const handleTextarea = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-        setCommentBody(event.target.value);
-    };
-
-    useEffect(() => {
-        setImage(userInfo?.image || initImage);
-    }, [userInfo?.image]);
-
-    const handlePostComment = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        try {
-            await postComment({ slug, commentBody, token });
-        } catch (error) {
-            console.error(`Error: ${error}`);
-        }
-    };
+    const { token, userInfo } = useAuthStore();
+    const { commentBody, handleTextarea } = useHandleCommentBody();
+    const { handlePostComment } = uesHandlePostComment({ slug, commentBody, token });
 
     return (
         <form className="card comment-form" onSubmit={handlePostComment}>
             <div className="card-block">
-                <textarea
-                    className="form-control"
-                    placeholder="Write a comment..."
+                <TextareaField
+                    styleClass={{ size: 'xs' }}
                     rows={3}
-                    onBlur={handleTextarea}></textarea>
+                    placeholder='"Write a comment...'
+                    onBlurHandler={handleTextarea}
+                />
             </div>
             <div className="card-footer">
                 <Image
-                    src={image}
+                    src={`${userInfo?.image || initImage}`}
                     alt={`${userInfo?.username} profile image`}
                     className="comment-author-img"
                     width={32}
                     height={32}
                 />
-                <button className="btn btn-sm btn-primary" type="submit">
+                <Button type="submit" styleClass={{ size: 'sm', outline: false, color: 'primary' }}>
                     Post Comment
-                </button>
+                </Button>
             </div>
         </form>
     );
