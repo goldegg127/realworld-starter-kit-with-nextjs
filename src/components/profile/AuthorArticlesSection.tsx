@@ -5,7 +5,7 @@ import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supab
 import { searchParamsType, Articles, ArticlesApiParam } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
-import { ArticleList } from '@/components/common';
+import { ArticleList, TabNav, TabMenu } from '@/components/common';
 
 export default async function AuthorArticlesSection({
     author,
@@ -35,20 +35,14 @@ export default async function AuthorArticlesSection({
 
     return (
         <>
-            <nav className="articles-toggle">
-                <ul className="nav nav-pills outline-active">
-                    <li className="nav-item">
-                        <Link className={`nav-link${!favorited ? ' active' : ''}`} href={navigator.profile(author)}>
-                            My Articles
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className={`nav-link${favorited ? ' active' : ''}`} href={navigator.favorited(author)}>
-                            Favorited Articles
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+            <TabNav navStyle="articles-toggle">
+                <TabMenu isActive={!!author} link={navigator.profile(author)}>
+                    My Articles
+                </TabMenu>
+                <TabMenu isActive={!!favorited} link={navigator.favorited(author)}>
+                    Favorited Articles
+                </TabMenu>
+            </TabNav>
             <ErrorBoundary fallback={<p>Something went wrong</p>}>
                 <Suspense fallback={<Loading />}>
                     <ArticleList

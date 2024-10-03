@@ -5,7 +5,7 @@ import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supab
 import { searchParamsType, Articles } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
-import { ArticleList } from '@/components/common';
+import { ArticleList, TabNav, TabMenu } from '@/components/common';
 
 export default async function AllAriticlesSection({ searchParams }: { searchParams?: searchParamsType }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
@@ -29,26 +29,24 @@ export default async function AllAriticlesSection({ searchParams }: { searchPara
 
     return (
         <>
-            <nav className="feed-toggle">
+            <TabNav navStyle="feed-toggle">
                 <ul className="nav nav-pills outline-active">
                     {/** 
                       * @todo 로그인 기능 구현 후 적용
-                      <li className="nav-item">
-                          <Link className="nav-link" href="">Your Feed</Link>
-                      </li> 
+                        <TabMenu isActive={} link={}>
+                            Your Feed
+                        </TabMenu>
                     */}
-                    <li className="nav-item">
-                        <Link className={`nav-link${!tag ? ' active' : ''}`} href={navigator.main}>
-                            Global Feed
-                        </Link>
-                    </li>
+                    <TabMenu isActive={!tag} link={navigator.main}>
+                        Global Feed
+                    </TabMenu>
                     {!!tag && (
-                        <li className="nav-item">
-                            <a className="nav-link active">{tag}</a>
-                        </li>
+                        <TabMenu isActive={true} link={navigator.tag(tag)}>
+                            {tag}
+                        </TabMenu>
                     )}
                 </ul>
-            </nav>
+            </TabNav>
             <ErrorBoundary fallback={<p>Something went wrong</p>}>
                 <Suspense fallback={<Loading />}>
                     <ArticleList
