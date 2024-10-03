@@ -1,6 +1,7 @@
+import { searchParamsType } from '@/type';
 import { EditorForm } from '@/components/editor';
 
-export default function EditorPage({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
+export default function EditorPage({ searchParams }: { searchParams?: searchParamsType }) {
     const slug = searchParams?.slug ?? '';
 
     return (

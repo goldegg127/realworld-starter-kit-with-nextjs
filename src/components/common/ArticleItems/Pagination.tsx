@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { searchParamsType } from '@/type';
 
 const getPageNums = (articlesCount: number): number[] => {
     const totalPageNum = Math.ceil(articlesCount / 10);
@@ -18,7 +19,7 @@ export default function Pagination({
 }: {
     currentPage: number;
     articlesCount: number;
-    searchParams?: { [key: string]: string | undefined };
+    searchParams?: searchParamsType;
 }) {
     // searchParams에서 undefined 값을 제거하고 새로운 객체로 변환
     const filteredSearchParams = Object.entries(searchParams)

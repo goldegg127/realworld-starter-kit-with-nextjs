@@ -1,3 +1,4 @@
+import { searchParamsType } from '@/type';
 import { ProfileBanner, ProfileArticleList } from '@/components/profile';
 
 export default function ProfilePage({
@@ -5,7 +6,7 @@ export default function ProfilePage({
     searchParams,
 }: {
     params: { author: string };
-    searchParams?: { [key: string]: string | undefined };
+    searchParams?: searchParamsType;
 }) {
     return (
         <main className="profile-page">

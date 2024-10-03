@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
-import { Articles, ArticlesApiParam } from '@/type';
+import { searchParamsType, Articles, ArticlesApiParam } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
 import { ArticleItems } from '@/components/common';
@@ -12,7 +12,7 @@ export default async function ProfileArticleList({
     searchParams,
 }: {
     author: string;
-    searchParams?: { [key: string]: string | undefined };
+    searchParams?: searchParamsType;
 }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
     const favorited = searchParams?.favorited ?? '';

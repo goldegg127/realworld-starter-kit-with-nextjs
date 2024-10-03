@@ -2,16 +2,12 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
-import { Articles } from '@/type';
+import { searchParamsType, Articles } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
 import { ArticleItems } from '@/components/common';
 
-export default async function MainAriticleList({
-    searchParams,
-}: {
-    searchParams?: { [key: string]: string | undefined };
-}) {
+export default async function MainAriticleList({ searchParams }: { searchParams?: searchParamsType }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
     const tag = searchParams?.tag ?? '';
 
