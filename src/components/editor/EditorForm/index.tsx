@@ -4,10 +4,8 @@ import { useState, useEffect } from 'react';
 import { postArticleDetails, updateArticleDetails } from '@/api';
 import { useAuthStore, useArticleStore } from '@/stores';
 import { useInputTitle, useInputDescription, useInputBody, useInputTags } from './hooks';
-import InputField from './InputField';
-import TextareaField from './TextareaField';
+import { Button, InputField, TextareaField } from '@/components/common';
 import TagList from './TagList';
-import { Button } from '@/components/common';
 
 export default function EditorForm({ slug }: { slug: string }) {
     const [errorMessage, setErrorMessage] = useState('');
