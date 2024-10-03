@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ButtonProps } from './type';
 
 export default function Button({
     children,
@@ -21,17 +22,3 @@ export default function Button({
         </button>
     );
 }
-
-type ButtonProps = {
-    children: React.ReactNode;
-    type?: 'submit' | 'reset' | 'button' | undefined;
-    styleClass: {
-        size?: 'xs' | 'sm' | 'lg';
-        outline: boolean;
-        color: 'primary' | 'secondary' | 'danger';
-        pull?: 'pull-xs-right';
-        action?: boolean;
-    };
-    onClick?: (event: React.MouseEvent) => Promise<void>;
-    link?: string;
-};
