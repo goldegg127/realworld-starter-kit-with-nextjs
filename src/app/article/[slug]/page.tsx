@@ -15,19 +15,8 @@ export default async function ArticleDetailsPage({ params }: { params: { slug: s
     await syncDetailsWithSupabase(params.slug);
 
     const { article } = await fetchDetailsFromSupabase(params.slug);
-    const {
-        slug,
-        title,
-        description,
-        body,
-        tagList,
-        createdAt,
-        updatedAt,
-        favorited,
-        favoritesCount,
-        author,
-    }: Article = article;
-    const { username, bio, image, following } = author;
+    const { slug, title, description, body, tagList, createdAt, author }: Article = article;
+    const { username, image } = author;
     const profileLink = navigator.profile(username);
     const date = formatDate(createdAt);
 

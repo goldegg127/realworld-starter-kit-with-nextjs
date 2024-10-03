@@ -9,7 +9,7 @@ export default function ArticleButtons({ slug }: { slug: string }) {
     return (
         <div className="buttons">
             {/**
-            * @todo 로그인 기능 구현 후 적용 예정
+            * @todo 좋아요 기능 구현 후 적용 예정
             <Button type="button" styleClass={{ size: 'sm', outline: true, color: 'secondary' }}>
                 <i className="ion-plus-round"></i>
                 &nbsp; Follow Eric Simons <span className="counter">(10)</span>
