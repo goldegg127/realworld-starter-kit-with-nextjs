@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
-import { Button } from '@/components/common';
+import { Button, InputField } from '@/components/common';
 
 export default function SigninForm() {
     const [email, setEmail] = useState('');
@@ -42,22 +42,18 @@ export default function SigninForm() {
                 </ul>
             )}
             <form onSubmit={handleLogin}>
-                <fieldset className="form-group">
-                    <input
-                        className="form-control form-control-lg"
-                        type="text"
-                        placeholder="Email"
-                        onBlur={handleInputEmail}
-                    />
-                </fieldset>
-                <fieldset className="form-group">
-                    <input
-                        className="form-control form-control-lg"
-                        type="password"
-                        placeholder="Password"
-                        onBlur={handleInputPassword}
-                    />
-                </fieldset>
+                <InputField
+                    type="text"
+                    styleClass={{ size: 'lg' }}
+                    placeholder="Email"
+                    onBlurHandler={handleInputEmail}
+                />
+                <InputField
+                    type="password"
+                    styleClass={{ size: 'lg' }}
+                    placeholder="Password"
+                    onBlurHandler={handleInputPassword}
+                />
                 {/**
                  * @todo Button 컴포넌트 적용 후 발생하는 “Extra attributes from the server” 경고 해결하기
                  */}

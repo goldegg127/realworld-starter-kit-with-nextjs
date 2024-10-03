@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useAuthStore } from '@/stores/authStore';
 import { uesHandlePostComment } from './hooks';
-import { Button } from '@/components/common';
+import { Button, TextareaField } from '@/components/common';
 
 export default function CommentEditor({ slug }: { slug: string }) {
     const [commentBody, setCommentBody] = useState('');
@@ -25,11 +25,12 @@ export default function CommentEditor({ slug }: { slug: string }) {
     return (
         <form className="card comment-form" onSubmit={handlePostComment}>
             <div className="card-block">
-                <textarea
-                    className="form-control"
-                    placeholder="Write a comment..."
+                <TextareaField
+                    styleClass={{ size: 'xs' }}
                     rows={3}
-                    onBlur={handleTextarea}></textarea>
+                    placeholder='"Write a comment...'
+                    onBlurHandler={handleTextarea}
+                />
             </div>
             <div className="card-footer">
                 <Image

@@ -99,21 +99,33 @@ export default function EditorForm({ slug }: { slug: string }) {
             </ul>
 
             <fieldset>
-                <InputField value={title} onChangeHandler={handleInputTitle} placeholder="Article Title" />
                 <InputField
+                    type="text"
+                    styleClass={{ size: 'lg' }}
+                    placeholder="Article Title"
+                    value={title}
+                    onChangeHandler={handleInputTitle}
+                />
+                <InputField
+                    type="text"
+                    styleClass={{ size: 'lg' }}
+                    placeholder="What's this article about?"
                     value={description}
                     onChangeHandler={handleInputDescription}
-                    placeholder="What's this article about?"
                 />
                 <TextareaField
+                    styleClass={{ size: 'lg' }}
+                    rows={8}
+                    placeholder="Write your article (in markdown)"
                     value={body}
                     onChangeHandler={handleTextarea}
-                    placeholder="Write your article (in markdown)"
                 />
                 <InputField
-                    onKeyboardHandler={handleInputTags}
+                    type="text"
+                    styleClass={{ size: 'lg' }}
                     placeholder="Enter tags"
                     readOnly={slug ? true : false}
+                    onKeyboardHandler={handleInputTags}
                 />
                 <TagList readOnly={slug ? true : false} />
                 <Button

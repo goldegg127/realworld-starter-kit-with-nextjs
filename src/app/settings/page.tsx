@@ -1,4 +1,4 @@
-import { Button } from '@/components/common';
+import { Button, InputField, TextareaField } from '@/components/common';
 
 export default function SettingsPage() {
     {
@@ -18,32 +18,15 @@ export default function SettingsPage() {
 
                         <form>
                             <fieldset>
-                                <fieldset className="form-group">
-                                    <input className="form-control" type="text" placeholder="URL of profile picture" />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        className="form-control form-control-lg"
-                                        type="text"
-                                        placeholder="Your Name"
-                                    />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <textarea
-                                        className="form-control form-control-lg"
-                                        rows={8}
-                                        placeholder="Short bio about you"></textarea>
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input className="form-control form-control-lg" type="text" placeholder="Email" />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        className="form-control form-control-lg"
-                                        type="password"
-                                        placeholder="New Password"
-                                    />
-                                </fieldset>
+                                <InputField
+                                    type="text"
+                                    styleClass={{ size: 'xs' }}
+                                    placeholder="URL of profile picture"
+                                />
+                                <InputField type="text" styleClass={{ size: 'lg' }} placeholder="Your Name" />
+                                <TextareaField rows={8} styleClass={{ size: 'lg' }} placeholder="Short bio about you" />
+                                <InputField type="text" styleClass={{ size: 'lg' }} placeholder="Email" />
+                                <InputField type="password" styleClass={{ size: 'lg' }} placeholder="New Password" />
                                 <Button
                                     type="button"
                                     styleClass={{
