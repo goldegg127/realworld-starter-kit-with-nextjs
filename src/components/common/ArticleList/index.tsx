@@ -8,7 +8,7 @@ import Pagination from './Pagination';
  *  import { Button } from '@/components/common';
  */
 
-export default function ArticleItems({
+export default function ArticleList({
     articles,
     articlesCount,
     currentPage,
@@ -25,7 +25,7 @@ export default function ArticleItems({
                 {articles.map(article => {
                     return (
                         <li key={article.slug}>
-                            <Item article={article} />
+                            <ArticleItem article={article} />
                         </li>
                     );
                 })}
@@ -35,7 +35,7 @@ export default function ArticleItems({
     );
 }
 
-function Item({ article }: { article: Article }) {
+function ArticleItem({ article }: { article: Article }) {
     const { slug, title, description, tagList, createdAt, author } = article;
     const { username, image } = author;
     const profileLink = navigator.profile(username);

@@ -1,5 +1,5 @@
 import { searchParamsType } from '@/type';
-import { ProfileBanner, ProfileArticleList } from '@/components/profile';
+import { ProfileBanner, AuthorArticlesSection } from '@/components/profile';
 
 export default function ProfilePage({
     params,
@@ -16,7 +16,7 @@ export default function ProfilePage({
                 </Container>
             </div>
             <Container>
-                <ProfileArticleList author={params.author} searchParams={searchParams} />
+                <AuthorArticlesSection author={params.author} searchParams={searchParams} />
             </Container>
         </main>
     );

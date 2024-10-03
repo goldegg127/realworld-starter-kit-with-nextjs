@@ -1,6 +1,6 @@
-import ArticleItems from './ArticleItems';
+import ArticleList from './ArticleList';
 import Button from './Button';
 import InputField from './InputField';
 import TextareaField from './TextareaField';
 
-export { ArticleItems, Button, InputField, TextareaField };
+export { ArticleList, Button, InputField, TextareaField };

@@ -5,9 +5,9 @@ import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supab
 import { searchParamsType, Articles } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
-import { ArticleItems } from '@/components/common';
+import { ArticleList } from '@/components/common';
 
-export default async function MainAriticleList({ searchParams }: { searchParams?: searchParamsType }) {
+export default async function AllAriticlesSection({ searchParams }: { searchParams?: searchParamsType }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
     const tag = searchParams?.tag ?? '';
 
@@ -51,7 +51,7 @@ export default async function MainAriticleList({ searchParams }: { searchParams?
             </nav>
             <ErrorBoundary fallback={<p>Something went wrong</p>}>
                 <Suspense fallback={<Loading />}>
-                    <ArticleItems
+                    <ArticleList
                         articles={articles}
                         articlesCount={articlesCount}
                         currentPage={currentPage}

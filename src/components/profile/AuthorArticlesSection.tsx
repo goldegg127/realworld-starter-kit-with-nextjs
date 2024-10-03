@@ -5,9 +5,9 @@ import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supab
 import { searchParamsType, Articles, ArticlesApiParam } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
-import { ArticleItems } from '@/components/common';
+import { ArticleList } from '@/components/common';
 
-export default async function ProfileArticleList({
+export default async function AuthorArticlesSection({
     author,
     searchParams,
 }: {
@@ -51,7 +51,7 @@ export default async function ProfileArticleList({
             </nav>
             <ErrorBoundary fallback={<p>Something went wrong</p>}>
                 <Suspense fallback={<Loading />}>
-                    <ArticleItems
+                    <ArticleList
                         articles={articles}
                         articlesCount={articlesCount}
                         currentPage={currentPage}
