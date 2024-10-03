@@ -4,6 +4,9 @@ import { Articles, Article } from '@/type';
 import { formatDate } from '@/util/format';
 import { navigator } from '@/util/navigation';
 import Pagination from './Pagination';
+/** @todo 좋아요 기능 구현 후 적용
+ *  import { Button } from '@/components/common';
+ */
 
 export default function ArticleItems({
     articles,
@@ -22,7 +25,7 @@ export default function ArticleItems({
                 {articles.map(article => {
                     return (
                         <li key={article.slug}>
-                            <ArticleItem article={article} />
+                            <Item article={article} />
                         </li>
                     );
                 })}
@@ -32,12 +35,11 @@ export default function ArticleItems({
     );
 }
 
-function ArticleItem({ article }: { article: Article }) {
-    const { slug, title, description, tagList, createdAt, favorited, favoritesCount, author } = article;
+function Item({ article }: { article: Article }) {
+    const { slug, title, description, tagList, createdAt, author } = article;
     const { username, image } = author;
     const profileLink = navigator.profile(username);
     const articleLink = navigator.articleDetails(slug);
-    const date = formatDate(createdAt);
 
     return (
         <article className="article-preview">
@@ -49,13 +51,20 @@ function ArticleItem({ article }: { article: Article }) {
                     <Link href={profileLink} className="author">
                         {username}
                     </Link>
-                    <span className="date">{date}</span>
+                    <span className="date">{formatDate(createdAt)}</span>
                 </div>
-                {/** 
-                * @todo 로그인 기능 구현 후 적용
-                    <button className={`btn ${favorited ? `btn-primary` : `btn-outline-primary`} btn-sm pull-xs-right`}>
-                        <i className="ion-heart"></i> {favoritesCount}
-                    </button>
+                {/**
+                 * @todo 좋아요 기능 구현 후 적용
+                <Button
+                    type="button"
+                    styleClass={{
+                        size: 'sm',
+                        outline: favorited ? false : true,
+                        color: 'primary',
+                        pull: 'pull-xs-right',
+                    }}>
+                    <i className="ion-heart"></i> {favoritesCount}
+                </Button>
                 */}
             </div>
             <div className="preview-link">

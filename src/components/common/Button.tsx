@@ -7,16 +7,16 @@ export default function Button({
     onClick,
     link,
 }: ButtonProps) {
-    const clasName = `btn btn-${size}${outline ? ` btn-outline-${color}` : ` btn-${color}`}${pull ? ` ${pull}` : ''}${
+    const className = `btn btn-${size}${outline ? ` btn-outline-${color}` : ` btn-${color}`}${pull ? ` ${pull}` : ''}${
         action ? ' action-btn' : ''
     }`;
 
     return link ? (
-        <Link href={link} onClick={onClick} className={clasName}>
+        <Link href={link} onClick={onClick} className={className}>
             {children}
         </Link>
     ) : (
-        <button type={type} onClick={onClick} className={clasName}>
+        <button type={type} onClick={onClick} className={className}>
             {children}
         </button>
     );
