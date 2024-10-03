@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import { navigator } from '@/util/navigation';
+
 export default function Footer() {
     return (
         <footer>
             <div className="container">
-                <Link href="/" className="logo-font">
+                <Link href={navigator.main} className="logo-font">
                     conduit
                 </Link>
                 <span className="attribution">

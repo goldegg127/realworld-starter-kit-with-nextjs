@@ -34,7 +34,7 @@ export default function HeaderActions() {
                             height={26}
                         />
                     </NavItem>
-                    <NavItem navName="Logout" path="/" onClick={logout}>
+                    <NavItem navName="Logout" path={navigator.main} onClick={logout}>
                         <i className="ion-log-out"></i>
                     </NavItem>
                 </>

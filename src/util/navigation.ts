@@ -7,4 +7,5 @@ export const navigator = {
     signup: `/signup`,
     editor: `/editor`,
     settings: `/settings`,
+    main: '/',
 };

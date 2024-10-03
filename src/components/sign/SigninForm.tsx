@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
+import { navigator } from '@/util/navigation';
 import { Button, InputField } from '@/components/common';
 
 export default function SigninForm() {
@@ -24,7 +25,7 @@ export default function SigninForm() {
 
             if (user) {
                 login(user);
-                router.push('/');
+                router.push(navigator.main);
             } else {
                 setErrorMessage('Login successful but no token received. Please try again later.');
             }

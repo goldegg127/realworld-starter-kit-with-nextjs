@@ -1,8 +1,9 @@
-import Link from 'next/link';
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
 import { Articles } from '@/type';
+import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
 import { ArticleItems } from '@/components/common';
 
@@ -41,7 +42,7 @@ export default async function MainAriticleList({
                       </li> 
                     */}
                     <li className="nav-item">
-                        <Link className={`nav-link${!tag ? ' active' : ''}`} href="/">
+                        <Link className={`nav-link${!tag ? ' active' : ''}`} href={navigator.main}>
                             Global Feed
                         </Link>
                     </li>
