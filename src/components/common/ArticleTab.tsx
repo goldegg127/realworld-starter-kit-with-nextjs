@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import { TabNavProps, TabMenuProps } from './type';
 
-function TabNav({ children, navStyle }: { children: React.ReactNode; navStyle: 'articles-toggle' | 'feed-toggle' }) {
+function TabNav({ children, navStyle }: TabNavProps) {
     return (
         <nav className={navStyle}>
             <ul className="nav nav-pills outline-active">{children}</ul>
@@ -8,7 +9,7 @@ function TabNav({ children, navStyle }: { children: React.ReactNode; navStyle: '
     );
 }
 
-function TabMenu({ children, isActive, link }: { children: React.ReactNode; isActive: boolean; link: string }) {
+function TabMenu({ children, isActive, link }: TabMenuProps) {
     return (
         <li className="nav-item">
             <Link className={`nav-link${isActive ? ' active' : ''}`} href={link}>

@@ -1,11 +1,10 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
 import { searchParamsType, Articles } from '@/type';
 import { navigator } from '@/util/navigation';
 import Loading from '@/app/loading';
-import { ArticleList, TabNav, TabMenu } from '@/components/common';
+import { ArticleTabList, TabMenu } from '@/components/common';
 
 export default async function AllAriticlesSection({ searchParams }: { searchParams?: searchParamsType }) {
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
@@ -29,34 +28,27 @@ export default async function AllAriticlesSection({ searchParams }: { searchPara
 
     return (
         <>
-            <TabNav navStyle="feed-toggle">
-                <ul className="nav nav-pills outline-active">
-                    {/** 
-                      * @todo 로그인 기능 구현 후 적용
-                        <TabMenu isActive={} link={}>
-                            Your Feed
-                        </TabMenu>
-                    */}
-                    <TabMenu isActive={!tag} link={navigator.main}>
-                        Global Feed
+            <ArticleTabList
+                navStyle="feed-toggle"
+                articles={articles}
+                articlesCount={articlesCount}
+                currentPage={currentPage}
+                searchParams={searchParams}>
+                {/** 
+                     * @todo 로그인 기능 구현 후 적용
+                    <TabMenu isActive={} link={}>
+                        Your Feed
                     </TabMenu>
-                    {!!tag && (
-                        <TabMenu isActive={true} link={navigator.tag(tag)}>
-                            {tag}
-                        </TabMenu>
-                    )}
-                </ul>
-            </TabNav>
-            <ErrorBoundary fallback={<p>Something went wrong</p>}>
-                <Suspense fallback={<Loading />}>
-                    <ArticleList
-                        articles={articles}
-                        articlesCount={articlesCount}
-                        currentPage={currentPage}
-                        searchParams={searchParams}
-                    />
-                </Suspense>
-            </ErrorBoundary>
+                */}
+                <TabMenu isActive={!tag} link={navigator.main}>
+                    Global Feed
+                </TabMenu>
+                {!!tag && (
+                    <TabMenu isActive={true} link={navigator.tag(tag)}>
+                        {tag}
+                    </TabMenu>
+                )}
+            </ArticleTabList>
         </>
     );
 }
