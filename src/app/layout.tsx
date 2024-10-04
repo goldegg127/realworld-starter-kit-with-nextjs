@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Head from 'next/head';
+import QueryProvider from '@/app/providers/QueryProvider';
 import { Header, Footer } from '@/components/global';
 import './globals.css';
 
@@ -25,9 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <link rel="stylesheet" href="//demo.productionready.io/main.css" />
             </head>
             <body>
-                <Header />
-                {children}
-                <Footer />
+                <QueryProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                </QueryProvider>
             </body>
         </html>
     );
