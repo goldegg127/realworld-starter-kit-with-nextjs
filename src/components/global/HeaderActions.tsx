@@ -19,7 +19,7 @@ export default function HeaderActions() {
                 </>
             ) : (
                 <>
-                    <NavItem navName="New Article" path={navigator.editor}>
+                    <NavItem navName="New Article" path={navigator.editor('')}>
                         <i className="ion-compose"></i>
                     </NavItem>
                     <NavItem navName="Settings" path={navigator.settings}>
