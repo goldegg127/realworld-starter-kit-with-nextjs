@@ -1,8 +1,10 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
 import { Article } from '@/type';
 import { useInputStates } from './useInputStates';
+import { useEffect } from 'react';
 
 function useGetArticle({
     slug,
@@ -13,16 +15,33 @@ function useGetArticle({
     setErrorMessage,
     setAuthorName,
 }: ReturnType<typeof useInputStates> & { slug: string }) {
-    const getArticle = async () => {
-        await syncDetailsWithSupabase(slug);
+    const {
+        data: queryData,
+        error,
+        isLoading,
+    } = useQuery({
+        queryKey: ['slug', slug],
+        queryFn: async () => {
+            await syncDetailsWithSupabase(slug);
+            return fetchDetailsFromSupabase(slug);
+        },
+        staleTime: 1000 * 60 * 5,
+        enabled: Boolean(slug),
+    });
 
-        const { article } = await fetchDetailsFromSupabase(slug);
-
-        if (!article) {
+    useEffect(() => {
+        if (error) {
             setErrorMessage('Unable to retrieve article information.');
+            return;
         }
 
-        const { title, description, body, tagList, author }: Article = article;
+        if (queryData) {
+            updateInputValues(queryData.article);
+        }
+    }, [error, queryData]);
+
+    const updateInputValues = (article: Article) => {
+        const { title, description, body, tagList, author } = article;
 
         setTitle(title);
         setDescription(description);
@@ -31,7 +50,7 @@ function useGetArticle({
         setAuthorName(author.username);
     };
 
-    return { getArticle };
+    return { isLoading };
 }
 
 export { useGetArticle };

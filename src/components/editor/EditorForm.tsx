@@ -10,20 +10,22 @@ export default function EditorForm({ slug }: { slug: string }) {
     const states = useInputStates();
     const { handleInputTitle, handleInputDescription, handleInputBody, handleInputTags } = useHandleInput(states);
     const { handleSubmit } = useHandleSubmitArticle({ slug, ...states });
-    const { getArticle } = useGetArticle({ slug, ...states });
+    const { isLoading } = useGetArticle({ slug, ...states });
     const { initForm } = useHandleInit(states);
 
     const { token, userInfo } = useAuthStore();
     const isEditable = slug && token && userInfo?.username === states.authorName;
 
     useEffect(() => {
-        /**
-         * @todo 개발 완료 후 slug 에서 isEditable 조건으로 교체
-        }**/
-        slug && getArticle();
-
         return () => initForm();
     }, [slug]);
+
+    /**
+     * @todo 개발 완료 후 slug 에서 isEditable 조건으로 교체
+    }**/
+    if (slug && isLoading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <>
