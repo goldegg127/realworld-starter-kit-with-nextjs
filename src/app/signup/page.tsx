@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { navigator } from '@/utils/navigation';
 import { SignupForm } from '@/components/sign';
