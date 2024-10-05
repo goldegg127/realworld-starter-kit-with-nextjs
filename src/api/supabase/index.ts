@@ -1,8 +1,17 @@
-import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from './syncArticles';
-import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from './syncComments';
-import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from './syncDetails';
-import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from './syncProfiles';
-import { syncTagListWithSupabase, fetchTagListFromSupabase } from './syncTags';
+import {
+    fetchArticlesFromSupabase,
+    fetchCommentsFromSupabase,
+    fetchDetailsFromSupabase,
+    fetchProfilesFromSupabase,
+    fetchTagListFromSupabase,
+} from './fetch';
+import {
+    syncArticlesWithSupabase,
+    syncCommentsWithSupabase,
+    syncDetailsWithSupabase,
+    syncProfilesWithSupabase,
+    syncTagListWithSupabase,
+} from './sync';
 
 export {
     // Articles
