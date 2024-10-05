@@ -10,7 +10,7 @@ export default async function AllAriticlesSection({ searchParams }: { searchPara
     const tag = searchParams?.tag ?? '';
 
     // 서버에서 Supabase와 동기화
-    await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, tag });
+    // await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, tag });
 
     const data = await fetchArticlesFromSupabase({
         offset: (currentPage - 1) * 10,

@@ -19,7 +19,7 @@ export default async function AuthorArticlesSection({
         favorited: favorited,
     };
 
-    await syncArticlesWithSupabase(param);
+    // await syncArticlesWithSupabase(param);
 
     const {
         articles,

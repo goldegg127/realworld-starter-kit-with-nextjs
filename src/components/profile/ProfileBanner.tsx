@@ -3,7 +3,7 @@ import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from '@/api/supab
 // import { Button } from "@/components/common";
 
 export default async function ProfileBanner({ author }: { author: string }) {
-    await syncProfilesWithSupabase(author);
+    // await syncProfilesWithSupabase(author);
 
     const { profile } = await fetchProfilesFromSupabase(author);
     const { username, bio, image, following } = profile;

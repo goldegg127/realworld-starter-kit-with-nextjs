@@ -5,7 +5,7 @@ import { navigator } from '@/utils/navigation';
 import { ArticleBanner, ArticleContent, ArticleActions, CommentsList, CommentEditor } from '@/components/article';
 
 export default async function ArticleDetailsPage({ params }: { params: { slug: string } }) {
-    await syncDetailsWithSupabase(params.slug);
+    // await syncDetailsWithSupabase(params.slug);
 
     const { article } = await fetchDetailsFromSupabase(params.slug);
     const { slug, title, description, body, tagList, createdAt, author }: Article = article;

@@ -12,7 +12,7 @@ export default async function Sidebar() {
 }
 
 async function TagList() {
-    await syncTagListWithSupabase();
+    // await syncTagListWithSupabase();
 
     const { tags } = await fetchTagListFromSupabase();
 

@@ -22,7 +22,7 @@ function useGetArticle({
     } = useQuery({
         queryKey: ['slug', slug],
         queryFn: async () => {
-            await syncDetailsWithSupabase(slug);
+            // await syncDetailsWithSupabase(slug);
             return fetchDetailsFromSupabase(slug);
         },
         staleTime: 1000 * 60 * 5,

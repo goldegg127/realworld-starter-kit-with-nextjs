@@ -8,7 +8,7 @@ import { navigator } from '@/utils/navigation';
 import CommentButtonDelete from './CommentDeleteButton';
 
 export default async function CommentsList({ slug }: { slug: string }) {
-    await syncCommentsWithSupabase(slug);
+    // await syncCommentsWithSupabase(slug);
 
     const { comments }: { comments: Comments } = await fetchCommentsFromSupabase(slug);
 
