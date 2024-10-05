@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchArticles } from '@/api';
-import { ArticlesApiParam } from '@/type';
+import { ArticlesApiParam } from '@/types';
 
 // Supabase와 동기화하는 함수 : RealWorld API에서 데이터를 가져와 Supabase에 저장하고, 이미 존재하는 데이터는 중복 삽입을 방지
 async function syncArticlesWithSupabase({

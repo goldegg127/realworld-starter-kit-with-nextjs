@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { SignupUser } from '@/api';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import { useSignStates } from './useSignStates';
 
 function useHandleSignup({

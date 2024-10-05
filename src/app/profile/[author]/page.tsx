@@ -1,4 +1,4 @@
-import { searchParamsType } from '@/type';
+import { searchParamsType } from '@/types';
 import { ProfileBanner, AuthorArticlesSection } from '@/components/profile';
 
 export default function ProfilePage({

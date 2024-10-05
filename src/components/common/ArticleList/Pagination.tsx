@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { searchParamsType } from '@/type';
+import { searchParamsType } from '@/types';
 
 const getPageNums = (articlesCount: number): number[] => {
     const totalPageNum = Math.ceil(articlesCount / 10);

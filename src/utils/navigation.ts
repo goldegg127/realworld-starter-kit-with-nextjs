@@ -5,7 +5,7 @@ export const navigator = {
     favorited: (username: string) => `?favorited=${username}`,
     signin: `/signin`,
     signup: `/signup`,
-    editor: `/editor`,
+    editor: (slug: string) => `/editor${slug ? `?slug=${slug}` : ''}`,
     settings: `/settings`,
-    main: '/',
+    main: `/`,
 };

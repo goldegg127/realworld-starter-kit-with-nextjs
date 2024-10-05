@@ -1,6 +1,7 @@
 'use client';
 
 import { useHandleDeleteArticle } from './hooks';
+import { navigator } from '@/utils/navigation';
 import { Button } from '@/components/common';
 
 export default function ArticleButtons({ slug }: { slug: string }) {
@@ -19,7 +20,7 @@ export default function ArticleButtons({ slug }: { slug: string }) {
                 &nbsp; Favorite Post <span className="counter">(29)</span>
             </Button>
             */}
-            <Button link={`/editor?slug=${slug}`} styleClass={{ size: 'sm', outline: true, color: 'secondary' }}>
+            <Button link={navigator.editor(slug)} styleClass={{ size: 'sm', outline: true, color: 'secondary' }}>
                 <i className="ion-edit"></i> Edit Article
             </Button>
             <Button

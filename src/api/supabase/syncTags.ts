@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchTagList } from '@/api';
-import { Article } from '@/type';
+import { Article } from '@/types';
 
 async function syncTagListWithSupabase() {
     try {

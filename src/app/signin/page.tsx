@@ -1,7 +1,5 @@
-'use client';
-
 import Link from 'next/link';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import { SigninForm } from '@/components/sign';
 
 export default function SigninPage() {

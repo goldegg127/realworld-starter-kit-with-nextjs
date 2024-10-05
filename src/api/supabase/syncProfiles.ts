@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchProfiles } from '@/api';
-import { Profile } from '@/type';
+import { Profile } from '@/types';
 
 async function syncProfilesWithSupabase(userName: string) {
     try {

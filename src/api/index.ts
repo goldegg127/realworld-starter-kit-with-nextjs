@@ -1,5 +1,5 @@
 import API from '@/config';
-import { ArticlesApiParam } from '@/type';
+import { ArticlesApiParam } from '@/types';
 
 export async function fetchArticles({
     offset = 0,

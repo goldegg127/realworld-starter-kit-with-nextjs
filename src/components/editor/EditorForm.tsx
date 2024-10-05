@@ -1,101 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { postArticleDetails, updateArticleDetails } from '@/api';
-import { useAuthStore, useArticleStore } from '@/stores';
-import { useInputTitle, useInputDescription, useInputBody, useInputTags } from './hooks';
+import { useAuthStore } from '@/stores';
+import { useInputStates, useHandleInput, useHandleSubmitArticle, useGetArticle, useHandleInit } from './hooks';
 import { Button, InputField, TextareaField } from '@/components/common';
 import TagList from './TagList';
+import { useEffect } from 'react';
 
 export default function EditorForm({ slug }: { slug: string }) {
-    const [errorMessage, setErrorMessage] = useState('');
+    const states = useInputStates();
+    const { handleInputTitle, handleInputDescription, handleInputBody, handleInputTags } = useHandleInput(states);
+    const { handleSubmit } = useHandleSubmitArticle({ slug, ...states });
+    const { isLoading } = useGetArticle({ slug, ...states });
+    const { initForm } = useHandleInit(states);
+
     const { token, userInfo } = useAuthStore();
-    const { author } = useArticleStore();
-
-    const isEditable = slug && token && userInfo?.username === author?.username;
-
-    const { title, handleInputTitle, initInputTitle } = useInputTitle();
-    const { description, handleInputDescription, initInputDescription } = useInputDescription();
-    const { body, handleTextarea, initTextarea } = useInputBody();
-    const { tagList, handleInputTags, initInputTags } = useInputTags();
+    const isEditable = slug && token && userInfo?.username === states.authorName;
 
     useEffect(() => {
-        /**
-         * @todo 개발 완료 후 if (slug && token) 에서 if (isEditable) 으로 교체
-        }**/
-        if (slug && token) {
-            console.log({ slug, token });
-        } else if (!isEditable) {
-            initInputTitle();
-            initTextarea();
-            initInputDescription();
-            initInputTags();
-        }
-    }, [slug, token, isEditable, initInputTitle, initTextarea, initInputDescription, initInputTags]);
+        return () => initForm();
+    }, [slug]);
 
-    useEffect(() => {
-        /**
-         * @todo 개발 완료 후 제거
-        }**/
-        console.log({ slug, token });
-        console.log({ title, description, body, tagList });
-    }, [slug, token, title, description, body, tagList]);
-
-    const createArticle = async () => {
-        if (token) {
-            try {
-                await postArticleDetails(
-                    {
-                        title,
-                        description,
-                        body,
-                        tagList,
-                    },
-                    token,
-                );
-            } catch (error) {
-                setErrorMessage('error: ');
-                console.error('error: ', error);
-            }
-        } else {
-            setErrorMessage('An account is required. Please log in to continue.');
-        }
-    };
-
-    const editArticle = async () => {
-        if (token) {
-            try {
-                await updateArticleDetails(
-                    slug,
-                    {
-                        title,
-                        description,
-                        body,
-                    },
-                    token,
-                );
-            } catch (error) {
-                setErrorMessage('error: ');
-                console.error('error: ', error);
-            }
-        } else {
-            setErrorMessage('An account is required. Please log in to continue.');
-        }
-    };
-
-    const handleSubmit = async (event: React.MouseEvent) => {
-        event.preventDefault();
-
-        /**
-         * @todo 개발 완료 후 if (isEditable) 으로 교체
-        }**/
-        slug ? editArticle() : createArticle();
-    };
+    /**
+     * @todo 개발 완료 후 slug 에서 isEditable 조건으로 교체
+    }**/
+    if (slug && isLoading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <>
             <ul className="error-messages">
-                <li>{errorMessage}</li>
+                <li>{states.errorMessage}</li>
             </ul>
 
             <fieldset>
@@ -103,22 +38,22 @@ export default function EditorForm({ slug }: { slug: string }) {
                     type="text"
                     styleClass={{ size: 'lg' }}
                     placeholder="Article Title"
-                    value={title}
+                    value={states.title}
                     onChangeHandler={handleInputTitle}
                 />
                 <InputField
                     type="text"
                     styleClass={{ size: 'lg' }}
                     placeholder="What's this article about?"
-                    value={description}
+                    value={states.description}
                     onChangeHandler={handleInputDescription}
                 />
                 <TextareaField
                     styleClass={{ size: 'lg' }}
                     rows={8}
                     placeholder="Write your article (in markdown)"
-                    value={body}
-                    onChangeHandler={handleTextarea}
+                    value={states.body}
+                    onChangeHandler={handleInputBody}
                 />
                 <InputField
                     type="text"
@@ -127,11 +62,11 @@ export default function EditorForm({ slug }: { slug: string }) {
                     readOnly={slug ? true : false}
                     onKeyboardHandler={handleInputTags}
                 />
-                <TagList readOnly={slug ? true : false} />
+                <TagList tagList={states.tagList} setTagList={states.setTagList} readOnly={Boolean(slug)} />
                 <Button
                     type="button"
                     onClick={handleSubmit}
-                    styleClass={{ size: 'lg', outline: false, color: 'primary' }}>
+                    styleClass={{ size: 'lg', outline: false, color: 'primary', pull: 'pull-xs-right' }}>
                     Publish Article
                 </Button>
             </fieldset>
