@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import QueryProvider from '@/app/providers/QueryProvider';
+import QueryProvider from '@/providers/QueryProvider';
 import { Header, Footer } from '@/components/global';
-import './globals.css';
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
     title: 'Conduit',
