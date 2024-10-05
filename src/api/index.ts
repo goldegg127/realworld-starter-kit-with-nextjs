@@ -1,4 +1,4 @@
-import API from '@/config';
+import { API, END_POINT } from '@/config';
 import { ArticlesApiParam } from '@/types';
 
 export async function fetchArticles({
@@ -104,7 +104,7 @@ export async function deleteArticleDetails(slug: string, token: string) {
 }
 
 export async function fetchComments(slug: string) {
-    const res = await fetch(`${API.ARTICLES}/${slug}/comments`);
+    const res = await fetch(`${API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`);
 
     if (!res.ok) {
         throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
@@ -122,7 +122,7 @@ export async function postComment({
     commentBody: string;
     token: string | null;
 }) {
-    const url = `${API.ARTICLES}/${slug}/comments`;
+    const url = `${API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`;
     const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -150,7 +150,7 @@ export async function deleteComment({
     commentId: number;
     token: string | null;
 }) {
-    const url = `${API.ARTICLES}/${slug}/comments/${commentId}`;
+    const url = `${API.ARTICLES}/${slug}/${END_POINT.COMMENTS}/${commentId}`;
     const res = await fetch(url, {
         method: 'DELETE',
         headers: {
@@ -186,7 +186,7 @@ export async function fetchTagList() {
 }
 
 export async function loginUser({ email, password }: { email: string; password: string }) {
-    const url = `${API.USERS}/login`;
+    const url = `${API.USERS}/${END_POINT.LOGIN}`;
 
     const res = await fetch(url, {
         method: 'POST',

@@ -1,10 +1,17 @@
 const BASE_URI = 'https://api.realworld.io/api';
 
-const API = {
-    ARTICLES: `${BASE_URI}/articles`,
-    PROFILES: `${BASE_URI}/profiles`,
-    TAGS: `${BASE_URI}/tags`,
-    USERS: `${BASE_URI}/users`,
+export const END_POINT = {
+    ARTICLES: `articles`,
+    PROFILES: `profiles`,
+    TAGS: `tags`,
+    USERS: `users`,
+    COMMENTS: `comments`,
+    LOGIN: `login`
 };
 
-export default API;
+export const API = {
+    ARTICLES: `${BASE_URI}/${END_POINT.ARTICLES}`,
+    PROFILES: `${BASE_URI}/${END_POINT.PROFILES}`,
+    TAGS: `${BASE_URI}/${END_POINT.TAGS}`,
+    USERS: `${BASE_URI}/${END_POINT.USERS}`,
+};
