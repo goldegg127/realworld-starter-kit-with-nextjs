@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { localStoragePersist } from '@/util/storageUtils';
+import { localStoragePersist } from '@/utils/storageUtils';
 import Cookies from 'js-cookie';
-import { User } from '@/type';
+import { User } from '@/types';
 
 type AuthState = {
     userInfo: User | null;

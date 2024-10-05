@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchComments } from '@/api';
-import { Author } from '@/type';
+import { Author } from '@/types';
 
 async function syncCommentsWithSupabase(slug: string) {
     try {

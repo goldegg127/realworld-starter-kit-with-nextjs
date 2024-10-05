@@ -1,6 +1,6 @@
 'use client';
 
-import { HandleInputEvent } from '@/type';
+import { HandleInputEvent } from '@/types';
 import { useSignStates } from './useSignStates';
 
 function useInputPassword({ setPassword }: ReturnType<typeof useSignStates>) {

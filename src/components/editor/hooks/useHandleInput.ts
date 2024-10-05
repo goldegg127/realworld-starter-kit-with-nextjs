@@ -1,6 +1,6 @@
 'use client';
 
-import { HandleInputEvent } from '@/type';
+import { HandleInputEvent } from '@/types';
 import { useInputStates } from './useInputStates';
 
 function useHandleInput({ setTitle, setDescription, setBody, tagList, setTagList }: ReturnType<typeof useInputStates>) {

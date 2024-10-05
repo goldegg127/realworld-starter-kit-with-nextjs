@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import { SignupForm } from '@/components/sign';
 
 export default function SignupPage() {

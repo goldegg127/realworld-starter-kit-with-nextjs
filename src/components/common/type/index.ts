@@ -1,4 +1,4 @@
-import { Articles, searchParamsType } from '@/type';
+import { Articles, searchParamsType } from '@/types';
 
 export type ButtonProps = {
     children: React.ReactNode;

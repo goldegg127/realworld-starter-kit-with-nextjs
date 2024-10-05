@@ -1,7 +1,7 @@
 'use client';
 
 import { useHandleDeleteArticle } from './hooks';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import { Button } from '@/components/common';
 
 export default function ArticleButtons({ slug }: { slug: string }) {

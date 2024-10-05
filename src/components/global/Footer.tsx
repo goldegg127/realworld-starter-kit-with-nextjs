@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 
 export default function Footer() {
     return (

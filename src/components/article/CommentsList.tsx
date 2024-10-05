@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
-import { Comments } from '@/type';
+import { Comments } from '@/types';
 import { CardFooterProps, ProfileLinkProps } from './type';
-import { formatDate } from '@/util/format';
-import { navigator } from '@/util/navigation';
+import { formatDate } from '@/utils/format';
+import { navigator } from '@/utils/navigation';
 import CommentButtonDelete from './CommentDeleteButton';
 
 export default async function CommentsList({ slug }: { slug: string }) {

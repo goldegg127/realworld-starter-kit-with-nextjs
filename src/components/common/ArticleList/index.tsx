@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { searchParamsType, Articles, Article } from '@/type';
-import { formatDate } from '@/util/format';
-import { navigator } from '@/util/navigation';
+import { searchParamsType, Articles, Article } from '@/types';
+import { formatDate } from '@/utils/format';
+import { navigator } from '@/utils/navigation';
 import Pagination from './Pagination';
 /** @todo 좋아요 기능 구현 후 적용
  *  import { Button } from '@/components/common';

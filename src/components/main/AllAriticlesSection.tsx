@@ -1,9 +1,8 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
-import { searchParamsType, Articles } from '@/type';
-import { navigator } from '@/util/navigation';
-import Loading from '@/app/loading';
+import { searchParamsType, Articles } from '@/types';
+import { navigator } from '@/utils/navigation';
 import { ArticleTabList, TabMenu } from '@/components/common';
 
 export default async function AllAriticlesSection({ searchParams }: { searchParams?: searchParamsType }) {

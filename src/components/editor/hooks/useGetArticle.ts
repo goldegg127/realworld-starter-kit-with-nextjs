@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
-import { Article } from '@/type';
+import { Article } from '@/types';
 import { useInputStates } from './useInputStates';
 import { useEffect } from 'react';
 

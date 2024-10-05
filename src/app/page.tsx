@@ -1,4 +1,4 @@
-import { searchParamsType } from '@/type';
+import { searchParamsType } from '@/types';
 import { MainBanner, AllAriticlesSection, Sidebar } from '@/components/main';
 
 export default function MainPage({ searchParams }: { searchParams?: searchParamsType }) {

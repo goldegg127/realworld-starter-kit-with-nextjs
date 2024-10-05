@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/api';
 import { useAuthStore } from '@/stores/authStore';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import { useSignStates } from './useSignStates';
 
 function useHandleLogin({ email, password, errorMessage, setErrorMessage }: ReturnType<typeof useSignStates>) {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import HeaderActions from '@/components/global/HeaderActions';
 
 export default function Header() {

@@ -1,7 +1,7 @@
 import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
-import { Article } from '@/type';
-import { formatDate } from '@/util/format';
-import { navigator } from '@/util/navigation';
+import { Article } from '@/types';
+import { formatDate } from '@/utils/format';
+import { navigator } from '@/utils/navigation';
 import { ArticleBanner, ArticleContent, ArticleActions, CommentsList, CommentEditor } from '@/components/article';
 
 export default async function ArticleDetailsPage({ params }: { params: { slug: string } }) {

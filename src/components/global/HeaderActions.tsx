@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuthStore } from '@/stores/authStore';
-import { navigator } from '@/util/navigation';
+import { navigator } from '@/utils/navigation';
 import { useActiveStyle } from '@/hooks/useActiveStyle';
 
 export default function HeaderActions() {

@@ -1,4 +1,4 @@
-import { searchParamsType } from '@/type';
+import { searchParamsType } from '@/types';
 import { EditorForm } from '@/components/editor';
 
 export default function EditorPage({ searchParams }: { searchParams?: searchParamsType }) {

@@ -1,4 +1,4 @@
-import { Comments, Comment, Author } from '@/type';
+import { Comments, Comment, Author } from '@/types';
 
 export type ArticleActionsProps = {
     slug: string;

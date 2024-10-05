@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
 import { fetchDetails } from '@/api';
-import { Article, Author } from '@/type';
+import { Article, Author } from '@/types';
 
 async function syncDetailsWithSupabase(slug: string) {
     try {

@@ -1,6 +1,6 @@
 import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
-import { searchParamsType, Articles, ArticlesApiParam } from '@/type';
-import { navigator } from '@/util/navigation';
+import { searchParamsType, Articles, ArticlesApiParam } from '@/types';
+import { navigator } from '@/utils/navigation';
 import { ArticleTabList, TabMenu } from '@/components/common';
 
 export default async function AuthorArticlesSection({
