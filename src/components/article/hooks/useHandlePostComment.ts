@@ -1,4 +1,4 @@
-import { postComment } from '@/api';
+import { postComment } from '@/app/api/realworld';
 
 function uesHandlePostComment({
     slug,

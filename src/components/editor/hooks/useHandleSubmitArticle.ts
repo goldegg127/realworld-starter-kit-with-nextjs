@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/stores';
-import { postArticleDetails, updateArticleDetails } from '@/api';
+import { postArticleDetails, updateArticleDetails } from '@/app/api/realworld';
 import { useInputStates } from './useInputStates';
 
 function useHandleSubmitArticle({

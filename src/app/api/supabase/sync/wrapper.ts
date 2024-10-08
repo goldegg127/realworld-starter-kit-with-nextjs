@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { syncSupabase } from '@/api/supabase';
+import { syncSupabase } from '@/app/api/supabase';
 
 export function supabaseSyncWrapper(handler: Function, syncType: string) {
     return async (req: NextApiRequest, res: NextApiResponse) => {

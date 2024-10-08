@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchTagList } from '@/api';
+import { fetchTagList } from '@/app/api/realworld';
 
 async function syncTagListWithSupabase() {
     try {

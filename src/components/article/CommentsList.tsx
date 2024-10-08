@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/api/supabase';
+import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/app/api/supabase';
 import { Comments } from '@/types';
 import { CardFooterProps, ProfileLinkProps } from './type';
 import { formatDate } from '@/utils/format';
@@ -8,7 +8,7 @@ import { navigator } from '@/utils/navigation';
 import CommentButtonDelete from './CommentDeleteButton';
 
 export default async function CommentsList({ slug }: { slug: string }) {
-    // await syncCommentsWithSupabase(slug);
+    await syncCommentsWithSupabase(slug);
 
     const { comments }: { comments: Comments } = await fetchCommentsFromSupabase(slug);
 

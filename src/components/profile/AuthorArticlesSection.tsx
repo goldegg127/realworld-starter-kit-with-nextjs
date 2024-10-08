@@ -1,4 +1,4 @@
-import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
+import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/app/api/supabase';
 import { searchParamsType, Articles, ArticlesApiParam } from '@/types';
 import { navigator } from '@/utils/navigation';
 import { ArticleTabList, TabMenu } from '@/components/common';
@@ -19,7 +19,7 @@ export default async function AuthorArticlesSection({
         favorited: favorited,
     };
 
-    // await syncArticlesWithSupabase(param);
+    await syncArticlesWithSupabase(param);
 
     const {
         articles,
