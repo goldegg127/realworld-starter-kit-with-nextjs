@@ -1,4 +1,4 @@
-import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/api/supabase';
+import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/app/api/supabase';
 import { Article } from '@/types';
 import { formatDate } from '@/utils/format';
 import { navigator } from '@/utils/navigation';

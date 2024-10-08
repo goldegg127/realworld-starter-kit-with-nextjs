@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { syncTagListWithSupabase, fetchTagListFromSupabase } from '@/api/supabase';
+import { syncTagListWithSupabase, fetchTagListFromSupabase } from '@/app/api/supabase';
 import { navigator } from '@/utils/navigation';
 
 export default async function Sidebar() {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/stores/authStore';
-import { deleteArticleDetails } from '@/api';
+import { deleteArticleDetails } from '@/app/api/realworld';
 
 function useHandleDeleteArticle(slug: string) {
     const { token } = useAuthStore();
