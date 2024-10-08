@@ -1,31 +1,36 @@
-import { API, END_POINT } from '@/config';
+import { REALWORLD_API, END_POINT } from '@/config';
 import { ArticlesApiParam } from '@/types';
 
-export async function fetchArticles({
+export async function fetchArticlesFromRealworld({
     offset = 0,
     limit = 10,
     tag = '',
     author = '',
     favorited = '',
 }: ArticlesApiParam) {
-    const url = `${API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
-        author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
-    }`;
+    try {
+        const url = `${REALWORLD_API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
+            author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
+        }`;
 
-    const res = await fetch(url, {
-        cache: 'force-cache',
-    });
+        const res = await fetch(url, {
+            cache: 'force-cache',
+        });
 
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error(`Failed to fetch Articles data: ${res.status} ${res.statusText}`);
+        if (!res.ok) {
+            // This will activate the closest `error.js` Error Boundary
+            throw new Error(`Failed to fetch Articles data: ${res.status} ${res.statusText}`);
+        }
+
+        return res.json();
+    } catch (error) {
+        console.error('Error fetching articles:', error);
+        throw error; // Error를 던져 호출한 곳에서 에러를 처리할 수 있게 함
     }
-
-    return res.json();
 }
 
 export async function fetchDetails(slug: string) {
-    const res = await fetch(`${API.ARTICLES}/${slug}`);
+    const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}`);
 
     if (!res.ok) {
         throw new Error(`Failed to fetch for article details: ${res.status} ${res.statusText}`);
@@ -38,7 +43,7 @@ export async function postArticleDetails(
     { title, description, body, tagList }: { title: string; description: string; body: string; tagList: string[] },
     token: string,
 ) {
-    const res = await fetch(`${API.ARTICLES}`, {
+    const res = await fetch(`${REALWORLD_API.ARTICLES}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -66,7 +71,7 @@ export async function updateArticleDetails(
     { title, description, body }: { title: string; description: string; body: string },
     token: string,
 ) {
-    const res = await fetch(`${API.ARTICLES}/${slug}`, {
+    const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -89,7 +94,7 @@ export async function updateArticleDetails(
 }
 
 export async function deleteArticleDetails(slug: string, token: string) {
-    const res = await fetch(`${API.ARTICLES}/${slug}`, {
+    const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Token ${token}`,
@@ -104,7 +109,7 @@ export async function deleteArticleDetails(slug: string, token: string) {
 }
 
 export async function fetchComments(slug: string) {
-    const res = await fetch(`${API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`);
+    const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`);
 
     if (!res.ok) {
         throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
@@ -122,7 +127,7 @@ export async function postComment({
     commentBody: string;
     token: string | null;
 }) {
-    const url = `${API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`;
+    const url = `${REALWORLD_API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`;
     const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -150,7 +155,7 @@ export async function deleteComment({
     commentId: number;
     token: string | null;
 }) {
-    const url = `${API.ARTICLES}/${slug}/${END_POINT.COMMENTS}/${commentId}`;
+    const url = `${REALWORLD_API.ARTICLES}/${slug}/${END_POINT.COMMENTS}/${commentId}`;
     const res = await fetch(url, {
         method: 'DELETE',
         headers: {
@@ -166,7 +171,7 @@ export async function deleteComment({
 }
 
 export async function fetchProfiles(username: string) {
-    const res = await fetch(`${API.PROFILES}/${username}`);
+    const res = await fetch(`${REALWORLD_API.PROFILES}/${username}`);
 
     if (!res.ok) {
         throw new Error(`Failed to fetch profile: ${res.status} ${res.statusText}`);
@@ -176,7 +181,7 @@ export async function fetchProfiles(username: string) {
 }
 
 export async function fetchTagList() {
-    const res = await fetch(API.TAGS);
+    const res = await fetch(REALWORLD_API.TAGS);
 
     if (!res.ok) {
         throw Error(`failed fetching tag list: ${res.status} ${res.statusText}`);
@@ -186,7 +191,7 @@ export async function fetchTagList() {
 }
 
 export async function loginUser({ email, password }: { email: string; password: string }) {
-    const url = `${API.USERS}/${END_POINT.LOGIN}`;
+    const url = `${REALWORLD_API.USERS}/${END_POINT.LOGIN}`;
 
     const res = await fetch(url, {
         method: 'POST',
@@ -206,7 +211,7 @@ export async function loginUser({ email, password }: { email: string; password: 
 }
 
 export async function SignupUser({ username, email, password }: { username: string; email: string; password: string }) {
-    const url = `${API.USERS}`;
+    const url = `${REALWORLD_API.USERS}`;
 
     const res = await fetch(url, {
         method: 'POST',

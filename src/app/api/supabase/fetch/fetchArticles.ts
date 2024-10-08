@@ -54,6 +54,10 @@ async function fetchArticlesFromSupabase({
         author: article.author,
     }));
 
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('Articles fetched successfully!');
+    }
+
     return {
         articles: articles || [],
         articlesCount: count || 0,

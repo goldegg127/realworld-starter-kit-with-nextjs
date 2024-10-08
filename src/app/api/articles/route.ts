@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { fetchArticlesFromSupabase } from '@/app/api/supabase';
+import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/app/api/supabase';
 
 export async function GET(req: Request) {
     console.log('api/articles');
@@ -7,12 +7,22 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get('page') ?? '1', 10);
     const tag = searchParams.get('tag') ?? '';
-
-    const articlesData = await fetchArticlesFromSupabase({
+    const params = {
         offset: (page - 1) * 10,
-        limit: 10,
         tag,
-    });
+    };
 
-    NextResponse.json(articlesData);
+    await syncArticlesWithSupabase(params);
+
+    try {
+        const articlesData = await fetchArticlesFromSupabase(params);
+
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Articles completed successfully!');
+        }
+
+        return NextResponse.json(articlesData);
+    } catch (error) {
+        console.error('Final Error: ', error);
+    }
 }

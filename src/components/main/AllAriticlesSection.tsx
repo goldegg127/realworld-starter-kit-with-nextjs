@@ -1,4 +1,4 @@
-import { fetchArticles } from '@/app/api/realworld';
+import { fetchArticles } from '@/app/api';
 import { searchParamsType, Articles } from '@/types';
 import { navigator } from '@/utils/navigation';
 import { ArticleTabList, TabMenu } from '@/components/common';

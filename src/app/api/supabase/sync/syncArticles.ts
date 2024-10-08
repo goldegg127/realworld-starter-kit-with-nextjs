@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchArticles } from '@/app/api/realworld';
+import { fetchArticlesFromRealworld } from '@/app/api/realworld';
 import { ArticlesApiParam } from '@/types';
 
 // Supabase와 동기화하는 함수 : RealWorld API에서 데이터를 가져와 Supabase에 저장하고, 이미 존재하는 데이터는 중복 삽입을 방지
@@ -12,7 +12,7 @@ async function syncArticlesWithSupabase({
 }: ArticlesApiParam) {
     try {
         // 1. Real World API fetch
-        const { articles } = await fetchArticles({ offset, limit, tag, author, favorited });
+        const { articles } = await fetchArticlesFromRealworld({ offset, limit, tag, author, favorited });
 
         if (favorited && articles.length === 0) {
             console.log(`Real World Articles API fetch: `, { offset, limit, tag, author, favorited }, articles);
