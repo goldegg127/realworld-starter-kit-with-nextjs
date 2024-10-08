@@ -25,7 +25,7 @@ export async function fetchArticlesFromRealworld({
         return res.json();
     } catch (error) {
         console.error('Error fetching articles:', error);
-        throw error; // Error를 던져 호출한 곳에서 에러를 처리할 수 있게 함
+        throw error;
     }
 }
 
