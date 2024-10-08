@@ -1,19 +1,21 @@
 import {
+    syncArticlesWithSupabase,
+    syncCommentsWithSupabase,
+    syncDetailsWithSupabase,
+    syncProfilesWithSupabase,
+    syncTagListWithSupabase,
+    syncSupabase,
+} from './sync';
+import {
     fetchArticlesFromSupabase,
     fetchCommentsFromSupabase,
     fetchDetailsFromSupabase,
     fetchProfilesFromSupabase,
     fetchTagListFromSupabase,
 } from './fetch';
-import {
-    syncArticlesWithSupabase,
-    syncCommentsWithSupabase,
-    syncDetailsWithSupabase,
-    syncProfilesWithSupabase,
-    syncTagListWithSupabase,
-} from './sync';
 
 export {
+    syncSupabase,
     // Articles
     syncArticlesWithSupabase,
     fetchArticlesFromSupabase,

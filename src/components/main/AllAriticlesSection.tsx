@@ -1,6 +1,4 @@
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/api/supabase';
+import { fetchArticles } from '@/api';
 import { searchParamsType, Articles } from '@/types';
 import { navigator } from '@/utils/navigation';
 import { ArticleTabList, TabMenu } from '@/components/common';
@@ -9,10 +7,7 @@ export default async function AllAriticlesSection({ searchParams }: { searchPara
     const currentPage = parseInt(searchParams?.page ?? '1', 10);
     const tag = searchParams?.tag ?? '';
 
-    // 서버에서 Supabase와 동기화
-    // await syncArticlesWithSupabase({ offset: (currentPage - 1) * 10, tag });
-
-    const data = await fetchArticlesFromSupabase({
+    const data = await fetchArticles({
         offset: (currentPage - 1) * 10,
         tag: tag,
     });

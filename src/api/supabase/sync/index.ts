@@ -6,8 +6,8 @@ import { syncDetailsWithSupabase } from './syncDetails';
 import { syncProfilesWithSupabase } from './syncProfiles';
 import { syncTagListWithSupabase } from './syncTags';
 
-async function syncSupabase(endpoint: string, params: any) {
-    switch (endpoint) {
+async function syncSupabase(type: string, params: any) {
+    switch (type) {
         case `${END_POINT.ARTICLES}`:
             if (!params.slug) {
                 await syncArticlesWithSupabase(params);
@@ -29,7 +29,7 @@ async function syncSupabase(endpoint: string, params: any) {
             break;
 
         default:
-            console.error(`Invalid sync endpoint: ${endpoint}`);
+            console.error(`Invalid sync type: ${type}`);
     }
 }
 

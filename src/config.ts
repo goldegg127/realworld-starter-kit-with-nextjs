@@ -6,7 +6,7 @@ export const END_POINT = {
     TAGS: `tags`,
     USERS: `users`,
     COMMENTS: `comments`,
-    LOGIN: `login`
+    LOGIN: `login`,
 };
 
 export const API = {
