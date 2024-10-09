@@ -1,7 +1,7 @@
 import { supabase } from '@/services/supabaseClient';
 import { Article, Author } from '@/types';
 
-async function fetchDetailsFromSupabase(slug: string): Promise<{ article: Article }> {
+async function fetchArticleDetailsFromSupabase(slug: string): Promise<{ article: Article }> {
     const { data: articleData, error } = await supabase
         .from('article_details')
         .select(
@@ -33,4 +33,4 @@ async function fetchDetailsFromSupabase(slug: string): Promise<{ article: Articl
     };
 }
 
-export { fetchDetailsFromSupabase };
+export { fetchArticleDetailsFromSupabase };

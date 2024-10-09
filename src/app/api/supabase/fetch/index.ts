@@ -1,13 +1,13 @@
 import { fetchArticlesFromSupabase } from './fetchArticles';
 import { fetchCommentsFromSupabase } from './fetchComments';
-import { fetchDetailsFromSupabase } from './fetchDetails';
+import { fetchArticleDetailsFromSupabase } from './fetchArticleDetails';
 import { fetchProfilesFromSupabase } from './fetchProfiles';
 import { fetchTagListFromSupabase } from './fetchTags';
 
 export {
     fetchArticlesFromSupabase,
     fetchCommentsFromSupabase,
-    fetchDetailsFromSupabase,
+    fetchArticleDetailsFromSupabase,
     fetchProfilesFromSupabase,
     fetchTagListFromSupabase,
 };

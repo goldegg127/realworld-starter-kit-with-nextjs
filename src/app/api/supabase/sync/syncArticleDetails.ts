@@ -1,10 +1,10 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchDetails } from '@/app/api/realworld';
+import { fetchArticleDetails } from '@/app/api/realworld';
 
-async function syncDetailsWithSupabase(slug: string) {
+async function syncArticleDetailsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
-        const { article } = await fetchDetails(slug);
+        const { article } = await fetchArticleDetails(slug);
 
         const { title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author } = article;
 
@@ -123,4 +123,4 @@ async function syncDetailsWithSupabase(slug: string) {
     }
 }
 
-export { syncDetailsWithSupabase };
+export { syncArticleDetailsWithSupabase };

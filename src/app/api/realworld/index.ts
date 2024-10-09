@@ -29,7 +29,7 @@ export async function fetchArticlesFromRealworld({
     }
 }
 
-export async function fetchDetails(slug: string) {
+export async function fetchArticleDetails(slug: string) {
     const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}`);
 
     if (!res.ok) {

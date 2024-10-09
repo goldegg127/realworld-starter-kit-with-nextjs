@@ -1,13 +1,11 @@
-import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/app/api/supabase';
+import { fetchArticleDetails } from '@/app/api';
 import { Article } from '@/types';
 import { formatDate } from '@/utils/format';
 import { navigator } from '@/utils/navigation';
 import { ArticleBanner, ArticleContent, ArticleActions, CommentsList, CommentEditor } from '@/components/article';
 
 export default async function ArticleDetailsPage({ params }: { params: { slug: string } }) {
-    await syncDetailsWithSupabase(params.slug);
-
-    const { article } = await fetchDetailsFromSupabase(params.slug);
+    const { article } = await fetchArticleDetails(params.slug);
     const { slug, title, description, body, tagList, createdAt, author }: Article = article;
     const { username, image } = author;
     const profileLink = navigator.profile(username);

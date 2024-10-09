@@ -1,30 +1,28 @@
 import {
     syncArticlesWithSupabase,
     syncCommentsWithSupabase,
-    syncDetailsWithSupabase,
+    syncArticleDetailsWithSupabase,
     syncProfilesWithSupabase,
     syncTagListWithSupabase,
-    syncSupabase,
 } from './sync';
 import {
     fetchArticlesFromSupabase,
     fetchCommentsFromSupabase,
-    fetchDetailsFromSupabase,
+    fetchArticleDetailsFromSupabase,
     fetchProfilesFromSupabase,
     fetchTagListFromSupabase,
 } from './fetch';
 
 export {
-    syncSupabase,
     // Articles
     syncArticlesWithSupabase,
     fetchArticlesFromSupabase,
+    // Details
+    syncArticleDetailsWithSupabase,
+    fetchArticleDetailsFromSupabase,
     // Comments
     syncCommentsWithSupabase,
     fetchCommentsFromSupabase,
-    // Details
-    syncDetailsWithSupabase,
-    fetchDetailsFromSupabase,
     // Profiles
     syncProfilesWithSupabase,
     fetchProfilesFromSupabase,
