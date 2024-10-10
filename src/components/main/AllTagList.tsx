@@ -2,16 +2,7 @@ import Link from 'next/link';
 import { fetchTagList } from '@/app/api';
 import { navigator } from '@/utils/navigation';
 
-export default async function Sidebar() {
-    return (
-        <article className="sidebar">
-            <p>Popular Tags</p>
-            <TagList />
-        </article>
-    );
-}
-
-async function TagList() {
+export default async function AllTagList() {
     const { tags }: { tags: string[] } = await fetchTagList();
 
     return (

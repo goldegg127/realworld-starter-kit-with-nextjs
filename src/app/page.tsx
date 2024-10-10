@@ -1,17 +1,25 @@
 import { searchParamsType } from '@/types';
-import { MainBanner, AllAriticlesSection, Sidebar } from '@/components/main';
+import { AllAriticlesSection, AllTagList } from '@/components/main';
 
 export default function MainPage({ searchParams }: { searchParams?: searchParamsType }) {
     return (
         <main className="home-page">
-            <MainBanner />
+            <section className="banner">
+                <div className="container">
+                    <h1 className="logo-font">conduit</h1>
+                    <p>A place to share your knowledge.</p>
+                </div>
+            </section>
             <section className="container page">
                 <div className="row">
                     <section className="col-md-9">
                         <AllAriticlesSection searchParams={searchParams} />
                     </section>
                     <aside className="col-md-3">
-                        <Sidebar />
+                        <article className="sidebar">
+                            <p>Popular Tags</p>
+                            <AllTagList />
+                        </article>
                     </aside>
                 </div>
             </section>
