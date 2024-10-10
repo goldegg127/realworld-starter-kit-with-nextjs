@@ -205,7 +205,7 @@ export async function loginUser({ email, password }: { email: string; password: 
     return res.json();
 }
 
-export async function SignupUser({ username, email, password }: { username: string; email: string; password: string }) {
+export async function signupUser({ username, email, password }: { username: string; email: string; password: string }) {
     const url = `${REALWORLD_API.USERS}`;
 
     const res = await fetch(url, {

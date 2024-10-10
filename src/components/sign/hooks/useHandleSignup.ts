@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { SignupUser } from '@/dataSources/realworld';
+import { signupUser } from '@/dataSources/realworld';
 import { navigator } from '@/utils/navigation';
 import { useSignStates } from './useSignStates';
 
@@ -18,7 +18,7 @@ function useHandleSignup({
         event.preventDefault();
 
         try {
-            const { user } = await SignupUser({ username, email, password });
+            const { user } = await signupUser({ username, email, password });
 
             if (user) {
                 router.push(navigator.signin);
