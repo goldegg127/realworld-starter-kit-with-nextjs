@@ -8,32 +8,27 @@ export async function fetchArticlesFromRealworld({
     author = '',
     favorited = '',
 }: ArticlesApiParam) {
-    try {
-        const url = `${REALWORLD_API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
-            author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
-        }`;
+    const url = `${REALWORLD_API.ARTICLES}?offset=${offset}&limit=${limit}${tag ? `&tag=${tag}` : ''}${
+        author ? (favorited ? `&favorited=${favorited}` : `&author=${author}`) : ''
+    }`;
 
-        const res = await fetch(url, {
-            cache: 'force-cache',
-        });
+    const res = await fetch(url, {
+        cache: 'force-cache',
+    });
 
-        if (!res.ok) {
-            // This will activate the closest `error.js` Error Boundary
-            throw new Error(`Failed to fetch Articles data: ${res.status} ${res.statusText}`);
-        }
-
-        return res.json();
-    } catch (error) {
-        console.error('Error fetching articles:', error);
-        throw error;
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error(`Failed to fetch Articles data from RealWorld: ${res.status} ${res.statusText}`);
     }
+
+    return res.json();
 }
 
 export async function fetchArticleDetails(slug: string) {
     const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}`);
 
     if (!res.ok) {
-        throw new Error(`Failed to fetch for article details: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to fetch for article details data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -60,7 +55,7 @@ export async function postArticleDetails(
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to post for your article: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to post for your article data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -87,7 +82,7 @@ export async function updateArticleDetails(
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to update for your article: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to update for your article data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -102,7 +97,7 @@ export async function deleteArticleDetails(slug: string, token: string) {
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to post for your article: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to post for your article data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -112,7 +107,7 @@ export async function fetchComments(slug: string) {
     const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`);
 
     if (!res.ok) {
-        throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to fetch comments data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -140,7 +135,7 @@ export async function postComment({
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to post your comment: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to post your comment data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -164,7 +159,7 @@ export async function deleteComment({
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to delete your comment: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to delete your comment data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -174,7 +169,7 @@ export async function fetchProfiles(username: string) {
     const res = await fetch(`${REALWORLD_API.PROFILES}/${username}`);
 
     if (!res.ok) {
-        throw new Error(`Failed to fetch profile: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to fetch profile data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -184,7 +179,7 @@ export async function fetchTagList() {
     const res = await fetch(REALWORLD_API.TAGS);
 
     if (!res.ok) {
-        throw Error(`failed fetching tag list: ${res.status} ${res.statusText}`);
+        throw Error(`failed fetching tag list data from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -204,7 +199,7 @@ export async function loginUser({ email, password }: { email: string; password: 
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to login: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to login from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
@@ -224,7 +219,7 @@ export async function SignupUser({ username, email, password }: { username: stri
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to signup: ${res.status} ${res.statusText}`);
+        throw new Error(`Failed to signup from RealWorld: ${res.status} ${res.statusText}`);
     }
 
     return res.json();
