@@ -1,6 +1,6 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchArticleDetails } from '@/app/api/realworld';
-import { Article, Author } from '@/types';
+import { fetchArticleDetails } from '@/dataSources/realworld';
+import { Author } from '@/types';
 
 async function fetchArticleDetailsFromSupabase(slug: string) {
     const { data: articleData, error } = await supabase

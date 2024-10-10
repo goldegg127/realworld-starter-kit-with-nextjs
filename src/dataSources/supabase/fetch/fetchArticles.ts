@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchArticlesFromRealworld } from '@/app/api/realworld';
+import { fetchArticlesFromRealworld } from '@/dataSources/realworld';
 import { Article, ArticlesApiParam } from '@/types';
 
 // Supabase에서 articles 데이터를 가져와 페이징 처리 및 tag 또는 author 필터링

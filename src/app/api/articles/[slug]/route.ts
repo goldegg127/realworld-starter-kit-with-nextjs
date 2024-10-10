@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { syncArticleDetailsWithSupabase, fetchArticleDetailsFromSupabase } from '@/app/api/supabase';
+import { syncArticleDetailsWithSupabase, fetchArticleDetailsFromSupabase } from '@/dataSources/supabase';
 
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
     const { slug } = params;

@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchComments } from '@/app/api/realworld';
+import { fetchComments } from '@/dataSources/realworld';
 
 async function syncCommentsWithSupabase(slug: string) {
     try {

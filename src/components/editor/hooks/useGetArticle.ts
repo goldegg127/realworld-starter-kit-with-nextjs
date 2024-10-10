@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/app/api/supabase';
+import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/dataSources/supabase';
 import { Article } from '@/types';
 import { useInputStates } from './useInputStates';
 import { useEffect } from 'react';

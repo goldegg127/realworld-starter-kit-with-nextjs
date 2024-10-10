@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { loginUser } from '@/app/api/realworld';
+import { loginUser } from '@/dataSources/realworld';
 import { useAuthStore } from '@/stores/authStore';
 import { navigator } from '@/utils/navigation';
 import { useSignStates } from './useSignStates';

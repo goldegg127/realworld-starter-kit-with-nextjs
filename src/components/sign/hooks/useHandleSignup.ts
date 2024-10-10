@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { SignupUser } from '@/app/api/realworld';
+import { SignupUser } from '@/dataSources/realworld';
 import { navigator } from '@/utils/navigation';
 import { useSignStates } from './useSignStates';
 

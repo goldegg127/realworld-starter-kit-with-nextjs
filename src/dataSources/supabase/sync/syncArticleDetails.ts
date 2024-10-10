@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchArticleDetails } from '@/app/api/realworld';
+import { fetchArticleDetails } from '@/dataSources/realworld';
 
 async function syncArticleDetailsWithSupabase(slug: string) {
     try {

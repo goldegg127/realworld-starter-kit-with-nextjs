@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/app/api/supabase';
+import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/dataSources/supabase';
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);

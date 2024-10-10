@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchProfiles } from '@/app/api/realworld';
+import { fetchProfiles } from '@/dataSources/realworld';
 
 async function syncProfilesWithSupabase(userName: string) {
     try {

@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from '@/app/api/supabase';
+import { syncProfilesWithSupabase, fetchProfilesFromSupabase } from '@/dataSources/supabase';
 // import { Button } from "@/components/common";
 
 export default async function ProfileBanner({ author }: { author: string }) {
     await syncProfilesWithSupabase(author);
 
     const { profile } = await fetchProfilesFromSupabase(author);
-    const { username, bio, image, following } = profile;
+    const { username, bio, image } = profile;
 
     return (
         <>
