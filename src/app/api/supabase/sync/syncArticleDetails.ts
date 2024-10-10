@@ -8,14 +8,22 @@ async function syncArticleDetailsWithSupabase(slug: string) {
 
         const { title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author } = article;
 
-        // 2. Supabase 테이블에서 데이터 확인
-        const { data: existingArticles, error: articleError } = await supabase
-            .from('article_details')
-            .select('id, slug')
-            .eq('slug', slug);
+        // 2. Supabase 테이블에서 article_details와 author 데이터를 병렬로 확인
+        const [resArticles, resAuthors] = await Promise.all([
+            supabase.from('article_details').select('id, slug').eq('slug', slug),
+            supabase.from('author').select('id, username').eq('username', author.username),
+        ]);
+
+        const { data: existingArticles, error: articleError } = resArticles;
+        const { data: existingAuthors, error: authorError } = resAuthors;
 
         if (articleError) {
             console.error('Error fetching existing article from Supabase:', articleError);
+            return;
+        }
+
+        if (authorError) {
+            console.error('Error fetching author From syncDetailsWithSupabase:', authorError);
             return;
         }
 
@@ -35,17 +43,6 @@ async function syncArticleDetailsWithSupabase(slug: string) {
 
         if (process.env.NODE_ENV !== 'production') {
             console.log(`Article "${slug}" data does not exist in Supabase. Proceeding with insertion...`);
-        }
-
-        // 3. Supabase의 author 테이블에서 데이터 확인
-        const { data: existingAuthors, error: authorError } = await supabase
-            .from('author')
-            .select('id, username')
-            .eq('username', author.username);
-
-        if (authorError) {
-            console.error('Error fetching author From syncDetailsWithSupabase:', authorError);
-            return;
         }
 
         let authorId;

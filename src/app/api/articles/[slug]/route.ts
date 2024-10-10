@@ -4,17 +4,23 @@ import { syncArticleDetailsWithSupabase, fetchArticleDetailsFromSupabase } from 
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
     const { slug } = params;
 
-    await syncArticleDetailsWithSupabase(slug);
-
     try {
         const articlesData = await fetchArticleDetailsFromSupabase(slug);
 
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('Article Details completed successfully!');
-        }
+        if (articlesData) {
+            if (process.env.NODE_ENV !== 'production') console.log('Article Details completed successfully!');
 
-        return NextResponse.json(articlesData);
+            return NextResponse.json(articlesData);
+        } else {
+            await syncArticleDetailsWithSupabase(slug);
+
+            const updateArticlesData = await fetchArticleDetailsFromSupabase(slug);
+
+            return NextResponse.json(updateArticlesData);
+        }
     } catch (error) {
         console.error('Final Error: ', error);
+
+        return new NextResponse('Failed to fetch article details', { status: 500 });
     }
 }
