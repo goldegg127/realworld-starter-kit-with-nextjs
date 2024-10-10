@@ -175,7 +175,7 @@ export async function fetchProfiles(username: string) {
     return res.json();
 }
 
-export async function fetchTagList() {
+export async function fetchTagListFromRealworld() {
     const res = await fetch(REALWORLD_API.TAGS);
 
     if (!res.ok) {
