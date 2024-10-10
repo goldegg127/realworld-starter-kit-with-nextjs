@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { syncTagListWithSupabase, fetchTagListFromSupabase } from '@/app/api/supabase';
+import { fetchTagList } from '@/app/api';
 import { navigator } from '@/utils/navigation';
 
 export default async function Sidebar() {
@@ -12,9 +12,7 @@ export default async function Sidebar() {
 }
 
 async function TagList() {
-    await syncTagListWithSupabase();
-
-    const { tags } = await fetchTagListFromSupabase();
+    const { tags }: { tags: string[] } = await fetchTagList();
 
     return (
         <ul className="tag-list">
