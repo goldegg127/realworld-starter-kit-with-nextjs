@@ -165,7 +165,7 @@ export async function deleteComment({
     return res.json();
 }
 
-export async function fetchProfiles(username: string) {
+export async function fetchProfilesFromRealworld(username: string) {
     const res = await fetch(`${REALWORLD_API.PROFILES}/${username}`);
 
     if (!res.ok) {

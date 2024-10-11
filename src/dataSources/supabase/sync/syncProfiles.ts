@@ -1,11 +1,11 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchProfiles } from '@/dataSources/realworld';
+import { fetchProfilesFromRealworld } from '@/dataSources/realworld';
 
 async function syncProfilesWithSupabase(userName: string) {
     try {
         // 1. Real World API fetch
         const decodedUser = decodeURIComponent(userName); // URL 인코딩된 username을 디코딩
-        const { profile } = await fetchProfiles(userName);
+        const { profile } = await fetchProfilesFromRealworld(userName);
 
         if (process.env.NODE_ENV !== 'production') {
             console.log('Fetch Profile from API', profile);
