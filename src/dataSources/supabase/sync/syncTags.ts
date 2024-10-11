@@ -16,8 +16,18 @@ async function syncTagListWithSupabase() {
             }
 
             if (existingTag.length > 1) {
+                // 중복된 태그가 여러 개일 경우, 가장 오래된 하나만 남기고 나머지 삭제
+                const tagIdsToKeep = existingTag.map(tag => tag.id).slice(1); // 첫 번째 태그 제외
+
+                const { error: deleteError } = await supabase.from('tags').delete().in('id', tagIdsToKeep);
+
+                if (deleteError) {
+                    console.error(`Error deleting duplicate tags for "${tag}":`, deleteError);
+                    continue;
+                }
+
                 if (process.env.NODE_ENV !== 'production') {
-                    console.warn(`Warning: Multiple entries found for the same Tag: "${tag}", skipping insertion.`);
+                    console.log(`Duplicate tags for "${tag}" removed, keeping the first one.`);
                 }
                 continue;
             }
