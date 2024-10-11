@@ -8,7 +8,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
         const articlesData = await fetchCommentsFromSupabase(slug);
 
         if (articlesData) {
-            if (process.env.NODE_ENV !== 'production') console.log('Article Details completed successfully!');
+            if (process.env.NODE_ENV !== 'production') console.log('Comments completed successfully!');
 
             return NextResponse.json(articlesData);
         } else {
@@ -21,6 +21,6 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
     } catch (error) {
         console.error('Final Error: ', error);
 
-        return new NextResponse('Failed to fetch article details', { status: 500 });
+        return new NextResponse('Failed to fetch Comments', { status: 500 });
     }
 }
