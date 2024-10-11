@@ -1,10 +1,10 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchTagList } from '@/dataSources/realworld';
+import { fetchTagListFromRealworld } from '@/dataSources/realworld';
 
 async function syncTagListWithSupabase() {
     try {
         // 1. Real World API fetch
-        const { tags } = await fetchTagList();
+        const { tags } = await fetchTagListFromRealworld();
 
         for (const tag of tags) {
             // 2. Supabase 테이블에서 데이터 확인
