@@ -20,19 +20,19 @@ async function fetchTagListFromSupabase() {
     const uniqueTags = [...new Set(tags)];
 
     if (uniqueTags && uniqueTags.length > 0) {
-        const supabseData = { tags: uniqueTags };
+        const resultData = { tags: uniqueTags };
 
         try {
             const supabaseTagsLength = uniqueTags.length;
             const realworldTagsLength = await fetchUpdatedAtFromRealWorld();
 
             if (supabaseTagsLength >= realworldTagsLength) {
-                return supabseData;
+                return resultData;
             }
         } catch (realWorldError) {
-            console.error(`Failed to fetch tagList from RealWorld API for check update: ${realWorldError}`);
+            console.error(`⚠️ Failed to fetch tagList from RealWorld API for check update: ${realWorldError}`);
 
-            return supabseData;
+            return resultData;
         }
     }
 

@@ -42,13 +42,15 @@ async function fetchArticleDetailsFromSupabase(slug: string) {
                 return resultData;
             }
         } catch (realWorldError) {
-            console.error(`Failed to fetch article details from RealWorld API for check update: ${realWorldError}`);
+            console.error(
+                `⚠️ ⚠️ Failed to fetch article details from RealWorld API for check update: ${realWorldError}`,
+            );
 
             return resultData;
         }
     }
 
-    return null;
+    return null; // 최신 데이터가 아니거나 데이터가 없는 경우
 }
 
 async function fetchUpdatedAtFromRealWorld(slug: string) {

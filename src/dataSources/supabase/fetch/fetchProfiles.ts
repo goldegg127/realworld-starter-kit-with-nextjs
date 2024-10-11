@@ -34,7 +34,7 @@ async function fetchProfilesFromSupabase(userName: string) {
                 return resultData;
             }
         } catch (realWorldError) {
-            console.error(`Failed to fetch profile data from RealWorld API for check update: ${realWorldError}`);
+            console.error(`⚠️ Failed to fetch profile data from RealWorld API for check update: ${realWorldError}`);
 
             return resultData;
         }

@@ -68,7 +68,7 @@ async function fetchArticlesFromSupabase({
                 return resultData;
             }
         } catch (realWorldError) {
-            console.error(`Failed to fetch articles from RealWorld API for check update: ${realWorldError}`);
+            console.error(`⚠️ Failed to fetch articles from RealWorld API for check update: ${realWorldError}`);
 
             return resultData;
         }
