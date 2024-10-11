@@ -62,19 +62,6 @@ async function syncTagListWithSupabase() {
             } else if (process.env.NODE_ENV !== 'production') {
                 console.log(`Tag "${tag}" inserted successfully!`);
             }
-
-            // 4. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-            const { data: insertedTag, error: fetchError } = await supabase
-                .from('tags')
-                .select('id, tag')
-                .eq('tag', tag)
-                .single();
-
-            if (fetchError) {
-                console.error('Error fetching tags after insert:', fetchError);
-            } else if (process.env.NODE_ENV !== 'production') {
-                console.log('Tags synchronized successfully! :', insertedTag);
-            }
         }
     } catch (error) {
         console.error('Error synchronizing Tags:', error);

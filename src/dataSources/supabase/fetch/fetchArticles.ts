@@ -74,10 +74,6 @@ async function fetchArticlesFromSupabase({
         }
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-        console.log('Articles fetched successfully!');
-    }
-
     return null; // 최신 데이터가 아니거나 데이터가 없는 경우
 }
 

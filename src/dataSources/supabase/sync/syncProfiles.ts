@@ -66,19 +66,6 @@ async function syncProfilesWithSupabase(userName: string) {
         } else if (process.env.NODE_ENV !== 'production') {
             console.log(`Profile username "${decodedUser}" inserted successfully!`);
         }
-
-        // 4. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-        const { data: insertedProfile, error: fetchError } = await supabase
-            .from('profile')
-            .select('id, username')
-            .eq('username', decodedUser)
-            .single();
-
-        if (fetchError) {
-            console.error('Error fetching Profile after insert:', fetchError);
-        } else if (process.env.NODE_ENV !== 'production') {
-            console.log('Profile synchronized successfully! :', insertedProfile);
-        }
     } catch (error) {
         console.error('Error synchronizing Profile:', error);
     }
