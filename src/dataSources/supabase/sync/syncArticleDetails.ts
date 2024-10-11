@@ -1,10 +1,10 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchArticleDetails } from '@/dataSources/realworld';
+import { fetchArticleDetailsFromRealworld } from '@/dataSources/realworld';
 
 async function syncArticleDetailsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
-        const { article } = await fetchArticleDetails(slug);
+        const { article } = await fetchArticleDetailsFromRealworld(slug);
 
         const { title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author } = article;
 
@@ -100,20 +100,6 @@ async function syncArticleDetailsWithSupabase(slug: string) {
             return;
         } else if (process.env.NODE_ENV !== 'production') {
             console.log('Article Details insertion successfully!');
-        }
-
-        // 6. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-        const { data: insertedDetail, error: fetchError } = await supabase
-            .from('article_details')
-            .select('id, slug')
-            .eq('slug', slug)
-            .single();
-
-        if (fetchError) {
-            console.error('Error fetching Article Details after insert:', fetchError);
-            return;
-        } else if (process.env.NODE_ENV !== 'production') {
-            console.log('Article Details synchronized successfully!! : ', insertedDetail);
         }
     } catch (error) {
         console.error('Error synchronizing Article Details:', error);

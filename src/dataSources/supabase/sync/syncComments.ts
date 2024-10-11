@@ -1,10 +1,10 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchComments } from '@/dataSources/realworld';
+import { fetchCommentsFromRealworld } from '@/dataSources/realworld';
 
 async function syncCommentsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
-        const { comments } = await fetchComments(slug);
+        const { comments } = await fetchCommentsFromRealworld(slug);
         console.log('Fetched Comments from API:', comments.length);
 
         for (const comment of comments) {
@@ -38,34 +38,31 @@ async function syncCommentsWithSupabase(slug: string) {
                 }
 
                 authorId = insertedAuthor.id;
-                console.log(`Author ${author.username} inserted successfully.`);
             }
 
-            // 4. comment는 author가 여러번 작성 가능. 중복체크 생략하고 데이터 삽입
-            const { error: commentInsertError } = await supabase.from('comments').insert({
-                body,
-                created_at: createdAt,
-                updated_at: updatedAt,
-                author_id: authorId,
-                article_slug: slug,
-            });
-
-            if (commentInsertError) {
-                console.error('Comment insertion failed:', commentInsertError);
-            } else if (process.env.NODE_ENV !== 'production') {
-                console.log(`Comment by ${author.username} inserted successfully.`);
-            }
-
-            // 5. Supabase의 comment 테이블에 제대로 삽입되었는지 바로 확인
-            const { data: insertedComments, error: fetchError } = await supabase
+            // 4. 중복 확인 후 댓글 삽입
+            const { data: existingComment, error: commentError } = await supabase
                 .from('comments')
-                .select('id, article_slug')
-                .eq('article_slug', slug);
+                .select('id')
+                .eq('body', body)
+                .eq('author_id', authorId)
+                .eq('article_slug', slug)
+                .maybeSingle();
 
-            if (fetchError) {
-                console.error('Error fetching comments after insert:', fetchError);
+            if (!existingComment) {
+                const { error: commentInsertError } = await supabase.from('comments').insert({
+                    body,
+                    created_at: createdAt,
+                    updated_at: updatedAt,
+                    author_id: authorId,
+                    article_slug: slug,
+                });
+
+                if (commentInsertError) {
+                    console.error('Comment insertion failed:', commentInsertError);
+                }
             } else if (process.env.NODE_ENV !== 'production') {
-                console.log('Comments synchronized successfully! : ', insertedComments.length);
+                console.log(`Duplicate comment by ${author.username} found, skipping insertion.`);
             }
         }
     } catch (error) {

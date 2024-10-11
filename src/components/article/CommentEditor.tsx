@@ -6,7 +6,7 @@ import { uesHandlePostComment, useHandleCommentBody } from './hooks';
 import { Button, TextareaField } from '@/components/common';
 
 export default function CommentEditor({ slug }: { slug: string }) {
-    const initImage = '/image/demo-avatar.png';
+    const initImage = '/images/demo-avatar.png';
     const { token, userInfo } = useAuthStore();
     const { commentBody, handleTextarea } = useHandleCommentBody();
     const { handlePostComment } = uesHandlePostComment({ slug, commentBody, token });

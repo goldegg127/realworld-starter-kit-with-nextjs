@@ -24,7 +24,7 @@ export async function fetchArticlesFromRealworld({
     return res.json();
 }
 
-export async function fetchArticleDetails(slug: string) {
+export async function fetchArticleDetailsFromRealworld(slug: string) {
     const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}`);
 
     if (!res.ok) {
@@ -103,7 +103,7 @@ export async function deleteArticleDetails(slug: string, token: string) {
     return res.json();
 }
 
-export async function fetchComments(slug: string) {
+export async function fetchCommentsFromRealworld(slug: string) {
     const res = await fetch(`${REALWORLD_API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`);
 
     if (!res.ok) {

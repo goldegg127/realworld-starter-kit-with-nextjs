@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchArticleDetails } from '@/dataSources/realworld';
+import { fetchArticleDetailsFromRealworld } from '@/dataSources/realworld';
 import { Author } from '@/types';
 
 async function fetchArticleDetailsFromSupabase(slug: string) {
@@ -54,7 +54,7 @@ async function fetchArticleDetailsFromSupabase(slug: string) {
 }
 
 async function fetchUpdatedAtFromRealWorld(slug: string) {
-    const { article } = await fetchArticleDetails(slug);
+    const { article } = await fetchArticleDetailsFromRealworld(slug);
 
     return article.updatedAt;
 }
