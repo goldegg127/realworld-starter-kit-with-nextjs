@@ -1,4 +1,4 @@
-import { NEXT_API } from '@/config';
+import { NEXT_API, END_POINT } from '@/config';
 import { ArticlesApiParam } from '@/types';
 
 export async function fetchArticles({
@@ -31,4 +31,44 @@ export async function fetchArticles({
         console.error('Error fetching articles:', error);
         throw error;
     }
+}
+
+export async function fetchArticleDetails(slug: string) {
+    const res = await fetch(`${NEXT_API.ARTICLES}/${slug}`);
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch for article details: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function fetchComments(slug: string) {
+    const res = await fetch(`${NEXT_API.ARTICLES}/${slug}/${END_POINT.COMMENTS}`);
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function fetchProfiles(username: string) {
+    const res = await fetch(`${NEXT_API.PROFILES}/${username}`);
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch profile: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+}
+
+export async function fetchTagList() {
+    const res = await fetch(NEXT_API.TAGS);
+
+    if (!res.ok) {
+        throw Error(`failed fetching tag list: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
 }

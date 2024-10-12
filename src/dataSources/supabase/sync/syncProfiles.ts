@@ -1,11 +1,11 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchProfiles } from '@/app/api/realworld';
+import { fetchProfilesFromRealworld } from '@/dataSources/realworld';
 
 async function syncProfilesWithSupabase(userName: string) {
     try {
         // 1. Real World API fetch
         const decodedUser = decodeURIComponent(userName); // URL 인코딩된 username을 디코딩
-        const { profile } = await fetchProfiles(userName);
+        const { profile } = await fetchProfilesFromRealworld(userName);
 
         if (process.env.NODE_ENV !== 'production') {
             console.log('Fetch Profile from API', profile);
@@ -65,19 +65,6 @@ async function syncProfilesWithSupabase(userName: string) {
             return;
         } else if (process.env.NODE_ENV !== 'production') {
             console.log(`Profile username "${decodedUser}" inserted successfully!`);
-        }
-
-        // 4. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-        const { data: insertedProfile, error: fetchError } = await supabase
-            .from('profile')
-            .select('id, username')
-            .eq('username', decodedUser)
-            .single();
-
-        if (fetchError) {
-            console.error('Error fetching Profile after insert:', fetchError);
-        } else if (process.env.NODE_ENV !== 'production') {
-            console.log('Profile synchronized successfully! :', insertedProfile);
         }
     } catch (error) {
         console.error('Error synchronizing Profile:', error);

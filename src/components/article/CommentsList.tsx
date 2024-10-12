@@ -1,16 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { syncCommentsWithSupabase, fetchCommentsFromSupabase } from '@/app/api/supabase';
+import { fetchComments } from '@/app/api';
 import { Comments } from '@/types';
 import { CardFooterProps, ProfileLinkProps } from './type';
 import { formatDate } from '@/utils/format';
 import { navigator } from '@/utils/navigation';
 import CommentButtonDelete from './CommentDeleteButton';
+import CardFooterImage from './CommentsCardFooterImage';
 
 export default async function CommentsList({ slug }: { slug: string }) {
-    await syncCommentsWithSupabase(slug);
-
-    const { comments }: { comments: Comments } = await fetchCommentsFromSupabase(slug);
+    const { comments }: { comments: Comments } = await fetchComments(slug);
 
     return (
         <ul>
@@ -38,13 +37,7 @@ function CardFooter({ slug, commentId, author, createdAt }: CardFooterProps) {
     return (
         <div className="card-footer">
             <ProfileLink username={username}>
-                <Image
-                    src={image}
-                    alt={`${username} profile image`}
-                    className="comment-author-img"
-                    width={32}
-                    height={32}
-                />
+                <CardFooterImage username={username} image={image} />
             </ProfileLink>{' '}
             <ProfileLink username={username}>{username}</ProfileLink>
             <span className="date-posted">{formatDate(createdAt)}</span>

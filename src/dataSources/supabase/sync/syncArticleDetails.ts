@@ -1,21 +1,29 @@
 import { supabase } from '@/services/supabaseClient';
-import { fetchDetails } from '@/app/api/realworld';
+import { fetchArticleDetailsFromRealworld } from '@/dataSources/realworld';
 
-async function syncDetailsWithSupabase(slug: string) {
+async function syncArticleDetailsWithSupabase(slug: string) {
     try {
         // 1. Real World API fetch
-        const { article } = await fetchDetails(slug);
+        const { article } = await fetchArticleDetailsFromRealworld(slug);
 
         const { title, description, body, tagList, createdAt, updatedAt, favorited, favoritesCount, author } = article;
 
-        // 2. Supabase 테이블에서 데이터 확인
-        const { data: existingArticles, error: articleError } = await supabase
-            .from('article_details')
-            .select('id, slug')
-            .eq('slug', slug);
+        // 2. Supabase 테이블에서 article_details와 author 데이터를 병렬로 확인
+        const [resArticles, resAuthors] = await Promise.all([
+            supabase.from('article_details').select('id, slug').eq('slug', slug),
+            supabase.from('author').select('id, username').eq('username', author.username),
+        ]);
+
+        const { data: existingArticles, error: articleError } = resArticles;
+        const { data: existingAuthors, error: authorError } = resAuthors;
 
         if (articleError) {
             console.error('Error fetching existing article from Supabase:', articleError);
+            return;
+        }
+
+        if (authorError) {
+            console.error('Error fetching author From Supabase:', authorError);
             return;
         }
 
@@ -35,17 +43,6 @@ async function syncDetailsWithSupabase(slug: string) {
 
         if (process.env.NODE_ENV !== 'production') {
             console.log(`Article "${slug}" data does not exist in Supabase. Proceeding with insertion...`);
-        }
-
-        // 3. Supabase의 author 테이블에서 데이터 확인
-        const { data: existingAuthors, error: authorError } = await supabase
-            .from('author')
-            .select('id, username')
-            .eq('username', author.username);
-
-        if (authorError) {
-            console.error('Error fetching author From syncDetailsWithSupabase:', authorError);
-            return;
         }
 
         let authorId;
@@ -104,23 +101,9 @@ async function syncDetailsWithSupabase(slug: string) {
         } else if (process.env.NODE_ENV !== 'production') {
             console.log('Article Details insertion successfully!');
         }
-
-        // 6. Supabase 테이블에 제대로 삽입되었는지 바로 확인
-        const { data: insertedDetail, error: fetchError } = await supabase
-            .from('article_details')
-            .select('id, slug')
-            .eq('slug', slug)
-            .single();
-
-        if (fetchError) {
-            console.error('Error fetching Article Details after insert:', fetchError);
-            return;
-        } else if (process.env.NODE_ENV !== 'production') {
-            console.log('Article Details synchronized successfully!! : ', insertedDetail);
-        }
     } catch (error) {
         console.error('Error synchronizing Article Details:', error);
     }
 }
 
-export { syncDetailsWithSupabase };
+export { syncArticleDetailsWithSupabase };

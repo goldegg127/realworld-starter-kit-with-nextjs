@@ -1,4 +1,4 @@
-import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/app/api/supabase';
+import { syncArticlesWithSupabase, fetchArticlesFromSupabase } from '@/dataSources/supabase';
 import { searchParamsType, Articles, ArticlesApiParam } from '@/types';
 import { navigator } from '@/utils/navigation';
 import { ArticleTabList, TabMenu } from '@/components/common';

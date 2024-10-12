@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteComment } from '@/app/api/realworld';
+import { deleteComment } from '@/dataSources/realworld';
 import { useAuthStore } from '@/stores/authStore';
 
 function useHandleDeleteComment(slug: string) {
