@@ -23,7 +23,7 @@ async function syncArticleDetailsWithSupabase(slug: string) {
         }
 
         if (authorError) {
-            console.error('Error fetching author From syncDetailsWithSupabase:', authorError);
+            console.error('Error fetching author From Supabase:', authorError);
             return;
         }
 

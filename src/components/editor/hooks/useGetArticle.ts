@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { syncDetailsWithSupabase, fetchDetailsFromSupabase } from '@/dataSources/supabase';
+import { syncArticleDetailsWithSupabase, fetchArticleDetailsFromSupabase } from '@/dataSources/supabase';
 import { Article } from '@/types';
 import { useInputStates } from './useInputStates';
 import { useEffect } from 'react';
@@ -22,8 +22,8 @@ function useGetArticle({
     } = useQuery({
         queryKey: ['slug', slug],
         queryFn: async () => {
-            await syncDetailsWithSupabase(slug);
-            return fetchDetailsFromSupabase(slug);
+            await syncArticleDetailsWithSupabase(slug);
+            return fetchArticleDetailsFromSupabase(slug);
         },
         staleTime: 1000 * 60 * 5,
         enabled: Boolean(slug),
